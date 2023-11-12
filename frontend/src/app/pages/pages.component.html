@@ -1,0 +1,14 @@
+<div class="flex">
+	<app-sidebar></app-sidebar>
+	<div class="page-wrapper p-4 lg:p-6 xl:p-8 2xl:p-10 2md:ml-[240px] 2xl:ml-[280px]">
+		<div class="2md:hidden">
+			<app-header></app-header>
+		</div>
+		<app-breadcrumb 
+			[breadcrumbs]="breadcrumbs" 
+			[showLastItemCustomLabel]="showLastItemCustomLabel"
+			[lastItemCustomLabel]="lastItemCustomLabel"
+		></app-breadcrumb>
+		<router-outlet></router-outlet>
+	</div>
+</div>

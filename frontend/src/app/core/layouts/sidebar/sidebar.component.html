@@ -1,0 +1,52 @@
+<div class="sidebar flex flex-col bg-white fixed w-[240px] 2xl:w-[280px] p-6 xl:p-8 2xl:px-12 2xl:py-10 top-0 bottom-0 overflow-y-auto"
+	[class.open]="menuOpen">
+	<mat-icon class="close-btn" (click)="toggleMenu()">close</mat-icon>
+	<div class="mb-auto">
+		<div class="logo">
+			<img src="../../../assets/images/map-logo.svg" alt="calopad">
+		</div>
+		<div class="mt-6 2md:mt-10">
+			<ul (click)="toggleMenu()">
+				<li class="py-4 2md:py-5">
+					<a class="menu-item"
+						[routerLink]="['/admin/dashboard']"
+						routerLinkActive="active">
+						<mat-icon>dashboard</mat-icon>
+						<span class="ml-6"> {{ 'common.dashboard' | translate }} </span>
+					</a>
+				</li>
+					<li class="py-4 2md:py-5">
+						<a class="menu-item" [routerLink]="['/admin/partner']" routerLinkActive="active">
+							<mat-icon svgIcon="list"></mat-icon>
+							<span class="ml-6"> {{ 'common.partner' | translate }} </span>
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	<div class="mt-5">
+		<ng-select class="w-full font-semibold text-secondary custom-select rounded" [searchable]="false"
+			[clearable]="false" [(ngModel)]="currentLanguage" (change)="changeLanguage()">
+			<ng-option value="en_US">
+				<span class="flex">
+					<img src="../../../assets/images/flags/en.svg" height="25" width="30" />
+					<span class="ml-2">EN</span>
+				</span>
+			</ng-option>
+			<ng-option value="de_CH">
+				<span class="flex">
+					<img src="../../../assets/images/flags/de.svg" height="25" width="30" />
+					<span class="ml-2">DE</span>
+				</span>
+			</ng-option>
+		</ng-select>
+		<p class="text-[15px] lg:text-[16px] xl:text-[18px] text-secondary font-semibold mt-4">{{ userData?.name }}</p>
+		<div class="mt-6">
+			<a class="flex menu-item" [routerLink]="['/auth/logout']">
+				<mat-icon svgIcon="logout"></mat-icon>
+				<span class="ml-3"> {{ 'common.logout' | translate }} </span>
+			</a>
+		</div>
+	</div>
+</div>
+<div (click)="toggleMenu()" class="menu-overlay"></div>

@@ -1,0 +1,65 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
+    "noUnusedLocals": false,
+    "paths": {
+      "@app/*": [
+        "app/*"
+      ],
+      "@auth/*": [
+        "app/auth/*"
+      ],
+      "@pages/*": [
+        "app/pages/*"
+      ],
+      "@environment/*": [
+        "environments/*"
+      ],
+      "@shared/*": [
+        "app/shared/*"
+      ],
+      "@interceptors/*": [
+        "app/core/interceptors/*"
+      ],
+      "@constants/*": [
+        "app/core/constants/*"
+      ],
+      "@directives/*": [
+        "app/core/directives/*"
+      ],
+      "@guards/*": [
+        "app/core/guards/*"
+      ],
+      "@models/*": [
+        "app/core/models/*"
+      ],
+      "@services/*": [
+        "app/core/services/*"
+      ],
+      "@layouts/*": [
+        "app/core/layouts/*"
+      ],
+    },
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "preserveWhitespaces": false,
+    "strictTemplates": true
+  }
+}

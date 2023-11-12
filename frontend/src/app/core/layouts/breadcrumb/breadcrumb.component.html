@@ -1,0 +1,20 @@
+<ul class="flex flex-wrap mb-4 lg:mb-8 xl:mb-12 2xl:mb-16">
+  <ng-template ngFor let-breadcrumb [ngForOf]="breadcrumbs" let-isLast="last">
+    <li *ngIf="!isLast">
+      <a class="flex text-[18px] sm:text-[20px] lg:text-[22px] xl:text-[25px] font-extrabold text-grey-light" [routerLink]="[breadcrumb.url]">
+        {{ 'breadcrumbs.' + breadcrumb.label | translate }}
+        <span class="mx-1.5">></span>
+      </a>
+    </li>
+    <li *ngIf="isLast">
+      <span class="text-[18px] sm:text-[20px] lg:text-[22px] xl:text-[25px] font-extrabold text-secondary" *ngIf="!showLastItemCustomLabel">
+        {{ 'breadcrumbs.' + breadcrumb.label | translate }}
+      </span>
+    </li>
+  </ng-template>
+  <li>
+    <span class="text-[18px] sm:text-[20px] lg:text-[22px] xl:text-[25px] font-extrabold text-secondary" *ngIf="showLastItemCustomLabel">
+      {{ lastItemCustomLabel }}
+    </span>
+  </li>
+</ul>

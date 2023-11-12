@@ -1,0 +1,138 @@
+<div class="bg-white shadow-2sm p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px] w-[100%] max-w-[900px]">
+  <form [formGroup]="addPartnerForm">
+    <div class="flex flex-wrap -m-2">
+      <div class="p-2">
+        <div class="flex items-center rounded-md px-4 border border-grey-50 h-[40px]">
+          <label class="text-grey-light font-semibold min-w-[100px]">{{ 'partner.add.active' | translate }}</label>
+          <mat-slide-toggle class="custom-slide-toggle" formControlName="isActive"></mat-slide-toggle>
+          <ng-container *ngTemplateOutlet="requiredError; context: { control: formControls.isActive }"></ng-container>
+        </div>
+      </div>
+      <div class="w-[100%] p-2">
+        <div class="flex">
+          <label class="field-lbl" [ngClass]="{ 'field-error': formControls.companyName.touched && formControls.companyName.invalid }">{{ 'partner.add.name' | translate }}</label>
+          <input class="form-field" [ngClass]="{ 'field-error': formControls.companyName.touched && formControls.companyName.invalid, 'bg-white': isReadOnly }" type="text" formControlName="companyName">
+        </div>
+        <ng-container *ngTemplateOutlet="requiredError; context: { control: formControls.companyName }"></ng-container>
+      </div>
+      <div class="w-[100%] flex flex-wrap" formGroupName="address">
+        <div class="w-full sm:w-[50%] p-2">
+          <div class="flex">
+            <label class="field-lbl" [ngClass]="{ 'field-error': addressControls.street.touched && addressControls.street.invalid }">{{ 'partner.add.street' | translate }}</label>
+            <input class="form-field" [ngClass]="{ 'field-error': addressControls.street.touched && addressControls.street.invalid, 'bg-white': isReadOnly }" type="text" formControlName="street">
+          </div>
+          <ng-container *ngTemplateOutlet="requiredError; context: { control: addressControls.street }"></ng-container>
+        </div>
+        <div class="w-full sm:w-[50%] p-2">
+          <div class="flex">
+            <label class="field-lbl" [ngClass]="{ 'field-error': addressControls.zip.touched && addressControls.zip.invalid }">{{ 'partner.add.zip' | translate }}</label>
+            <input class="form-field" [ngClass]="{ 'field-error': addressControls.zip.touched && addressControls.zip.invalid, 'bg-white': isReadOnly }" type="text" formControlName="zip" maxlength="6" appAllowNumberOnly [regexType]="regexType.integer">
+          </div>
+          <ng-container *ngTemplateOutlet="requiredError; context: { control: addressControls.zip }"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="patternError; context: { control: addressControls.zip, message: ( 'validation.invalidZip' | translate ) }"></ng-container>
+        </div>
+        <div class="w-full sm:w-[50%] p-2">
+          <div class="flex">
+            <label class="field-lbl" [ngClass]="{ 'field-error': addressControls.city.touched && addressControls.city.invalid }">{{ 'partner.add.city' | translate }}</label>
+            <input class="form-field" [ngClass]="{ 'field-error': addressControls.city.touched && addressControls.city.invalid, 'bg-white': isReadOnly }" type="text" formControlName="city">
+          </div>
+          <ng-container *ngTemplateOutlet="requiredError; context: { control: addressControls.city }"></ng-container>
+        </div>
+        <div class="w-full sm:w-[50%] p-2">
+          <div class="flex">
+            <label class="field-lbl" [ngClass]="{ 'field-error': addressControls.country.touched && addressControls.country.invalid }">{{ 'partner.add.country' | translate }}</label>
+            <ng-select class="w-full font-semibold text-secondary custom-select" [ngClass]="{ 'field-error': addressControls.country.touched && addressControls.country.invalid }" formControlName="country"
+              [clearable]="false"
+              [searchable]="false">
+              <ng-option *ngFor="let country of countryList" [value]="country.value">
+                {{ 'partner.add.' + country.label | translate }}
+              </ng-option>
+            </ng-select>
+          </div>
+          <ng-container *ngTemplateOutlet="requiredError; context: { control: addressControls.country }"></ng-container>
+        </div>
+      </div>
+    </div>
+    <h4 class="sub-txt relative text-[14px] font-semibold text-secondary mb-6 lg:mb-8 2xl:mb-10 mt-8 lg:mt-12 2xl:mt-16">
+      <span class="bg-white relative z-[1] px-2 lg:px-3 -ml-2 lg:-ml-3">{{ 'partner.add.additionalDetails' | translate }}</span>
+    </h4>
+    <div class="flex flex-wrap -m-2">
+      <div class="w-full sm:w-[50%] p-2">
+        <div class="flex">
+          <label class="field-lbl" [ngClass]="{ 'field-error': formControls.name.touched && formControls.name.invalid }">{{ 'partner.add.contact' | translate }}</label>
+          <input class="form-field" [ngClass]="{ 'field-error': formControls.name.touched && formControls.name.invalid, 'bg-white': isReadOnly }" type="text" formControlName="name">
+        </div>
+        <ng-container *ngTemplateOutlet="requiredError; context: { control: formControls.name }"></ng-container>
+      </div>
+      <div class="w-full sm:w-[50%] p-2">
+        <div class="flex">
+          <label class="field-lbl" [ngClass]="{ 'field-error': formControls.email.touched && formControls.email.invalid, 'read-only': uuid && !isReadOnly }">{{ 'partner.add.email' | translate }}</label>
+          <input class="form-field" [ngClass]="{ 'field-error': formControls.email.touched && formControls.email.invalid, 'read-only': uuid && !isReadOnly, 'bg-white': isReadOnly }" type="text" [pattern]="emailRegex" [readonly]="uuid && true"
+            formControlName="email">
+        </div>
+        <ng-container *ngTemplateOutlet="requiredError; context: { control: formControls.email }"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="patternError; context: { control: formControls.email, message: ( 'validation.invalidEmail' | translate ) }"></ng-container>
+      </div>
+      <div class="w-full sm:w-[50%] p-2">
+        <div class="flex field-box">
+          <label class="field-lbl" [ngClass]="{ 'field-error': formControls.phoneNo.touched && formControls.phoneNo.invalid }">{{ 'partner.add.phone' | translate }}</label>
+          <app-cp-tel-input class="w-full flex" [cssClass]="{ 'form-field': true, 'field-error': formControls.phoneNo.touched && formControls.phoneNo.invalid }"
+            formControlName="phoneNo" [isDisabled]="isReadOnly"></app-cp-tel-input>
+        </div>
+        <ng-container *ngTemplateOutlet="requiredError; context: { control: formControls.phoneNo }"></ng-container>
+        <ng-container *ngTemplateOutlet="patternError; context: { control: formControls.phoneNo, message: ( 'validation.invalidPhoneNo' | translate ) }"></ng-container>
+      </div>
+      <div class="w-full sm:w-[50%] p-2">
+        <div class="flex">
+          <label class="field-lbl">{{ 'partner.add.web' | translate }}</label>
+          <input class="form-field" [ngClass]="{ 'bg-white': isReadOnly }" type="text" [pattern]="webUrlRegex" formControlName="webAddress">
+        </div>
+      </div>
+      <div class="w-full sm:w-[50%] p-2">
+        <div class="flex">
+          <label class="field-lbl" [ngClass]="{ 'field-error': formControls.currency.touched && formControls.currency.invalid }">{{ 'partner.add.currency' | translate }}</label>
+          <ng-select class="w-full font-semibold text-secondary custom-select" [ngClass]="{ 'field-error': formControls.currency.touched && formControls.currency.invalid }" [items]="currencyList" bindLabel="label"
+            bindValue="value" formControlName="currency" [clearable]="false" [searchable]="false"></ng-select>
+        </div>
+        <ng-container *ngTemplateOutlet="requiredError; context: { control: formControls.currency }"></ng-container>
+      </div>
+      <div class="w-full sm:w-[50%] p-2">
+        <div class="flex">
+          <label class="field-lbl" [ngClass]="{ 'field-error': formControls.locale.touched && formControls.locale.invalid }">{{ 'partner.add.language' | translate }}</label>
+          <ng-select class="w-full font-semibold text-secondary custom-select" [ngClass]="{ 'field-error': formControls.locale.touched && formControls.locale.invalid }" [items]="languageList" bindLabel="label"
+            bindValue="value" formControlName="locale" [clearable]="false" [searchable]="false"></ng-select>
+        </div>
+        <ng-container *ngTemplateOutlet="requiredError; context: { control: formControls.locale }"></ng-container>
+      </div>
+    </div>
+    <div class="flex justify-end mt-6 2xl:mt-8" *ngIf="!isReadOnly">
+      <app-cp-button 
+        [class]="{ 'common-btn secondary-btn font-semibold rounded-[5px] min-w-[100px] mr-4': true }"
+        [label]="( 'partner.add.cancel' | translate )"
+        (onTap)="navigateToList()"
+      ></app-cp-button>
+
+      <app-cp-button 
+        [class]="{ 'common-btn primary-btn font-semibold rounded-[5px] min-w-[100px]': true }"
+        [label]="uuid ? ( 'partner.add.update' | translate ) : ( 'partner.add.add' | translate )"
+        (onTap)="onSubmit()"
+        [isDisabled]="isSubmitted"
+        [spin]="isSubmitted"
+      ></app-cp-button>
+      
+    </div>
+  </form>
+</div>
+
+<ng-template #requiredError let-control="control">
+  <ng-container *ngIf="control.touched && control.errors?.required">
+    <p class="error-message">{{ 'validation.fieldRequired' | translate }}</p>
+  </ng-container>
+</ng-template>
+<ng-template #patternError let-control="control" let-message="message">
+  <ng-container *ngIf="control.touched && (control.errors?.pattern || control.errors?.email || control.errors?.invalidNumber)">
+    <p class="error-message">{{ message }}</p>
+  </ng-container>
+</ng-template>

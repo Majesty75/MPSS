@@ -1,0 +1,8 @@
+<mat-icon class="open-menu" [matMenuTriggerFor]="actions">more_vert</mat-icon>
+<mat-menu class="custom-matMenu" #actions="matMenu">
+	<ng-container *ngFor="let data of actionData">
+		<button class="" (click)="data.callback(rowReference)" mat-menu-item>
+			<span>{{ data.label | translate }}</span>
+		</button>
+	</ng-container>
+</mat-menu>

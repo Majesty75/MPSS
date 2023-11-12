@@ -1,0 +1,467 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+html,
+body {
+  @apply h-full;
+}
+
+body {
+  @apply bg-main m-0 font-base text-black leading-[normal] text-[14px] xl:text-[15px] 2xl:text-[16px];
+}
+
+body * {
+  @apply tracking-[.02em];
+}
+
+.sidebar {
+  .menu-item {
+    svg {
+      path {
+        @apply fill-grey-light;
+      }
+    }
+
+    &.active,
+    &:hover {
+      svg {
+        path {
+          @apply fill-primary;
+        }
+      }
+    }
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  -webkit-overflow-scrolling: auto;
+  @apply w-1.5 h-1.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply rounded-md shadow-inner;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary rounded-md;
+}
+
+.common-btn {
+  @apply px-4 h-[40px] rounded-[5px];
+
+  &.primary-btn {
+    @apply bg-primary text-white;
+  }
+
+  &.secondary-btn {
+    @apply bg-primary-light text-primary;
+  }
+
+  &:disabled {
+    @apply bg-grey-50 text-grey-light cursor-not-allowed;
+  }
+}
+
+.custom-slide-toggle {
+  &.mat-mdc-slide-toggle {
+    .mdc-switch {
+      .mdc-switch__handle-track {
+        @apply w-3.5;
+      }
+
+      .mdc-switch__track {
+        @apply rounded-3xl h-5;
+
+        &::after {
+          background-color: #ff6b00 !important;
+        }
+      }
+
+      .mdc-switch__handle {
+        @apply left-1 h-3.5 w-3.5;
+
+        &::after {
+          background-color: #ffffff !important;
+        }
+
+        .mdc-switch__ripple {
+          @apply hidden;
+        }
+      }
+
+      &:enabled {
+        .mdc-switch__track {
+          &::after {
+            background-color: #ff6b00;
+          }
+        }
+      }
+
+      &:disabled {
+        .mdc-switch__track {
+          @apply opacity-100;
+
+          &::before {
+            @apply bg-grey-50;
+          }
+        }
+      }
+    }
+
+    .mdc-switch__icon--on,
+    .mdc-switch__icon--off {
+      @apply hidden;
+    }
+  }
+}
+
+.custom-select {
+
+  &.ng-select,
+  &.ng-select-focused:not(.ng-select-opened) {
+    .ng-select-container {
+      @apply border-grey-50 shadow-none rounded-md rounded-l-none text-secondary min-h-[40px] h-[100%];
+
+      .ng-value-container {
+        @apply pl-4 pr-2;
+
+        .ng-input {
+          @apply pl-4 top-[50%] translate-y-[-50%];
+        }
+      }
+    }
+
+    .ng-dropdown-panel {
+      @apply border-grey-50;
+
+      .ng-dropdown-panel-items {
+        .ng-option {
+          @apply text-secondary px-4 py-2;
+
+          &.ng-option-selected {
+            @apply bg-primary-light text-primary;
+          }
+
+          &.ng-option-marked {
+            @apply bg-grey-50;
+          }
+        }
+      }
+    }
+
+    .ng-arrow-wrapper {
+      @apply pr-3;
+    }
+  }
+
+  &.rounded {
+    .ng-select-container {
+      @apply rounded-md;
+    }
+  }
+
+  &.field-error {
+    .ng-select-container {
+      @apply border-red text-red;
+
+      .ng-arrow-wrapper {
+        .ng-arrow {
+          @apply border-t-red;
+        }
+      }
+    }
+  }
+
+  &.ng-select-disabled {
+    .ng-select-container {
+      @apply bg-white;
+    }
+  }
+}
+
+.status-select {
+  &.ng-select {
+    @apply inline-block;
+
+    .ng-select-container {
+      @apply inline-flex border-0 w-auto;
+
+      .ng-value-container {
+        padding-left: 0 !important;
+      }
+    }
+
+    .ng-dropdown-panel {
+      @apply left-auto right-0 w-auto;
+
+      .ng-dropdown-panel-items {
+        .ng-option {
+          background-color: transparent !important;
+        }
+      }
+    }
+  }
+}
+
+.custom-table {
+  tr {
+    &:nth-last-child(-n + 2) {
+      .status-select {
+        &.ng-select {
+          .ng-dropdown-panel {
+            @apply top-auto bottom-full;
+          }
+        }
+      }
+    }
+  }
+}
+
+.custom-chk {
+  &.mat-mdc-checkbox {
+    .mdc-checkbox {
+      @apply p-0 m-0 w-5 h-5;
+
+      .mdc-checkbox__background {
+        border-color: #a0a0a0 !important;
+        @apply border top-0 left-0 w-5 h-5;
+      }
+
+      .mdc-checkbox__ripple,
+      .mat-mdc-checkbox-ripple {
+        @apply hidden;
+      }
+
+      .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background {
+        background-color: #ff6b00 !important;
+        border-color: #ff6b00 !important;
+      }
+    }
+
+    &.mat-mdc-checkbox-checked {
+      .mdc-checkbox {
+        .mdc-checkbox__background {
+          background-color: #ff6b00 !important;
+          border-color: #ff6b00 !important;
+        }
+      }
+    }
+  }
+}
+
+.custom-paginator {
+  @apply font-base border-t-[1px] border-grey-50 text-[13px] font-semibold pt-4;
+
+  .mat-mdc-paginator-container {
+    @apply justify-between p-0 min-h-[auto];
+  }
+
+  .mat-mdc-paginator-page-size-label {
+    @apply m-0;
+  }
+
+  .mat-mdc-form-field {
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      @apply border-grey-50;
+    }
+
+    &.mat-focused {
+
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        @apply border-grey-500;
+      }
+
+      .mat-mdc-select-arrow {
+        @apply text-grey-500;
+      }
+    }
+  }
+
+  .mat-mdc-paginator-range-label {
+    @apply m-0 mr-6 ml-3;
+  }
+
+  .mat-mdc-button-base {
+    @apply p-0 h-8 w-8;
+  }
+}
+
+.custom-matMenu {
+  .mat-mdc-menu-content {
+    .mat-mdc-menu-item {
+      @apply min-h-[40px];
+
+      .mdc-list-item__primary-text {
+        @apply font-base text-[14px] xl:text-[15px] 2xl:text-[16px] font-semibold text-grey-500;
+      }
+    }
+  }
+}
+
+.mat-mdc-select-panel {
+  .mat-mdc-option {
+    .mdc-list-item__primary-text {
+      @apply font-base font-semibold text-grey-500;
+    }
+
+    &.mdc-list-item--selected {
+      .mdc-list-item__primary-text {
+        color: #ff6b00 !important;
+      }
+    }
+  }
+}
+
+.mat-ripple {
+  @apply hidden;
+}
+
+.mat-mdc-select-panel {
+  .mat-mdc-option {
+    @apply text-[14px] xl:text-[15px] 2xl:text-[16px] min-h-[40px];
+  }
+}
+
+.mat-mdc-dialog-container {
+  max-width: 100% !important;
+}
+
+.iti {
+  &.iti--separate-dial-code {
+    @apply w-[100%] font-semibold;
+
+    .iti__country {
+      @apply px-3 py-2;
+    }
+
+    .iti__selected-flag {
+      @apply bg-transparent pl-4 pr-2 border-r border-grey-50;
+    }
+  }
+}
+
+.mdc-snackbar {
+  &.mat-mdc-snack-bar-container {
+    .mdc-snackbar__surface {
+      @apply bg-white pr-0 border-l-4;
+
+      .mat-mdc-simple-snack-bar {
+        @apply items-start;
+      }
+
+      .mdc-snackbar__label {
+        @apply text-inherit font-base font-semibold;
+      }
+
+      .mdc-button {
+        color: inherit !important;
+        @apply min-h-[44px] min-w-[44px];
+      }
+    }
+  }
+
+  &.error-snackbar {
+    .mdc-snackbar__surface {
+      @apply border-red text-red;
+    }
+  }
+
+  &.success-snackbar {
+    .mdc-snackbar__surface {
+      @apply border-green text-green;
+    }
+  }
+
+  &.warning-snackbar {
+    .mdc-snackbar__surface {
+      @apply border-orange-400 text-orange-400;
+    }
+  }
+
+  &.info-snackbar {
+    .mdc-snackbar__surface {
+      @apply border-blue-400 text-blue-400;
+    }
+  }
+}
+
+.field-lbl {
+  @apply flex items-center text-grey-light rounded-md rounded-r-none min-w-[105px] md:min-w-[115px] w-[105px] md:w-[115px] px-4 py-1 leading-[20px] border border-r-0 border-grey-50 font-semibold;
+  word-break: break-word;
+}
+
+.form-field {
+  @apply w-full px-4 font-semibold text-secondary rounded-md rounded-l-none border outline-0 min-h-[40px] border-grey-50;
+
+  &:disabled {
+    @apply bg-white;
+  }
+}
+
+.field-error {
+  @apply border-red text-red;
+}
+
+.error-message {
+  @apply text-red mt-1 text-[12px] md:text-[14px] font-semibold;
+}
+
+.read-only {
+  @apply bg-grey-100 text-grey-light;
+}
+
+@media (max-width: 639px) {
+  .custom-paginator {
+    .mat-mdc-paginator-page-size {
+      .mat-mdc-form-field {
+        @apply m-0 w-[60px];
+
+        .mat-mdc-text-field-wrapper {
+          @apply px-2;
+        }
+      }
+    }
+
+    .mat-mdc-paginator-page-size-label {
+      @apply hidden;
+    }
+
+    .mat-mdc-paginator-range-label {
+      @apply mx-3;
+    }
+  }
+}
+
+
+.field-box {
+  .iti__country-list {
+    .iti__country {
+      &.iti__active {
+        @apply bg-primary-light text-primary font-semibold;
+      }
+
+      &.iti__highlight {
+        @apply bg-grey-50;
+      }
+    }
+  }
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

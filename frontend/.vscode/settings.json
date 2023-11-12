@@ -1,0 +1,51 @@
+{
+    // HTML
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    // Maximum amount of characters per line (0 = disable).
+    "html.format.wrapLineLength": 120,
+    // JAVASCRIPT
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[json][jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[css][scss][less]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features",
+    },
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+    "security.workspace.trust.untrustedFiles": "open",
+    "workbench.colorCustomizations": {
+        "editorUnnecessaryCode.border": "#ff0000"
+    },
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "editor.inlineSuggest.enabled": true,
+    "editor.rulers": [],
+    // When set to true, commits will automatically be fetched from the default remote of the current Git repository.
+    // Setting to `all` will fetch from all remotes.
+    "git.autofetch": false,
+    // Controls whether an active snippet prevents quick suggestions.
+    "editor.suggest.snippetsPreventQuickSuggestions": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "[scss]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.organizeImports": true,
+    },
+    "html.format.extraLiners": "",
+    "cSpell.words": [
+        "Swal",
+        "sweetalert",
+        "Toastr"
+    ],
+    "editor.formatOnSave": true,
+    "docwriter.style": "Auto-detect"
+}

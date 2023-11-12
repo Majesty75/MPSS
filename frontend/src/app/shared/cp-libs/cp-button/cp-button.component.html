@@ -1,0 +1,14 @@
+<button 
+  [type]="type" 
+  [disabled]="isDisabled" 
+  [style.pointer-events]="spin ? 'none' : ''" 
+  [ngClass]="class" 
+  (click)="click()"
+>
+  <ng-container *ngIf="!spin; else spinner;">
+    {{label}}
+  </ng-container>
+  <ng-template #spinner>
+    <app-cp-loader [class]="{ 'w-6 h-6 border-x-secondary border-y-transparent': true }"></app-cp-loader>
+  </ng-template>
+</button>

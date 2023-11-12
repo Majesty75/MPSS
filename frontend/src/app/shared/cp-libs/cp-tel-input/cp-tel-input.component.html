@@ -1,0 +1,13 @@
+<input
+  type="text"
+  class="cp-tel-input h-[100%]"
+  [ngClass]="cssClass"
+  [attr.id]="name"
+  [attr.name]="name"
+  [name]="name"
+  [formControl]="telInputControl"
+  (countrychange)="i18nPhoneNumber()"
+  (click)="onClick()"
+  (blur)="onBlur()"
+  #intlTelInput
+/>

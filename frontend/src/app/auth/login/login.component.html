@@ -1,0 +1,47 @@
+<div class="flex flex-col py-6 px-4 min-h-[100vh] items-center justify-center">
+  <img class="w-[220px] md:w-[280px]" src="../../../assets/images/map-logo.svg">
+  <div
+    class="bg-white px-4 sm:px-10 md:px-[100px] w-[570px] max-w-[100%] py-4 sm:py-[44px] rounded-[10px] mt-7 md:mt-[90px]">
+    <form #loginForm="ngForm">
+      <div class="flex">
+        <label class="field-lbl"
+          [ngClass]="{ 'field-error': (loginForm.submitted || username.touched) && username.invalid }">{{
+          'login.username' |
+          translate }}</label>
+        <input class="form-field"
+          [ngClass]="{ 'field-error': (loginForm.submitted || username.touched) && username.invalid }" type="text"
+          name="username" ngModel #username="ngModel" required>
+      </div>
+      <ng-container *ngIf="(loginForm.submitted || username.touched) && username.errors?.required">
+        <p class="error-message"> {{ 'validation.usernameRequired' | translate }} </p>
+      </ng-container>
+      <div class="flex mt-4">
+        <label class="field-lbl"
+          [ngClass]="{ 'field-error': (loginForm.submitted || password.touched) && password.invalid }">{{
+          'login.password' | translate }}</label>
+        <input class="form-field"
+          [ngClass]="{ 'field-error': (loginForm.submitted || password.touched) && password.invalid }" type="password"
+          name="password" ngModel #password="ngModel" required>
+      </div>
+      <ng-container *ngIf="(loginForm.submitted || password.touched) && password.errors?.required">
+        <p class="error-message"> {{ 'validation.passwordRequired' | translate }} </p>
+      </ng-container>
+      <div class="mt-5 md:mt-8 text-right">
+        <app-cp-button [type]="'submit'" [label]="'login.login' | translate"
+          [class]="{'common-btn secondary-btn font-base font-semibold rounded-[5px] min-w-[120px]': true, 'pointer-events-none': isSubmitted}"
+          [isDisabled]="isSubmitted" [spin]="isSubmitted" (onTap)="onSubmit(loginForm)"></app-cp-button>
+      </div>
+      <div class="mt-2 md:mt-3 text-right">
+        <a class="cursor-pointer text-[13px]" (click)="navigateToForgotPassword()">{{ 'login.forgotPassword' | translate
+          }}</a>
+      </div>
+    </form>
+  </div>
+  <div class="bg-white p-4 w-[570px] max-w-[100%] rounded-[10px] mt-5 md:mt-8">
+    <p class="text-center text-[13px] font-semibold">
+      <span class="font-bold">{{ 'login.problems' | translate }}</span><br>
+      {{ 'login.contactUs' | translate }}
+      <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>
+    </p>
+  </div>
+</div>

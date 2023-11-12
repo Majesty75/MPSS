@@ -1,0 +1,21 @@
+.custom-table {
+    tr {
+        @apply h-[48px] lg:h-[52px] 2xl:h-[60px];
+    }
+    th,
+    td {
+        @apply font-base text-[14px] xl:text-[15px] 2xl:text-[16px] leading-[normal] border-grey-50 overflow-visible py-2;
+        &:first-child {
+            @apply pl-0;
+        }
+        &:last-child {
+            @apply pr-0;
+        }
+    }
+    th {
+        @apply font-bold text-black whitespace-nowrap;
+    }
+    td {
+        @apply font-semibold text-grey-500;
+    }
+}

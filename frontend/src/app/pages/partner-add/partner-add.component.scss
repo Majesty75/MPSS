@@ -1,0 +1,15 @@
+.sub-txt {
+    &:after {
+        @apply content-[""] absolute border-t border-grey-50  -left-10 -right-10 top-2/4;
+        
+        @media (max-width: 1535px) {
+            @apply -left-8 -right-8;
+        }
+        @media (max-width: 1279px) {
+            @apply -left-6 -right-6;
+        }
+        @media (max-width: 1023px) {
+            @apply -left-4 -right-4;
+        }
+    }
+}
