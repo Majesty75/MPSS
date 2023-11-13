@@ -17,13 +17,13 @@ import { AlertToastrService } from '@services/alert-toastr.service';
 import { CpEventsService } from '@services/cp-events.service';
 
 @Component({
-  selector: 'app-partner-add',
+  selector: 'app-vendor-add',
   standalone: true,
   imports: [CommonModule, MatSlideToggleModule, NgSelectModule, FormsModule, CpButtonComponent, ReactiveFormsModule, TranslateModule, AllowNumberOnlyDirective, CpTelInputComponent],
-  templateUrl: './partner-add.component.html',
-  styleUrls: ['./partner-add.component.scss']
+  templateUrl: './vendor-add.component.html',
+  styleUrls: ['./vendor-add.component.scss']
 })
-export class PartnerAddComponent implements OnInit {
+export class VendorAddComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
   addPartnerForm: FormGroup<AddVendorForm>;
@@ -74,7 +74,7 @@ export class PartnerAddComponent implements OnInit {
         city: new FormControl('', Validators.required),
         country: new FormControl('', Validators.required),
       }),
-      vendorName: new FormControl('', Validators.required),
+      companyName: new FormControl('', Validators.required),
       name: new FormControl('', Validators.required),
       phoneNo: new FormControl('', Validators.required),
       webAddress: new FormControl(''),

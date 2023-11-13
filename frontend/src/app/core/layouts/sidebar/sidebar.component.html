@@ -8,24 +8,46 @@
 		<div class="mt-6 2md:mt-10">
 			<ul (click)="toggleMenu()">
 				<li class="py-4 2md:py-5">
-					<a class="menu-item"
-						[routerLink]="['/admin/dashboard']"
-						routerLinkActive="active">
+					<a class="menu-item" [routerLink]="['/admin/dashboard']" routerLinkActive="active">
 						<mat-icon>dashboard</mat-icon>
 						<span class="ml-6"> {{ 'common.dashboard' | translate }} </span>
 					</a>
 				</li>
-					<li class="py-4 2md:py-5">
-						<a class="menu-item" [routerLink]="['/admin/partner']" routerLinkActive="active">
-							<mat-icon svgIcon="list"></mat-icon>
-							<span class="ml-6"> {{ 'common.partner' | translate }} </span>
-						</a>
-					</li>
+				<li class="py-4 2md:py-5">
+					<a class="menu-item" [routerLink]="['/admin/vendor']" routerLinkActive="active">
+						<mat-icon svgIcon="list"></mat-icon>
+						<span class="ml-6"> {{ 'common.vendors' | translate }} </span>
+					</a>
+				</li>
+				<li class="py-4 2md:py-5">
+					<a class="menu-item" [routerLink]="['/admin/part']" routerLinkActive="active">
+						<mat-icon svgIcon="list"></mat-icon>
+						<span class="ml-6"> {{ 'common.parts' | translate }} </span>
+					</a>
+				</li>
+				<li class="py-4 2md:py-5">
+					<a class="menu-item" [routerLink]="['/admin/sale']" routerLinkActive="active">
+						<mat-icon svgIcon="list"></mat-icon>
+						<span class="ml-6"> {{ 'common.sales' | translate }} </span>
+					</a>
+				</li>
+				<li class="py-4 2md:py-5">
+					<a class="menu-item" [routerLink]="['/admin/purchase']" routerLinkActive="active">
+						<mat-icon svgIcon="list"></mat-icon>
+						<span class="ml-6"> {{ 'common.purchases' | translate }} </span>
+					</a>
+				</li>
+				<li class="py-4 2md:py-5">
+					<a class="menu-item" [routerLink]="['/admin/report']" routerLinkActive="active">
+						<mat-icon svgIcon="list"></mat-icon>
+						<span class="ml-6"> {{ 'common.reports' | translate }} </span>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</div>
 	<div class="mt-5">
-		<ng-select class="w-full font-semibold text-secondary custom-select rounded" [searchable]="false"
+		<!-- <ng-select class="w-full font-semibold text-secondary custom-select rounded" [searchable]="false"
 			[clearable]="false" [(ngModel)]="currentLanguage" (change)="changeLanguage()">
 			<ng-option value="en_US">
 				<span class="flex">
@@ -39,7 +61,7 @@
 					<span class="ml-2">DE</span>
 				</span>
 			</ng-option>
-		</ng-select>
+		</ng-select> -->
 		<p class="text-[15px] lg:text-[16px] xl:text-[18px] text-secondary font-semibold mt-4">{{ userData?.name }}</p>
 		<div class="mt-6">
 			<a class="flex menu-item" [routerLink]="['/auth/logout']">

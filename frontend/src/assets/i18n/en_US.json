@@ -15,7 +15,10 @@
   },
   "breadcrumbs": {
     "dashboard": "Dashboard",
-    "partnerList": "Partner List",
+    "vendorList": "Vendor List",
+    "partList": "Part List",
+    "saleList": "Sale List",
+    "purchaseList": "Purchase List",
     "add": "Add",
     "edit": "Edit",
     "settings": "Settings"
@@ -45,7 +48,7 @@
     "invalidPartner": "The partner could not be found",
     "updateStatusSuccessful": "Partner status has been updated successfully",
     "cardStatusUpdateSuccessful": "Card status has been updated successfully",
-    "invalidSellingPrice": "Partner selling price must be greater than the total cost of card",
+    "invalidsellPrice": "Partner selling price must be greater than the total cost of card",
     "cardCodeRedeemed": "This code has already been redeemed",
     "cardCodeBlocked": "Oops, your card has blocked",
     "exchangeRateSuccessful": "Exchange rate has been saved successfully",
@@ -65,7 +68,18 @@
     "totalCards": "Total Cards",
     "activated": "Activated",
     "redeemed": "Redeemed",
-    "date": "Date"
+    "date": "Date",
+    "vendors": "Vendors",
+    "parts": "Parts",
+    "sales": "Sales",
+    "purchases": "Purchases",
+    "reports": "Reports",
+    "street": "Street",
+    "zip": "ZIP",
+    "city": "City",
+    "country": "Country",
+    "email": "Email",
+    "phone": "Phone"
   },
   "partner": {
     "companyName": "Company Name",
@@ -138,5 +152,10 @@
     "thu": "Thu",
     "fri": "Fri",
     "sat": "Sat"
+  },
+  "vendor": {
+    "addVendor": "Add Vendor",
+    "searchVendor": "Search Vendor",
+    "vendorName": "Vendor Name"
   }
 }

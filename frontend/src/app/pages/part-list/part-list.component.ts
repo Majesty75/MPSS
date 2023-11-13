@@ -9,12 +9,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VendorDetail, VendorList } from '@app/core/models/vendor.model';
-import { VendorService } from '@app/core/services/vendor.service';
+import { PartDetail, PartList } from '@app/core/models/part.model';
+import { VendorDetail } from '@app/core/models/vendor.model';
+import { PartService } from '@app/core/services/part.service';
 import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpLoaderComponent } from '@app/shared/cp-libs/cp-loader/cp-loader.component';
-import { COUNTRY_LIST, MessageType, PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
+import { PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -23,18 +24,18 @@ import { CpEventsService } from '@services/cp-events.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
-  selector: 'app-partner-list',
+  selector: 'app-part-list',
   standalone: true,
   imports: [CommonModule, MatTableModule, TranslateModule, MatPaginatorModule, MatCheckboxModule, CpButtonComponent, MatIconModule, MatButtonModule, FormsModule, ReactiveFormsModule, NgSelectModule, CpLoaderComponent, CpActionToolbarComponent],
-  templateUrl: './partner-list.component.html',
-  styleUrls: ['./partner-list.component.scss']
+  templateUrl: './part-list.component.html',
+  styleUrls: ['./part-list.component.scss']
 })
-export class PartnerListComponent {
+export class PartListComponent {
 
   breadcrumbs: BreadCrumb[] = [];
-  partnerList = new MatTableDataSource<VendorDetail>();
-  columnLabel = ['partnerId', 'companyName', 'street', 'zip', 'city', 'country', 'email', 'phoneNo', 'isActive', 'action'];
-  selection = new SelectionModel<VendorDetail>(true, []);
+  partList = new MatTableDataSource<PartDetail>();
+  columnLabel = ['partId', 'partName', 'partNumber', 'cost', 'sellPrice', 'vendorName'];
+  selection = new SelectionModel<PartDetail>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageSizeOptions = PAGE_SIZE;
   searchControl = new FormControl('');
@@ -48,7 +49,7 @@ export class PartnerListComponent {
   constructor(
     private route: ActivatedRoute,
     private cpEventsService: CpEventsService,
-    private partnerService: VendorService,
+    private partService: PartService,
     private router: Router,
     private toasterService: AlertToastrService,
     public translateService: TranslateService
@@ -68,10 +69,10 @@ export class PartnerListComponent {
           this.onSearch(value);
         }
       });
-    this.getPartnerList();
+    this.getPartList();
   }
 
-  getPartnerList(): void {
+  getPartList(): void {
     const params = {
       sort: this.sortValue.value,
       pageSize: this.paginator?.pageSize || 10,
@@ -79,32 +80,22 @@ export class PartnerListComponent {
       ...this.searchValue && { search: this.searchValue }
     }
     this.isLoading = true;
-    this.partnerList = new MatTableDataSource([]);
-    this.partnerService.getVendorList(params)
+    this.partList = new MatTableDataSource([]);
+    this.partService.getPartList(params)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res: VendorList) => {
+        next: (res: PartList) => {
           if (res) {
             this.isLoading = false;
-            res.records.map((el: VendorDetail) => {
-              COUNTRY_LIST.forEach((country) => {
-                if (el.country === country.value) {
-                  el.country = country.label.charAt(0).toUpperCase() + country.label.slice(1);
-                }
-                return;
-              })
-              el.partnerAction = [
+            res.records.map((el: PartDetail) => {
+              el.partAction = [
                 {
                   label: 'partner.edit',
-                  callback: this.editPartner.bind(this)
-                },
-                {
-                  label: el.isActive ? 'partner.markAsInactive' : 'partner.markAsActive',
-                  callback: this.updateStatus.bind(this)
+                  callback: this.editPart.bind(this)
                 }
               ]
             });
-            this.partnerList = new MatTableDataSource(res.records);
+            this.partList = new MatTableDataSource(res.records);
             this.paginator.length = res.totalCount;
           }
         },
@@ -115,22 +106,11 @@ export class PartnerListComponent {
   }
 
   ngAfterViewInit(): void {
-    this.partnerList.paginator = this.paginator;
+    this.partList.paginator = this.paginator;
   }
 
-  editPartner(row: VendorDetail): void {
+  editPart(row: VendorDetail): void {
     this.router.navigate([`../${row.uuid}`], { relativeTo: this.route });
-  }
-
-  updateStatus(row: VendorDetail): void {
-    this.partnerService.updateVendorDetail({ isActive: !row.isActive }, row.uuid)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-          this.toasterService.displaySnackBarWithTranslation('toasterMessage.updateStatusSuccessful', MessageType.success);
-          this.getPartnerList();
-        },
-      })
   }
 
   onSearch(searchValue: string): void {
@@ -144,10 +124,10 @@ export class PartnerListComponent {
     } else {
       this.searchValue = '';
     }
-    this.getPartnerList();
+    this.getPartList();
   }
 
-  navigateToAddPartner(): void {
+  navigateToAddPart(): void {
     this.router.navigate(['../add'], { relativeTo: this.route });
   }
 }

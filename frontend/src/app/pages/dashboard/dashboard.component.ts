@@ -1,29 +1,28 @@
-import { AfterViewInit, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { BreadCrumb } from '@models/breadcrumb.model';
-import { CpEventsService } from '@services/cp-events.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { AfterViewInit, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AccountingStatus, ErrorCode, MessageType, PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
-import { AdminService } from '@services/admin.service';
+import { ActivatedRoute } from '@angular/router';
+import { VendorService } from '@app/core/services/vendor.service';
+import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
 import { CpLoaderComponent } from '@app/shared/cp-libs/cp-loader/cp-loader.component';
+import { AccountingStatus, PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
+import { LOCAL_STORAGE_CONSTANT } from '@constants/localstorage.constant';
+import { DashboardAccountingStats, InvoiceDetail, InvoiceList, PerformanceOverview, RedemptionDetail, RedemptionList, TopPartners } from '@models/admin.model';
+import { LoginResponse } from '@models/auth.model';
+import { BreadCrumb } from '@models/breadcrumb.model';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AdminService } from '@services/admin.service';
+import { AlertToastrService } from '@services/alert-toastr.service';
+import { CpEventsService } from '@services/cp-events.service';
+import { LocalStorageService } from '@services/local-storage.service';
+import { UtilityService } from '@services/utility.service';
 import { ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
-import { DashboardAccountingStats, InvoiceDetail, InvoiceList, PerformanceOverview, RedemptionDetail, RedemptionList, TopPartners } from '@models/admin.model';
-import { LocalStorageService } from '@services/local-storage.service';
-import { LoginResponse } from '@models/auth.model';
-import { LOCAL_STORAGE_CONSTANT } from '@constants/localstorage.constant';
-import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
-import { UtilityService } from '@services/utility.service';
-import { PartnerService } from '@services/partner.service';
-import { AlertToastrService } from '@services/alert-toastr.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-dashboard',
@@ -81,7 +80,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private localStorageService: LocalStorageService,
     private utilityService: UtilityService,
     private translateService: TranslateService,
-    private partnerService: PartnerService,
+    private partnerService: VendorService,
     private toasterService: AlertToastrService
   ) {
     this.userData = this.localStorageService.get(LOCAL_STORAGE_CONSTANT.USER_DATA);
@@ -187,22 +186,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   updateStatus(status: string, uuid: string): void {
-    this.partnerService.updateAccountStatus(uuid, { status })
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-          if (status === AccountingStatus.billed) {
-            this.getOpenInvoicesList();
-          }
-          this.toasterService.displaySnackBarWithTranslation('toasterMessage.billStatusUpdateSuccessful', MessageType.success);
-        },
-        error: (error: HttpErrorResponse) => {
-          if (error.error.status === ErrorCode.badRequest && error.error.error === AccountingStatus.billed) {
-            this.toasterService.displaySnackBarWithTranslation('toasterMessage.billStatusChanged', MessageType.error);
-          }
-          this.getOpenInvoicesList();
-        }
-      })
   }
 
   getLatestRedemptionList(): void {

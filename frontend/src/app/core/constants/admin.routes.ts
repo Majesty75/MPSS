@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
+import { VendorDetailService } from "@app/core/services/vendor-detail.service";
 import { BreadcrumbResolverFn } from "@services/breadcrumb-resolve.service";
-import { PartnerDetailService } from "@services/partner-detail.service";
+import { PartDetailService } from "../services/part-detail.service";
 
 export const adminRoutes: Routes = [
   {
@@ -23,9 +24,9 @@ export const adminRoutes: Routes = [
         }
       },
       {
-        path: 'partner',
+        path: 'vendor',
         data: {
-          breadcrumb: 'partnerList',
+          breadcrumb: 'vendorList',
         },
         children: [
           {
@@ -33,16 +34,16 @@ export const adminRoutes: Routes = [
             redirectTo: 'list',
             pathMatch: 'full'
           },
-          { 
+          {
             path: 'list',
-            loadComponent: () => import('@pages/partner-list/partner-list.component').then((m) => m.PartnerListComponent),
+            loadComponent: () => import('@pages/vendor-list/vendor-list.component').then((m) => m.VendorListComponent),
             resolve: {
               breadcrumbs: BreadcrumbResolverFn,
             }
           },
           {
             path: 'add',
-            loadComponent: () => import('@pages/partner-add/partner-add.component').then((m) => m.PartnerAddComponent),
+            loadComponent: () => import('@pages/vendor-add/vendor-add.component').then((m) => m.VendorAddComponent),
             data: {
               breadcrumb: 'add'
             },
@@ -52,17 +53,155 @@ export const adminRoutes: Routes = [
           },
           {
             path: ':uuid',
-            loadComponent: () => import('@pages/partner-add/partner-add.component').then((m) => m.PartnerAddComponent),
+            loadComponent: () => import('@pages/vendor-add/vendor-add.component').then((m) => m.VendorAddComponent),
             data: {
               breadcrumb: 'edit'
             },
             resolve: {
               breadcrumbs: BreadcrumbResolverFn,
-              partnerDetail: PartnerDetailService
+              partnerDetail: VendorDetailService
             }
           }
         ]
-      }
+      },
+      {
+        path: 'part',
+        data: {
+          breadcrumb: 'partList',
+        },
+        children: [
+          {
+            path: '',
+            redirectTo: 'list',
+            pathMatch: 'full'
+          },
+          {
+            path: 'list',
+            loadComponent: () => import('@pages/part-list/part-list.component').then((m) => m.PartListComponent),
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+            }
+          },
+          {
+            path: 'add',
+            loadComponent: () => import('@pages/part-add/part-add.component').then((m) => m.PartAddComponent),
+            data: {
+              breadcrumb: 'add'
+            },
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+            }
+          },
+          {
+            path: ':uuid',
+            loadComponent: () => import('@pages/part-add/part-add.component').then((m) => m.PartAddComponent),
+            data: {
+              breadcrumb: 'edit'
+            },
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+              partnerDetail: PartDetailService
+            }
+          }
+        ]
+      },
+      {
+        path: 'sale',
+        data: {
+          breadcrumb: 'saleList',
+        },
+        children: [
+          {
+            path: '',
+            redirectTo: 'list',
+            pathMatch: 'full'
+          },
+          {
+            path: 'list',
+            loadComponent: () => import('@pages/sale-list/sale-list.component').then((m) => m.SaleListComponent),
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+            }
+          },
+          {
+            path: 'add',
+            loadComponent: () => import('@pages/sale-add/sale-add.component').then((m) => m.SaleAddComponent),
+            data: {
+              breadcrumb: 'add'
+            },
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+            }
+          },
+          {
+            path: ':uuid',
+            loadComponent: () => import('@pages/sale-add/sale-add.component').then((m) => m.SaleAddComponent),
+            data: {
+              breadcrumb: 'edit'
+            },
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+              partnerDetail: VendorDetailService
+            }
+          }
+        ]
+      },
+      {
+        path: 'purchase',
+        data: {
+          breadcrumb: 'purchaseList',
+        },
+        children: [
+          {
+            path: '',
+            redirectTo: 'list',
+            pathMatch: 'full'
+          },
+          {
+            path: 'list',
+            loadComponent: () => import('@pages/purchase-list/purchase-list.component').then((m) => m.PurchaseListComponent),
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+            }
+          },
+          {
+            path: 'add',
+            loadComponent: () => import('@pages/purchase-add/purchase-add.component').then((m) => m.PurchaseAddComponent),
+            data: {
+              breadcrumb: 'add'
+            },
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+            }
+          },
+          {
+            path: ':uuid',
+            loadComponent: () => import('@pages/purchase-add/purchase-add.component').then((m) => m.PurchaseAddComponent),
+            data: {
+              breadcrumb: 'edit'
+            },
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+              partnerDetail: VendorDetailService
+            }
+          }
+        ]
+      },
+      {
+        path: 'report',
+        data: {
+          breadcrumb: 'reports',
+        },
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('@pages/reports/reports.component').then((m) => m.ReportsComponent),
+            resolve: {
+              breadcrumbs: BreadcrumbResolverFn,
+            }
+          }
+        ]
+      },
     ]
   }
 ]

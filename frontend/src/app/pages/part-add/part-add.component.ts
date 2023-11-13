@@ -5,7 +5,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddVendorForm, VendorAddress } from '@app/core/models/vendor.model';
-import { VendorService } from '@app/core/services/vendor.service';
+import { PartService } from '@app/core/services/part.service';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpTelInputComponent } from '@app/shared/cp-libs/cp-tel-input/cp-tel-input.component';
 import { COUNTRY_LIST, CURRENCY_LIST, LANGUAGE_LIST, MessageType, REGEX_CONSTANTS, RegexType } from '@constants/app.constants';
@@ -17,16 +17,16 @@ import { AlertToastrService } from '@services/alert-toastr.service';
 import { CpEventsService } from '@services/cp-events.service';
 
 @Component({
-  selector: 'app-partner-add',
+  selector: 'app-part-add',
   standalone: true,
   imports: [CommonModule, MatSlideToggleModule, NgSelectModule, FormsModule, CpButtonComponent, ReactiveFormsModule, TranslateModule, AllowNumberOnlyDirective, CpTelInputComponent],
-  templateUrl: './partner-add.component.html',
-  styleUrls: ['./partner-add.component.scss']
+  templateUrl: './part-add.component.html',
+  styleUrls: ['./part-add.component.scss']
 })
-export class PartnerAddComponent implements OnInit {
+export class PartAddComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
-  addPartnerForm: FormGroup<AddVendorForm>;
+  addPartForm: FormGroup<AddVendorForm>;
   uuid: string;
   isSubmitted = false;
   isReadOnly = false;
@@ -43,7 +43,7 @@ export class PartnerAddComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private cpEventsService: CpEventsService,
-    private partnerService: VendorService,
+    private partService: PartService,
     private toasterService: AlertToastrService,
     private router: Router
   ) {
@@ -58,14 +58,14 @@ export class PartnerAddComponent implements OnInit {
     !this.isReadOnly && this.cpEventsService.cpHeaderDataChanged.emit({ breadcrumbs: this.breadcrumbs });
     this.initializeForm();
     if (this.uuid || this.isReadOnly) {
-      const partnerDetail = this.route.snapshot.data.partnerDetail || this.partnerService.partnerDetail;
-      this.addPartnerForm.patchValue(partnerDetail);
-      this.isReadOnly && this.addPartnerForm.disable();
+      const partDetail = this.route.snapshot.data.partnerDetail || this.partService.partnerDetail;
+      this.addPartForm.patchValue(partDetail);
+      this.isReadOnly && this.addPartForm.disable();
     }
   }
 
   initializeForm(): void {
-    this.addPartnerForm = new FormGroup<AddVendorForm>({
+    this.addPartForm = new FormGroup<AddVendorForm>({
       isActive: new FormControl(false, Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       address: new FormGroup<VendorAddress>({
@@ -74,7 +74,7 @@ export class PartnerAddComponent implements OnInit {
         city: new FormControl('', Validators.required),
         country: new FormControl('', Validators.required),
       }),
-      vendorName: new FormControl('', Validators.required),
+      companyName: new FormControl('', Validators.required),
       name: new FormControl('', Validators.required),
       phoneNo: new FormControl('', Validators.required),
       webAddress: new FormControl(''),
@@ -84,16 +84,16 @@ export class PartnerAddComponent implements OnInit {
   }
 
   get formControls(): AddVendorForm {
-    return this.addPartnerForm.controls;
+    return this.addPartForm.controls;
   }
 
   get addressControls(): VendorAddress {
-    return this.addPartnerForm.controls.address.controls;
+    return this.addPartForm.controls.address.controls;
   }
 
   onSubmit(): boolean | void {
-    this.addPartnerForm.markAllAsTouched();
-    if (this.addPartnerForm.invalid) {
+    this.addPartForm.markAllAsTouched();
+    if (this.addPartForm.invalid) {
       return true;
     }
     this.isSubmitted = true;
@@ -105,7 +105,7 @@ export class PartnerAddComponent implements OnInit {
   }
 
   addPartner(): void {
-    this.partnerService.addVendor(this.addPartnerForm.value)
+    this.partService.addPart(this.addPartForm.value)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
@@ -120,7 +120,7 @@ export class PartnerAddComponent implements OnInit {
   }
 
   updatePartner(): void {
-    this.partnerService.updateVendorDetail(this.addPartnerForm.value, this.uuid)
+    this.partService.updateVendorDetail(this.addPartForm.value, this.uuid)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

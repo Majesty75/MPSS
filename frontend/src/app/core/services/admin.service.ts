@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { PartnerListQueryParams } from '@models/partner.model';
-import { HttpClientService } from '@services/http-client.service';
-import { Observable } from 'rxjs';
+import { VendorListQueryParams } from '@app/core/models/vendor.model';
 import { API_ROUTES } from '@constants/app.constants';
 import { DashboardAccountingStats, InvoiceList, PerformanceOverview, PerformanceStatsParams, RedemptionList, TopPartners } from '@models/admin.model';
+import { HttpClientService } from '@services/http-client.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +25,8 @@ export class AdminService {
   getTopPartners(): Observable<TopPartners[]> {
     return this.httpClientService.get(API_ROUTES.dashboardTopPartnersApi);
   }
-  
-  getLatestRedemptionList(params: Partial<PartnerListQueryParams>): Observable<RedemptionList> {
+
+  getLatestRedemptionList(params: Partial<VendorListQueryParams>): Observable<RedemptionList> {
     return this.httpClientService.get(API_ROUTES.redemptionListApi, { params })
   }
 
@@ -38,7 +38,7 @@ export class AdminService {
     return this.httpClientService.patch(API_ROUTES.exchangeRateApi, params);
   }
 
-  getOpenInvoiceList(params: Partial<PartnerListQueryParams>): Observable<InvoiceList> {
+  getOpenInvoiceList(params: Partial<VendorListQueryParams>): Observable<InvoiceList> {
     return this.httpClientService.get(API_ROUTES.openInvoiceListApi, { params });
   }
 }

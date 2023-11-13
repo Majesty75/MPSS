@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { LOCAL_STORAGE_CONSTANT } from '@constants/localstorage.constant';
-import { LocalStorageService } from '@services/local-storage.service';
+import { VendorService } from '@app/core/services/vendor.service';
 import { DEFAULT_LANGUAGE } from '@constants/app.constants';
+import { LOCAL_STORAGE_CONSTANT } from '@constants/localstorage.constant';
 import { LoginResponse } from '@models/auth.model';
-import { PartnerService } from '@services/partner.service';
+import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from '@services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class UtilityService {
   constructor(
     private translateService: TranslateService,
     private localStorageService: LocalStorageService,
-    private partnerService: PartnerService
+    private partnerService: VendorService
   ) { }
 
   setLanguage(): void {
@@ -31,7 +31,7 @@ export class UtilityService {
   }
 
   changeLanguage(locale: string, uuid?: string): void {
-    uuid && this.partnerService.updatePartnerDetail({ locale }, uuid).subscribe();
+    // uuid && this.partnerService.updateVendorDetail({ locale }, uuid).subscribe();
     this.localStorageService.set(LOCAL_STORAGE_CONSTANT.CURRENT_LANGUAGE_STATE_KEY, locale);
     this.translateService.use(locale);
   }
@@ -45,7 +45,7 @@ export class UtilityService {
   }
 
   numberToDayConverter(index: number): string {
-    return `days.${this.days[index-1]}`;
+    return `days.${this.days[index - 1]}`;
   }
 
 }

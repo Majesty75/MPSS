@@ -1,24 +1,24 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
-import { catchError, Observable } from 'rxjs';
-import { PartnerService } from '@services/partner.service';
-import { CreatePartner } from '@models/partner.model';
+import { CreateVendor } from '@app/core/models/vendor.model';
+import { VendorService } from '@app/core/services/vendor.service';
 import { ErrorCode, MessageType } from '@constants/app.constants';
+import { Observable, catchError } from 'rxjs';
 import { AlertToastrService } from './alert-toastr.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
-export const PartnerDetailService: ResolveFn<Observable<CreatePartner | {}>> = 
+export const VendorDetailService: ResolveFn<Observable<CreateVendor | {}>> =
   (route: ActivatedRouteSnapshot, _: RouterStateSnapshot) => {
-    const partnerService = inject(PartnerService);
+    const vendorService = inject(VendorService);
     const toasterService = inject(AlertToastrService);
     const router = inject(Router);
 
-    return partnerService.getPartnerDetail(route.params.uuid)
+    return vendorService.getVendorDetail(route.params.uuid)
       .pipe(catchError((error: HttpErrorResponse) => {
         if (error.status === ErrorCode.badRequest) {
-          toasterService.displaySnackBarWithTranslation('toasterMessage.invalidPartner', MessageType.error);
+          toasterService.displaySnackBarWithTranslation('toasterMessage.invalidVendor', MessageType.error);
         }
-        router.navigate(['/admin/partner']);
+        router.navigate(['/admin/vendor']);
         return null;
       }));
   };
