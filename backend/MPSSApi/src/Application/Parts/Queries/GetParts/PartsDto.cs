@@ -3,6 +3,8 @@
 namespace MPSSApi.Application.Parts.Queries.GetParts;
 public class PartsDto
 {
+    public int Id { get; set; }
+
     public string PartName { get; set; } = string.Empty;
 
     public string PartNumber { get; set; } = string.Empty;

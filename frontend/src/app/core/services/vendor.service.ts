@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CreateVendor, VendorList, VendorListQueryParams } from '@app/core/models/vendor.model';
+import { CreateVendor, VendorDetail, VendorList, VendorListQueryParams } from '@app/core/models/vendor.model';
 import { API_ROUTES } from '@constants/app.constants';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { HttpClientService } from '@services/http-client.service';
@@ -17,16 +17,20 @@ export class VendorService {
     private httpClientService: HttpClientService
   ) { }
 
+  getVendors(): Observable<VendorDetail[]> {
+    return this.httpClientService.get(API_ROUTES.vendorsApi);
+  }
+
   getVendorList(params: Partial<VendorListQueryParams>): Observable<VendorList> {
     return this.httpClientService.get(API_ROUTES.vendorListApi, { params });
   }
 
   addVendor(params: Partial<CreateVendor>): Observable<[] | null> {
-    return this.httpClientService.post(API_ROUTES.addVendorApi, params);
+    return this.httpClientService.post(API_ROUTES.vendorsApi, params);
   }
 
   getVendorDetail(id: string): Observable<CreateVendor> {
-    return this.httpClientService.get(`${API_ROUTES.addVendorApi}/${id}`, {
+    return this.httpClientService.get(`${API_ROUTES.vendorsApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
       }
@@ -34,7 +38,7 @@ export class VendorService {
   }
 
   updateVendorDetail(params: Partial<CreateVendor>, id: string): Observable<[] | null> {
-    return this.httpClientService.put(`${API_ROUTES.addVendorApi}/${id}`, params);
+    return this.httpClientService.put(`${API_ROUTES.vendorsApi}/${id}`, params);
   }
 
   downloadExcel(id: string): Observable<HttpResponse<Blob>> {

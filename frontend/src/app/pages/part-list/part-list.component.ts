@@ -34,12 +34,12 @@ export class PartListComponent {
 
   breadcrumbs: BreadCrumb[] = [];
   partList = new MatTableDataSource<PartDetail>();
-  columnLabel = ['partId', 'partName', 'partNumber', 'cost', 'sellPrice', 'vendorName'];
+  columnLabel = ['partName', 'partNumber', 'cost', 'sellPrice', 'vendorName', 'action'];
   selection = new SelectionModel<PartDetail>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageSizeOptions = PAGE_SIZE;
   searchControl = new FormControl('');
-  sortValue = new FormControl('newest');
+  sortValue = new FormControl('asc');
   sortOptions = SORT_OPTIONS;
   searchValue: string;
   isLoading = false;
@@ -90,7 +90,7 @@ export class PartListComponent {
             res.records.map((el: PartDetail) => {
               el.partAction = [
                 {
-                  label: 'partner.edit',
+                  label: 'common.edit',
                   callback: this.editPart.bind(this)
                 }
               ]

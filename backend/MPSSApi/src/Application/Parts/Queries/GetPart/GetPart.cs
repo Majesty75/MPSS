@@ -25,8 +25,8 @@ public class GetPartQueryHandler : IRequestHandler<GetPartQuery, PartDto>
 
     public async Task<PartDto> Handle(GetPartQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Parts
-            .FindAsync(new object[] { request.Id }, cancellationToken);
+        var entity = await _context.Parts.Include(p => p.Vendor)
+            .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
 
         Guard.Against.NotFound(request.Id, entity);
 

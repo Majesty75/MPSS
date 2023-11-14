@@ -31,6 +31,7 @@
     "invalidEmail": "Please enter valid email",
     "invalidPassword": "Password must be 8 characters long and contain at least 1 special character, 1 uppercase letter, 1 lowercase letter and 1 number",
     "fieldRequired": "This field is required",
+    "greaterThanZero": "Value should be greater than 0",
     "invalidWeb": "Please enter valid URL",
     "invalidZip": "Please enter valid zip",
     "invalidPhoneNo": "Please enter valid phone number",
@@ -115,5 +116,13 @@
     "addVendor": "Add Vendor",
     "searchVendor": "Search Vendor",
     "vendorName": "Vendor Name"
+  },
+  "part": {
+    "addPart": "Add Part",
+    "searchPart": "Search Part",
+    "partName": "Part Name",
+    "partNumber": "Part Number",
+    "cost": "Cost",
+    "sellPrice": "Sell Price"
   }
 }

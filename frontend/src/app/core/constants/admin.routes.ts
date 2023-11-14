@@ -100,7 +100,7 @@ export const adminRoutes: Routes = [
             },
             resolve: {
               breadcrumbs: BreadcrumbResolverFn,
-              partnerDetail: PartDetailService
+              partDetail: PartDetailService
             }
           }
         ]

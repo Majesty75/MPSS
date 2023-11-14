@@ -10,22 +10,22 @@ import { CreatePart, PartList, PartListQueryParams } from '../models/part.model'
 })
 export class PartService {
 
-  partnerDetail: CreatePart;
+  partDetail: CreatePart;
   breadcrumbs: BreadCrumb[];
   constructor(
     private httpClientService: HttpClientService
   ) { }
 
   getPartList(params: Partial<PartListQueryParams>): Observable<PartList> {
-    return this.httpClientService.get(API_ROUTES.vendorListApi, { params });
+    return this.httpClientService.get(API_ROUTES.partListApi, { params });
   }
 
   addPart(params: Partial<CreatePart>): Observable<[] | null> {
-    return this.httpClientService.post(API_ROUTES.addVendorApi, params);
+    return this.httpClientService.post(API_ROUTES.partsApi, params);
   }
 
   getPartDetail(id: string): Observable<CreatePart> {
-    return this.httpClientService.get(`${API_ROUTES.addVendorApi}/${id}`, {
+    return this.httpClientService.get(`${API_ROUTES.partsApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
       }
@@ -33,7 +33,7 @@ export class PartService {
   }
 
   updateVendorDetail(params: Partial<CreatePart>, id: string): Observable<[] | null> {
-    return this.httpClientService.patch(`${API_ROUTES.addVendorApi}/${id}`, params);
+    return this.httpClientService.put(`${API_ROUTES.partsApi}/${id}`, params);
   }
 
 }
