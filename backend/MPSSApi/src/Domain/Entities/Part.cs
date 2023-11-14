@@ -11,5 +11,5 @@ public class Part : BaseAuditableEntity
 
     public int? VendorId { get; set; }
 
-    public Vendor? Vendor { get; set; }
+    public Vendor Vendor { get; set; } = null!;
 }

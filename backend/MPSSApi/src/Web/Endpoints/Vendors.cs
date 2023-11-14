@@ -1,13 +1,10 @@
 ﻿
 using MPSSApi.Application.Common.Models;
 using MPSSApi.Application.TodoLists.Commands.DeleteTodoList;
-using MPSSApi.Application.TodoLists.Commands.UpdateTodoList;
 using MPSSApi.Application.Vendors.Commands.CreateVendor;
 using MPSSApi.Application.Vendors.Commands.UpdateVendor;
-using MPSSApi.Application.Vendors.Queries;
 using MPSSApi.Application.Vendors.Queries.GetVendor;
 using MPSSApi.Application.Vendors.Queries.GetVendors;
-using MPSSApi.Domain.Entities;
 
 namespace MPSSApi.Web.Endpoints;
 public class Vendors : EndpointGroupBase

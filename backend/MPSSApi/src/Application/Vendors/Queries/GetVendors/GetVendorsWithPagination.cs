@@ -39,16 +39,16 @@ public class GetVendorsWithPaginationQueryHandler : IRequestHandler<GetVendorsWi
 
         if(request.Search != null)
         {
-            vendors = _context.Vendors.Where(x => x.VendorName.Contains(request.Search));
+            vendors = vendors.Where(x => x.VendorName.Contains(request.Search));
         }
 
         if(SortType.Ascending.Equals(request.Sort))
         {
-            vendors = _context.Vendors.OrderBy(v => v.VendorName);
+            vendors = vendors.OrderBy(v => v.VendorName);
         } 
         else if (SortType.Descending.Equals(request.Sort))
         {
-            vendors = _context.Vendors.OrderByDescending(v => v.VendorName);
+            vendors = vendors.OrderByDescending(v => v.VendorName);
         }
 
         return await vendors

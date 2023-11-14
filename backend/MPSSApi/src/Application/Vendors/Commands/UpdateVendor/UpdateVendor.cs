@@ -27,7 +27,7 @@ public class UpdateVendorCommandValidator : AbstractValidator<UpdateVendorComman
         RuleFor(v => v.VendorName)
             .MaximumLength(200)
             .NotEmpty()
-                .WithMessage("Vendor Name Is Required")
+                .WithMessage("'{PropertyName}' Is Required")
                 .WithErrorCode("Required");
 
         RuleFor(v => v.Id)
