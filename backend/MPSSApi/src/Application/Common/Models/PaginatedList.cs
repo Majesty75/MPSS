@@ -2,7 +2,7 @@
 
 public class PaginatedList<T>
 {
-    public IReadOnlyCollection<T> Items { get; }
+    public IReadOnlyCollection<T> Records { get; }
     public int PageNumber { get; }
     public int TotalPages { get; }
     public int TotalCount { get; }
@@ -12,7 +12,7 @@ public class PaginatedList<T>
         PageNumber = pageNumber;
         TotalPages = (int)Math.Ceiling(count / (double)pageSize);
         TotalCount = count;
-        Items = items;
+        Records = items;
     }
 
     public bool HasPreviousPage => PageNumber > 1;

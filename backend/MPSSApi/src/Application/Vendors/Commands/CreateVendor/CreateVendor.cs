@@ -5,9 +5,7 @@ namespace MPSSApi.Application.Vendors.Commands.CreateVendor;
 
 public record CreateVendorCommand : IRequest<int>
 {
-    public int VendorId { get; set; }
-
-    public string? VendorName { get; set; }
+    public string VendorName { get; set; } = string.Empty;
 
     public string? Email { get; set; }
 
@@ -26,6 +24,12 @@ public class CreateVendorCommandValidator : AbstractValidator<CreateVendorComman
 {
     public CreateVendorCommandValidator()
     {
+        RuleFor(v => v.VendorName)
+            .MaximumLength(200)
+            .NotEmpty()
+                .WithMessage("Vendor Name Is Required")
+                .WithErrorCode("Required");
+
         RuleFor(v => v.Email)
             .MaximumLength(50)
             .EmailAddress()
@@ -47,6 +51,7 @@ public class CreateVendorCommandHandler : IRequestHandler<CreateVendorCommand, i
     {
         var entity = new Vendor()
         {
+            VendorName = request.VendorName,
             Email = request.Email,
             PhoneNo = request.PhoneNo,
             Street = request.Street,

@@ -9,6 +9,7 @@ public class VendorConfiguration : IEntityTypeConfiguration<Vendor>
     {
         builder
             .Property(t => t.VendorName)
+            .IsRequired()
             .HasMaxLength(200);
 
         builder

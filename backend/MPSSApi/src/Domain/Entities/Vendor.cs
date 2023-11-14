@@ -1,7 +1,7 @@
 ﻿namespace MPSSApi.Domain.Entities;
 public class Vendor : BaseAuditableEntity
 {
-    public string? VendorName { get; set; }
+    public string VendorName { get; set; } = string.Empty;
 
     public string? Email { get; set; }
 
