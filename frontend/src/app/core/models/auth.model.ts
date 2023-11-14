@@ -5,7 +5,7 @@ export interface LoginParams {
 
 export interface LoginResponse {
   token: string;
-  uuid: string;
+  id: string;
   name: string;
   email: string;
   isPasswordReset?: boolean;

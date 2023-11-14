@@ -8,7 +8,7 @@ using MPSSApi.Domain.Enums;
 namespace MPSSApi.Application.Vendors.Queries.GetVendors;
 
 [Authorize]
-public record GetVendorsWithPaginationQuery : PaginationQuery, IRequest<PaginatedList<VendorDto>>;
+public record GetVendorsWithPaginationQuery : PaginationQuery, IRequest<PaginatedList<VendorsDto>>;
 
 public class GetVendorsWithPaginationQueryValidator : AbstractValidator<GetVendorsWithPaginationQuery>
 {
@@ -22,7 +22,7 @@ public class GetVendorsWithPaginationQueryValidator : AbstractValidator<GetVendo
     }
 }
 
-public class GetVendorsWithPaginationQueryHandler : IRequestHandler<GetVendorsWithPaginationQuery, PaginatedList<VendorDto>>
+public class GetVendorsWithPaginationQueryHandler : IRequestHandler<GetVendorsWithPaginationQuery, PaginatedList<VendorsDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -33,7 +33,7 @@ public class GetVendorsWithPaginationQueryHandler : IRequestHandler<GetVendorsWi
         _mapper = mapper;
     }
 
-    public async Task<PaginatedList<VendorDto>> Handle(GetVendorsWithPaginationQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<VendorsDto>> Handle(GetVendorsWithPaginationQuery request, CancellationToken cancellationToken)
     {
         IQueryable<Vendor> vendors = _context.Vendors;
 
@@ -52,7 +52,7 @@ public class GetVendorsWithPaginationQueryHandler : IRequestHandler<GetVendorsWi
         }
 
         return await vendors
-            .ProjectTo<VendorDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<VendorsDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.Page, request.PageSize);
     }
 }

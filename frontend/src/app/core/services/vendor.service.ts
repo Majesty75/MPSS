@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class VendorService {
 
-  partnerDetail: CreateVendor;
+  vendorDetail: CreateVendor;
   breadcrumbs: BreadCrumb[];
   constructor(
     private httpClientService: HttpClientService
@@ -25,20 +25,20 @@ export class VendorService {
     return this.httpClientService.post(API_ROUTES.addVendorApi, params);
   }
 
-  getVendorDetail(uuid: string): Observable<CreateVendor> {
-    return this.httpClientService.get(`${API_ROUTES.addVendorApi}/${uuid}`, {
+  getVendorDetail(id: string): Observable<CreateVendor> {
+    return this.httpClientService.get(`${API_ROUTES.addVendorApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
       }
     });
   }
 
-  updateVendorDetail(params: Partial<CreateVendor>, uuid: string): Observable<[] | null> {
-    return this.httpClientService.patch(`${API_ROUTES.addVendorApi}/${uuid}`, params);
+  updateVendorDetail(params: Partial<CreateVendor>, id: string): Observable<[] | null> {
+    return this.httpClientService.put(`${API_ROUTES.addVendorApi}/${id}`, params);
   }
 
-  downloadExcel(uuid: string): Observable<HttpResponse<Blob>> {
-    return this.httpClientService.get(`${API_ROUTES.downloadExcelApi}/${uuid}`, {
+  downloadExcel(id: string): Observable<HttpResponse<Blob>> {
+    return this.httpClientService.get(`${API_ROUTES.downloadExcelApi}/${id}`, {
       observe: 'response', responseType: 'blob',
       headers: {
         'X-CP-BIR': 'true'

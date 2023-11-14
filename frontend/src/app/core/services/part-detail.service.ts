@@ -13,7 +13,7 @@ export const PartDetailService: ResolveFn<Observable<CreatePart | {}>> =
     const toasterService = inject(AlertToastrService);
     const router = inject(Router);
 
-    return partService.getPartDetail(route.params.uuid)
+    return partService.getPartDetail(route.params.id)
       .pipe(catchError((error: HttpErrorResponse) => {
         if (error.status === ErrorCode.badRequest) {
           toasterService.displaySnackBarWithTranslation('toasterMessage.invalidPart', MessageType.error);

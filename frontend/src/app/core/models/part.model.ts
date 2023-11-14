@@ -12,7 +12,7 @@ export interface CreatePart {
     webAddress: string;
     currency: string;
     locale: string;
-    uuid: string;
+    id: string;
 }
 
 export interface Address {
@@ -54,7 +54,7 @@ export interface PartList {
 }
 export interface PartDetail {
     partId: number;
-    uuid: string;
+    id: string;
     partName: string;
     partNumber: string;
     cost: number;

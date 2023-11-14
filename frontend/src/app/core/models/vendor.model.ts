@@ -2,16 +2,10 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { ActionToolbar } from "@models/common.model";
 
 export interface CreateVendor {
-  isActive: boolean;
+  vendorName: string;
   email: string;
-  companyName: string;
-  address: Partial<Address>;
-  name: string;
   phoneNo: string;
-  webAddress: string;
-  currency: string;
-  locale: string;
-  uuid: string;
+  address: Partial<Address>;
 }
 
 export interface Address {
@@ -22,15 +16,10 @@ export interface Address {
 }
 
 export interface AddVendorForm {
-  isActive: FormControl<boolean>,
+  vendorName: FormControl<string>,
   email: FormControl<string>,
-  address: FormGroup<VendorAddress>,
-  companyName: FormControl<string>,
-  name: FormControl<string>,
   phoneNo: FormControl<string>,
-  webAddress: FormControl<string>,
-  currency: FormControl<string>,
-  locale: FormControl<string>,
+  address: FormGroup<VendorAddress>
 }
 
 export interface VendorAddress {
@@ -52,9 +41,8 @@ export interface VendorList {
   totalCount: number;
 }
 export interface VendorDetail {
-  vendorId: number;
+  id: number;
   email: string;
-  uuid: string;
   vendorName: string;
   street: string;
   city: string;

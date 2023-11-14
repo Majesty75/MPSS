@@ -1,18 +1,17 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
-import { LoginResponse } from '@models/auth.model';
-import { LocalStorageService } from '@services/local-storage.service';
-import { LOCAL_STORAGE_CONSTANT } from '@constants/localstorage.constant';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { UtilityService } from '@services/utility.service';
-import { CpEventsService } from '@services/cp-events.service';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { LOCAL_STORAGE_CONSTANT } from '@constants/localstorage.constant';
+import { LoginResponse } from '@models/auth.model';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
+import { CpEventsService } from '@services/cp-events.service';
+import { LocalStorageService } from '@services/local-storage.service';
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,7 +25,7 @@ export class SidebarComponent implements OnInit {
   userData: LoginResponse;
   currentLanguage: string;
   menuOpen = false;
-  
+
   private destroyRef = inject(DestroyRef);
 
   constructor(
@@ -54,14 +53,14 @@ export class SidebarComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: boolean) => {
         this.menuOpen = res;
-    })
+      })
   }
 
   changeLanguage(): void {
-    this.utilityService.changeLanguage(this.currentLanguage, this.userData?.uuid);
+    this.utilityService.changeLanguage(this.currentLanguage, this.userData?.id);
   }
 
   toggleMenu(): void {
-    this.menuOpen = !this.menuOpen;  
+    this.menuOpen = !this.menuOpen;
   }
 }

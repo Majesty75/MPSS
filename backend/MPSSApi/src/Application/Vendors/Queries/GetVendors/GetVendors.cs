@@ -8,7 +8,7 @@ using MPSSApi.Domain.Enums;
 namespace MPSSApi.Application.Vendors.Queries.GetVendors;
 
 [Authorize]
-public record GetVendorsQuery : IRequest<IReadOnlyCollection<VendorDto>>;
+public record GetVendorsQuery : IRequest<IReadOnlyCollection<VendorsDto>>;
 
 public class GetVendorsQueryValidator : AbstractValidator<GetVendorsQuery>
 {
@@ -17,7 +17,7 @@ public class GetVendorsQueryValidator : AbstractValidator<GetVendorsQuery>
     }
 }
 
-public class GetVendorsQueryHandler : IRequestHandler<GetVendorsQuery, IReadOnlyCollection<VendorDto>>
+public class GetVendorsQueryHandler : IRequestHandler<GetVendorsQuery, IReadOnlyCollection<VendorsDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -28,10 +28,10 @@ public class GetVendorsQueryHandler : IRequestHandler<GetVendorsQuery, IReadOnly
         _mapper = mapper;
     }
 
-    public async Task<IReadOnlyCollection<VendorDto>> Handle(GetVendorsQuery request, CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<VendorsDto>> Handle(GetVendorsQuery request, CancellationToken cancellationToken)
     {
         return await _context.Vendors
-            .ProjectTo<VendorDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<VendorsDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
     }
 }

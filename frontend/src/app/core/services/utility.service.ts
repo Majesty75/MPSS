@@ -30,8 +30,8 @@ export class UtilityService {
     return this.localStorageService.get(LOCAL_STORAGE_CONSTANT.USER_DATA);
   }
 
-  changeLanguage(locale: string, uuid?: string): void {
-    // uuid && this.partnerService.updateVendorDetail({ locale }, uuid).subscribe();
+  changeLanguage(locale: string, id?: string): void {
+    // id && this.partnerService.updateVendorDetail({ locale }, id).subscribe();
     this.localStorageService.set(LOCAL_STORAGE_CONSTANT.CURRENT_LANGUAGE_STATE_KEY, locale);
     this.translateService.use(locale);
   }

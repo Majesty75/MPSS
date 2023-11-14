@@ -15,14 +15,14 @@ export const API_ROUTES = {
   loginApi: 'users/login',
   forgotPasswordApi: 'auth/forgotPassword',
   setPasswordApi: 'auth/setPassword',
-  vendorListApi: 'vendor',
-  addVendorApi: 'vendor',
-  partListApi: 'part',
-  addPartApi: 'part',
+  vendorListApi: 'vendors/paginate',
+  addVendorApi: 'vendors',
+  partListApi: 'parts',
+  addPartApi: 'parts',
   saleListApi: 'sales',
   addSaleApi: 'sales',
-  purchaseListApi: 'purchase',
-  addPurchaseApi: 'purchase',
+  purchaseListApi: 'purchases',
+  addPurchaseApi: 'purchases',
   cardListApi: 'cards',
   downloadExcelApi: 'cards/excel',
   accountingStatsApi: 'cards/accountingStats',
@@ -61,9 +61,10 @@ export enum ErrorCode {
 }
 
 export const COUNTRY_LIST = [
-  { value: '63f3818f7ad52cc9f404f645', label: 'switzerland' },
-  { value: '63f3818f7ad52cc9f404f5a7', label: 'austria' },
-  { value: '63f3818f7ad52cc9f404f5de', label: 'germany' }
+  { value: 'India', label: 'india' },
+  { value: 'Switzerland', label: 'switzerland' },
+  { value: 'Austria', label: 'austria' },
+  { value: 'Germany', label: 'germany' }
 ]
 
 export const CURRENCY_LIST = [
@@ -82,8 +83,8 @@ export enum HttpMethod {
 }
 
 export const SORT_OPTIONS = [
-  { value: 'oldest', label: 'oldestEntries' },
-  { value: 'newest', label: 'latestEntries' }
+  { value: 'asc', label: 'ascending' },
+  { value: 'desc', label: 'descending' }
 ]
 
 export enum RegexType {

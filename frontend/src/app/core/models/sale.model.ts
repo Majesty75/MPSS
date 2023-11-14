@@ -11,7 +11,7 @@ export interface CreateSale {
     webAddress: string;
     currency: string;
     locale: string;
-    uuid: string;
+    id: string;
 }
 
 export interface Address {
@@ -54,7 +54,7 @@ export interface SaleList {
 
 export interface SaleDetail {
     saleId: number;
-    uuid: string;
+    id: string;
     saleNumber: string;
     total: number;
     date: Date;

@@ -5,5 +5,5 @@ export const environment = {
   baseUrl: 'http://localhost:4200',
   hostName: 'http://localhost:5000',
   restAPI: '/api/',
-  preferredCountries: ['ch', 'de', 'fr', 'gb', 'it', 'nl', 'fi'],
+  preferredCountries: ['in'],
 };

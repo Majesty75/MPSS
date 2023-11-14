@@ -100,11 +100,11 @@
             <div class="w-full sm:w-[50%] p-2">
                 <div class="flex">
                     <label class="field-lbl"
-                        [ngClass]="{ 'field-error': formControls.email.touched && formControls.email.invalid, 'read-only': uuid && !isReadOnly }">{{
+                        [ngClass]="{ 'field-error': formControls.email.touched && formControls.email.invalid, 'read-only': id && !isReadOnly }">{{
                         'partner.add.email' | translate }}</label>
                     <input class="form-field"
-                        [ngClass]="{ 'field-error': formControls.email.touched && formControls.email.invalid, 'read-only': uuid && !isReadOnly, 'bg-white': isReadOnly }"
-                        type="text" [pattern]="emailRegex" [readonly]="uuid && true" formControlName="email">
+                        [ngClass]="{ 'field-error': formControls.email.touched && formControls.email.invalid, 'read-only': id && !isReadOnly, 'bg-white': isReadOnly }"
+                        type="text" [pattern]="emailRegex" [readonly]="id && true" formControlName="email">
                 </div>
                 <ng-container
                     *ngTemplateOutlet="requiredError; context: { control: formControls.email }"></ng-container>
@@ -164,7 +164,7 @@
                 [label]="( 'partner.add.cancel' | translate )" (onTap)="navigateToList()"></app-cp-button>
 
             <app-cp-button [class]="{ 'common-btn primary-btn font-semibold rounded-[5px] min-w-[100px]': true }"
-                [label]="uuid ? ( 'partner.add.update' | translate ) : ( 'partner.add.add' | translate )"
+                [label]="id ? ( 'partner.add.update' | translate ) : ( 'partner.add.add' | translate )"
                 (onTap)="onSubmit()" [isDisabled]="isSubmitted" [spin]="isSubmitted"></app-cp-button>
 
         </div>

@@ -52,14 +52,14 @@ export const adminRoutes: Routes = [
             }
           },
           {
-            path: ':uuid',
+            path: ':id',
             loadComponent: () => import('@pages/vendor-add/vendor-add.component').then((m) => m.VendorAddComponent),
             data: {
               breadcrumb: 'edit'
             },
             resolve: {
               breadcrumbs: BreadcrumbResolverFn,
-              partnerDetail: VendorDetailService
+              vendorDetail: VendorDetailService
             }
           }
         ]
@@ -93,7 +93,7 @@ export const adminRoutes: Routes = [
             }
           },
           {
-            path: ':uuid',
+            path: ':id',
             loadComponent: () => import('@pages/part-add/part-add.component').then((m) => m.PartAddComponent),
             data: {
               breadcrumb: 'edit'
@@ -134,7 +134,7 @@ export const adminRoutes: Routes = [
             }
           },
           {
-            path: ':uuid',
+            path: ':id',
             loadComponent: () => import('@pages/sale-add/sale-add.component').then((m) => m.SaleAddComponent),
             data: {
               breadcrumb: 'edit'
@@ -175,7 +175,7 @@ export const adminRoutes: Routes = [
             }
           },
           {
-            path: ':uuid',
+            path: ':id',
             loadComponent: () => import('@pages/purchase-add/purchase-add.component').then((m) => m.PurchaseAddComponent),
             data: {
               breadcrumb: 'edit'

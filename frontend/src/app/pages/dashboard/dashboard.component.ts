@@ -185,7 +185,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       })
   }
 
-  updateStatus(status: string, uuid: string): void {
+  updateStatus(status: string, id: string): void {
   }
 
   getLatestRedemptionList(): void {

@@ -110,7 +110,7 @@ export class PartListComponent {
   }
 
   editPart(row: VendorDetail): void {
-    this.router.navigate([`../${row.uuid}`], { relativeTo: this.route });
+    this.router.navigate([`../${row.id}`], { relativeTo: this.route });
   }
 
   onSearch(searchValue: string): void {

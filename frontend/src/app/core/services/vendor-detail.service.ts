@@ -13,7 +13,7 @@ export const VendorDetailService: ResolveFn<Observable<CreateVendor | {}>> =
     const toasterService = inject(AlertToastrService);
     const router = inject(Router);
 
-    return vendorService.getVendorDetail(route.params.uuid)
+    return vendorService.getVendorDetail(route.params.id)
       .pipe(catchError((error: HttpErrorResponse) => {
         if (error.status === ErrorCode.badRequest) {
           toasterService.displaySnackBarWithTranslation('toasterMessage.invalidVendor', MessageType.error);

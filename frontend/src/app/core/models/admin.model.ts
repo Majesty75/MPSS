@@ -1,5 +1,5 @@
-import { ActionToolbar } from "@models/common.model";
 import { AccountingStatus } from "@constants/app.constants";
+import { ActionToolbar } from "@models/common.model";
 
 export interface RedemptionList {
   records: RedemptionDetail[] | null;
@@ -52,6 +52,6 @@ export interface InvoiceDetail {
   accountingDate: string;
   billable: number;
   status: AccountingStatus;
-  uuid: string;
+  id: string;
   type: string;
 }

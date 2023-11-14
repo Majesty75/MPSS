@@ -1,7 +1,8 @@
-﻿using MPSSApi.Domain.Entities;
+﻿using MPSSApi.Application.Common.Models;
+using MPSSApi.Domain.Entities;
 
 namespace MPSSApi.Application.Vendors.Queries.GetVendors;
-public class VendorDto
+public class VendorsDto
 {
     public int Id { get; set; }
 
@@ -23,7 +24,7 @@ public class VendorDto
     {
         public Mapping()
         {
-            CreateMap<Vendor, VendorDto>();
+            CreateMap<Vendor, VendorsDto>();
         }
     }
 }

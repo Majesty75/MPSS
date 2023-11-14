@@ -3,14 +3,14 @@ import {
   HttpEvent, HttpInterceptorFn, HttpRequest, HttpResponse
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, map } from 'rxjs';
-import { environment } from '@environment/environment';
-import { LOCAL_STORAGE_CONSTANT } from '@constants/localstorage.constant';
-import { LocalStorageService } from '@services/local-storage.service';
-import { ErrorCode, HttpMethod, MessageType } from '@constants/app.constants';
-import { LoggerService } from '@services/logger.service';
-import { AlertToastrService } from '@services/alert-toastr.service';
 import { Router } from '@angular/router';
+import { ErrorCode, HttpMethod, MessageType } from '@constants/app.constants';
+import { LOCAL_STORAGE_CONSTANT } from '@constants/localstorage.constant';
+import { environment } from '@environment/environment';
+import { AlertToastrService } from '@services/alert-toastr.service';
+import { LocalStorageService } from '@services/local-storage.service';
+import { LoggerService } from '@services/logger.service';
+import { catchError, map } from 'rxjs';
 
 export const HttpTokenInterceptor: HttpInterceptorFn = (request, next) => {
   const localStorageService = inject(LocalStorageService);
@@ -18,11 +18,11 @@ export const HttpTokenInterceptor: HttpInterceptorFn = (request, next) => {
   if (token) {
     request = request.clone({
       setHeaders: {
-        Authorization: token,
+        Authorization: 'Bearer ' + token,
       }
     });
   }
-  
+
   if (!request.url.includes('i18n')) {
     const requestUrl = `${environment.hostName}${environment.restAPI}${request.url}`;
     request = request.clone({
@@ -64,14 +64,14 @@ export const HttpErrorInterceptor: HttpInterceptorFn = (request: HttpRequest<any
     }
 
     if (request.url.includes('/auth/login')) {
-      switch(error.error.status) {
+      switch (error.error.status) {
         case ErrorCode.unauthorized:
           toasterService.displaySnackBarWithTranslation('toasterMessage.loginUnsuccessful', MessageType.error);
           break;
         case ErrorCode.notFound:
           toasterService.displaySnackBarWithTranslation('toasterMessage.userNotFound', MessageType.error);
           break;
-        case ErrorCode.internalServer: 
+        case ErrorCode.internalServer:
           toasterService.displaySnackBarWithTranslation('toasterMessage.internalServerError', MessageType.error);
           break;
       }

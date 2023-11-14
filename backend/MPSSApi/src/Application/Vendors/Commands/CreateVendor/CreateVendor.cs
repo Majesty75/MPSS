@@ -1,4 +1,5 @@
 ﻿using MPSSApi.Application.Common.Interfaces;
+using MPSSApi.Application.Common.Models;
 using MPSSApi.Domain.Entities;
 
 namespace MPSSApi.Application.Vendors.Commands.CreateVendor;
@@ -11,13 +12,7 @@ public record CreateVendorCommand : IRequest<int>
 
     public string? PhoneNo { get; set; }
 
-    public string? Street { get; set; }
-
-    public string? City { get; set; }
-
-    public string? Zip { get; set; }
-
-    public string? Country { get; set; }
+    public AddressCommand? Address { get; set; }
 }
 
 public class CreateVendorCommandValidator : AbstractValidator<CreateVendorCommand>
@@ -54,10 +49,10 @@ public class CreateVendorCommandHandler : IRequestHandler<CreateVendorCommand, i
             VendorName = request.VendorName,
             Email = request.Email,
             PhoneNo = request.PhoneNo,
-            Street = request.Street,
-            City = request.City,
-            Zip = request.Zip,
-            Country = request.Country
+            Street = request.Address?.Street,
+            City = request.Address?.City,
+            Zip = request.Address?.Zip,
+            Country = request.Address?.Country
         };
 
         _context.Vendors.Add(entity);

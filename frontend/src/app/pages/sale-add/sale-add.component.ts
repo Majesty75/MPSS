@@ -4,7 +4,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AddVendorForm, VendorAddress } from '@app/core/models/vendor.model';
+import { AddSaleForm } from '@app/core/models/sale.model';
+import { VendorAddress } from '@app/core/models/vendor.model';
 import { VendorService } from '@app/core/services/vendor.service';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpTelInputComponent } from '@app/shared/cp-libs/cp-tel-input/cp-tel-input.component';
@@ -26,8 +27,8 @@ import { CpEventsService } from '@services/cp-events.service';
 export class SaleAddComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
-  addPartnerForm: FormGroup<AddVendorForm>;
-  uuid: string;
+  addPartnerForm: FormGroup<AddSaleForm>;
+  id: string;
   isSubmitted = false;
   isReadOnly = false;
 
@@ -48,7 +49,7 @@ export class SaleAddComponent implements OnInit {
     private router: Router
   ) {
     this.breadcrumbs = this.route.snapshot.data.breadcrumbs;
-    this.uuid = this.route.snapshot.paramMap.get('uuid');
+    this.id = this.route.snapshot.paramMap.get('id');
     if (this.router.url.includes('company-details')) {
       this.isReadOnly = true;
     }
@@ -57,15 +58,15 @@ export class SaleAddComponent implements OnInit {
   ngOnInit(): void {
     !this.isReadOnly && this.cpEventsService.cpHeaderDataChanged.emit({ breadcrumbs: this.breadcrumbs });
     this.initializeForm();
-    if (this.uuid || this.isReadOnly) {
-      const partnerDetail = this.route.snapshot.data.partnerDetail || this.partnerService.partnerDetail;
+    if (this.id || this.isReadOnly) {
+      const partnerDetail = this.route.snapshot.data.partnerDetail || this.partnerService.vendorDetail;
       this.addPartnerForm.patchValue(partnerDetail);
       this.isReadOnly && this.addPartnerForm.disable();
     }
   }
 
   initializeForm(): void {
-    this.addPartnerForm = new FormGroup<AddVendorForm>({
+    this.addPartnerForm = new FormGroup<AddSaleForm>({
       isActive: new FormControl(false, Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       address: new FormGroup<VendorAddress>({
@@ -83,7 +84,7 @@ export class SaleAddComponent implements OnInit {
     });
   }
 
-  get formControls(): AddVendorForm {
+  get formControls(): AddSaleForm {
     return this.addPartnerForm.controls;
   }
 
@@ -97,7 +98,7 @@ export class SaleAddComponent implements OnInit {
       return true;
     }
     this.isSubmitted = true;
-    if (!this.uuid) {
+    if (!this.id) {
       this.addPartner();
     } else {
       this.updatePartner();
@@ -120,7 +121,7 @@ export class SaleAddComponent implements OnInit {
   }
 
   updatePartner(): void {
-    this.partnerService.updateVendorDetail(this.addPartnerForm.value, this.uuid)
+    this.partnerService.updateVendorDetail(this.addPartnerForm.value, this.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AddVendorForm, VendorAddress } from '@app/core/models/vendor.model';
+import { AddPartForm, PartAddress } from '@app/core/models/part.model';
 import { PartService } from '@app/core/services/part.service';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpTelInputComponent } from '@app/shared/cp-libs/cp-tel-input/cp-tel-input.component';
@@ -26,8 +26,8 @@ import { CpEventsService } from '@services/cp-events.service';
 export class PartAddComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
-  addPartForm: FormGroup<AddVendorForm>;
-  uuid: string;
+  addPartForm: FormGroup<AddPartForm>;
+  id: string;
   isSubmitted = false;
   isReadOnly = false;
 
@@ -48,7 +48,7 @@ export class PartAddComponent implements OnInit {
     private router: Router
   ) {
     this.breadcrumbs = this.route.snapshot.data.breadcrumbs;
-    this.uuid = this.route.snapshot.paramMap.get('uuid');
+    this.id = this.route.snapshot.paramMap.get('id');
     if (this.router.url.includes('company-details')) {
       this.isReadOnly = true;
     }
@@ -57,7 +57,7 @@ export class PartAddComponent implements OnInit {
   ngOnInit(): void {
     !this.isReadOnly && this.cpEventsService.cpHeaderDataChanged.emit({ breadcrumbs: this.breadcrumbs });
     this.initializeForm();
-    if (this.uuid || this.isReadOnly) {
+    if (this.id || this.isReadOnly) {
       const partDetail = this.route.snapshot.data.partnerDetail || this.partService.partnerDetail;
       this.addPartForm.patchValue(partDetail);
       this.isReadOnly && this.addPartForm.disable();
@@ -65,10 +65,10 @@ export class PartAddComponent implements OnInit {
   }
 
   initializeForm(): void {
-    this.addPartForm = new FormGroup<AddVendorForm>({
+    this.addPartForm = new FormGroup<AddPartForm>({
       isActive: new FormControl(false, Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      address: new FormGroup<VendorAddress>({
+      address: new FormGroup<PartAddress>({
         street: new FormControl('', Validators.required),
         zip: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{4,6}$')]),
         city: new FormControl('', Validators.required),
@@ -83,11 +83,11 @@ export class PartAddComponent implements OnInit {
     });
   }
 
-  get formControls(): AddVendorForm {
+  get formControls(): AddPartForm {
     return this.addPartForm.controls;
   }
 
-  get addressControls(): VendorAddress {
+  get addressControls(): PartAddress {
     return this.addPartForm.controls.address.controls;
   }
 
@@ -97,7 +97,7 @@ export class PartAddComponent implements OnInit {
       return true;
     }
     this.isSubmitted = true;
-    if (!this.uuid) {
+    if (!this.id) {
       this.addPartner();
     } else {
       this.updatePartner();
@@ -120,7 +120,7 @@ export class PartAddComponent implements OnInit {
   }
 
   updatePartner(): void {
-    this.partService.updateVendorDetail(this.addPartForm.value, this.uuid)
+    this.partService.updateVendorDetail(this.addPartForm.value, this.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

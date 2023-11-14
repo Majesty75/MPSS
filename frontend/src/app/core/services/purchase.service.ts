@@ -25,20 +25,20 @@ export class PurchaseService {
     return this.httpClientService.post(API_ROUTES.addPurchaseApi, params);
   }
 
-  getPurchaseDetail(uuid: string): Observable<CreatePurchase> {
-    return this.httpClientService.get(`${API_ROUTES.addPurchaseApi}/${uuid}`, {
+  getPurchaseDetail(id: string): Observable<CreatePurchase> {
+    return this.httpClientService.get(`${API_ROUTES.addPurchaseApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
       }
     });
   }
 
-  updatePurchaseDetail(params: Partial<CreatePurchase>, uuid: string): Observable<[] | null> {
-    return this.httpClientService.patch(`${API_ROUTES.addPurchaseApi}/${uuid}`, params);
+  updatePurchaseDetail(params: Partial<CreatePurchase>, id: string): Observable<[] | null> {
+    return this.httpClientService.patch(`${API_ROUTES.addPurchaseApi}/${id}`, params);
   }
 
-  downloadExcel(uuid: string): Observable<HttpResponse<Blob>> {
-    return this.httpClientService.get(`${API_ROUTES.downloadExcelApi}/${uuid}`, {
+  downloadExcel(id: string): Observable<HttpResponse<Blob>> {
+    return this.httpClientService.get(`${API_ROUTES.downloadExcelApi}/${id}`, {
       observe: 'response', responseType: 'blob',
       headers: {
         'X-CP-BIR': 'true'

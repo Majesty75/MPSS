@@ -33,12 +33,12 @@ export class VendorListComponent {
 
   breadcrumbs: BreadCrumb[] = [];
   vendorList = new MatTableDataSource<VendorDetail>();
-  columnLabel = ['vendorId', 'vendorName', 'street', 'zip', 'city', 'country', 'email', 'phoneNo', 'action'];
+  columnLabel = ['vendorName', 'street', 'zip', 'city', 'country', 'email', 'phoneNo', 'action'];
   selection = new SelectionModel<VendorDetail>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageSizeOptions = PAGE_SIZE;
   searchControl = new FormControl('');
-  sortValue = new FormControl('newest');
+  sortValue = new FormControl('asc');
   sortOptions = SORT_OPTIONS;
   searchValue: string;
   isLoading = false;
@@ -95,7 +95,7 @@ export class VendorListComponent {
               })
               el.vendorAction = [
                 {
-                  label: 'vendor.edit',
+                  label: 'common.edit',
                   callback: this.editVendor.bind(this)
                 }
               ]
@@ -115,7 +115,7 @@ export class VendorListComponent {
   }
 
   editVendor(row: VendorDetail): void {
-    this.router.navigate([`../${row.uuid}`], { relativeTo: this.route });
+    this.router.navigate([`../${row.id}`], { relativeTo: this.route });
   }
 
   onSearch(searchValue: string): void {

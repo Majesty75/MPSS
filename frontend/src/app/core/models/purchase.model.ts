@@ -13,7 +13,7 @@ export interface CreatePurchase {
     webAddress: string;
     currency: string;
     locale: string;
-    uuid: string;
+    id: string;
 }
 
 export interface Address {
@@ -55,7 +55,7 @@ export interface PurchaseList {
 }
 export interface PurchaseDetail {
     purchaseId: number;
-    uuid: string;
+    id: string;
     purchaseNumber: string;
     total: number;
     date: Date;

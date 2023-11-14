@@ -24,16 +24,16 @@ export class PartService {
     return this.httpClientService.post(API_ROUTES.addVendorApi, params);
   }
 
-  getPartDetail(uuid: string): Observable<CreatePart> {
-    return this.httpClientService.get(`${API_ROUTES.addVendorApi}/${uuid}`, {
+  getPartDetail(id: string): Observable<CreatePart> {
+    return this.httpClientService.get(`${API_ROUTES.addVendorApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
       }
     });
   }
 
-  updateVendorDetail(params: Partial<CreatePart>, uuid: string): Observable<[] | null> {
-    return this.httpClientService.patch(`${API_ROUTES.addVendorApi}/${uuid}`, params);
+  updateVendorDetail(params: Partial<CreatePart>, id: string): Observable<[] | null> {
+    return this.httpClientService.patch(`${API_ROUTES.addVendorApi}/${id}`, params);
   }
 
 }

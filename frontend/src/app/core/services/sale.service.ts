@@ -25,20 +25,20 @@ export class SaleService {
     return this.httpClientService.post(API_ROUTES.addSaleApi, params);
   }
 
-  getSaleDetail(uuid: string): Observable<CreateSale> {
-    return this.httpClientService.get(`${API_ROUTES.addSaleApi}/${uuid}`, {
+  getSaleDetail(id: string): Observable<CreateSale> {
+    return this.httpClientService.get(`${API_ROUTES.addSaleApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
       }
     });
   }
 
-  updateSaleDetail(params: Partial<CreateSale>, uuid: string): Observable<[] | null> {
-    return this.httpClientService.patch(`${API_ROUTES.addSaleApi}/${uuid}`, params);
+  updateSaleDetail(params: Partial<CreateSale>, id: string): Observable<[] | null> {
+    return this.httpClientService.patch(`${API_ROUTES.addSaleApi}/${id}`, params);
   }
 
-  downloadExcel(uuid: string): Observable<HttpResponse<Blob>> {
-    return this.httpClientService.get(`${API_ROUTES.downloadExcelApi}/${uuid}`, {
+  downloadExcel(id: string): Observable<HttpResponse<Blob>> {
+    return this.httpClientService.get(`${API_ROUTES.downloadExcelApi}/${id}`, {
       observe: 'response', responseType: 'blob',
       headers: {
         'X-CP-BIR': 'true'

@@ -1,5 +1,5 @@
 ﻿using MPSSApi.Application.Common.Interfaces;
-using MPSSApi.Application.TodoLists.Commands.UpdateTodoList;
+using MPSSApi.Application.Common.Models;
 
 namespace MPSSApi.Application.Vendors.Commands.UpdateVendor;
 
@@ -13,13 +13,7 @@ public record UpdateVendorCommand : IRequest
 
     public string? PhoneNo { get; set; }
 
-    public string? Street { get; set; }
-
-    public string? City { get; set; }
-
-    public string? Zip { get; set; }
-
-    public string? Country { get; set; }
+    public AddressCommand? Address { get; set; }
 }
 
 public class UpdateVendorCommandValidator : AbstractValidator<UpdateVendorCommand>
@@ -75,10 +69,10 @@ public class UpdateVendorCommandHandler : IRequestHandler<UpdateVendorCommand>
         entity.VendorName = request.VendorName;
         entity.Email = request.Email;
         entity.PhoneNo = request.PhoneNo;
-        entity.Street = request.Street;
-        entity.City = request.City;
-        entity.Zip = request.Zip;
-        entity.Country = request.Country;
+        entity.Street = request.Address?.Street;
+        entity.City = request.Address?.City;
+        entity.Zip = request.Address?.Zip;
+        entity.Country = request.Address?.Country;
 
         await _context.SaveChangesAsync(cancellationToken);
     }

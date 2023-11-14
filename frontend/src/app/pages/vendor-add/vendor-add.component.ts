@@ -14,7 +14,6 @@ import { BreadCrumb } from '@models/breadcrumb.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertToastrService } from '@services/alert-toastr.service';
-import { CpEventsService } from '@services/cp-events.service';
 
 @Component({
   selector: 'app-vendor-add',
@@ -26,10 +25,9 @@ import { CpEventsService } from '@services/cp-events.service';
 export class VendorAddComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
-  addPartnerForm: FormGroup<AddVendorForm>;
-  uuid: string;
+  addVendorForm: FormGroup<AddVendorForm>;
+  id: string;
   isSubmitted = false;
-  isReadOnly = false;
 
   readonly countryList = COUNTRY_LIST;
   readonly currencyList = CURRENCY_LIST;
@@ -42,75 +40,64 @@ export class VendorAddComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private cpEventsService: CpEventsService,
-    private partnerService: VendorService,
+    private vendorService: VendorService,
     private toasterService: AlertToastrService,
     private router: Router
   ) {
     this.breadcrumbs = this.route.snapshot.data.breadcrumbs;
-    this.uuid = this.route.snapshot.paramMap.get('uuid');
-    if (this.router.url.includes('company-details')) {
-      this.isReadOnly = true;
-    }
+    this.id = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-    !this.isReadOnly && this.cpEventsService.cpHeaderDataChanged.emit({ breadcrumbs: this.breadcrumbs });
     this.initializeForm();
-    if (this.uuid || this.isReadOnly) {
-      const partnerDetail = this.route.snapshot.data.partnerDetail || this.partnerService.partnerDetail;
-      this.addPartnerForm.patchValue(partnerDetail);
-      this.isReadOnly && this.addPartnerForm.disable();
+    if (this.id) {
+      const vendorDetail = this.route.snapshot.data.vendorDetail || this.vendorService.vendorDetail;
+      this.addVendorForm.patchValue(vendorDetail);
     }
   }
 
   initializeForm(): void {
-    this.addPartnerForm = new FormGroup<AddVendorForm>({
-      isActive: new FormControl(false, Validators.required),
+    this.addVendorForm = new FormGroup<AddVendorForm>({
+      vendorName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
+      phoneNo: new FormControl('', Validators.required),
       address: new FormGroup<VendorAddress>({
         street: new FormControl('', Validators.required),
         zip: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{4,6}$')]),
         city: new FormControl('', Validators.required),
         country: new FormControl('', Validators.required),
-      }),
-      companyName: new FormControl('', Validators.required),
-      name: new FormControl('', Validators.required),
-      phoneNo: new FormControl('', Validators.required),
-      webAddress: new FormControl(''),
-      currency: new FormControl('', Validators.required),
-      locale: new FormControl('', Validators.required),
+      })
     });
   }
 
   get formControls(): AddVendorForm {
-    return this.addPartnerForm.controls;
+    return this.addVendorForm.controls;
   }
 
   get addressControls(): VendorAddress {
-    return this.addPartnerForm.controls.address.controls;
+    return this.addVendorForm.controls.address.controls;
   }
 
   onSubmit(): boolean | void {
-    this.addPartnerForm.markAllAsTouched();
-    if (this.addPartnerForm.invalid) {
+    this.addVendorForm.markAllAsTouched();
+    if (this.addVendorForm.invalid) {
       return true;
     }
     this.isSubmitted = true;
-    if (!this.uuid) {
-      this.addPartner();
+    if (!this.id) {
+      this.addVendor();
     } else {
-      this.updatePartner();
+      this.updateVendor();
     }
   }
 
-  addPartner(): void {
-    this.partnerService.addVendor(this.addPartnerForm.value)
+  addVendor(): void {
+    this.vendorService.addVendor(this.addVendorForm.value)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.isSubmitted = false;
-          this.toasterService.displaySnackBarWithTranslation('toasterMessage.addPartnerSuccessful', MessageType.success);
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.addVendorSuccessful', MessageType.success);
           this.navigateToList();
         },
         error: () => {
@@ -119,13 +106,13 @@ export class VendorAddComponent implements OnInit {
       })
   }
 
-  updatePartner(): void {
-    this.partnerService.updateVendorDetail(this.addPartnerForm.value, this.uuid)
+  updateVendor(): void {
+    this.vendorService.updateVendorDetail(this.addVendorForm.value, this.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.isSubmitted = false;
-          this.toasterService.displaySnackBarWithTranslation('toasterMessage.updatePartnerSuccessful', MessageType.success);
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.updateVendorSuccessful', MessageType.success);
           this.navigateToList();
         },
         error: () => {
