@@ -22,11 +22,11 @@ export class PurchaseService {
   }
 
   addPurchase(params: Partial<CreatePurchase>): Observable<[] | null> {
-    return this.httpClientService.post(API_ROUTES.addPurchaseApi, params);
+    return this.httpClientService.post(API_ROUTES.purchasesApi, params);
   }
 
   getPurchaseDetail(id: string): Observable<CreatePurchase> {
-    return this.httpClientService.get(`${API_ROUTES.addPurchaseApi}/${id}`, {
+    return this.httpClientService.get(`${API_ROUTES.purchasesApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
       }
@@ -34,7 +34,7 @@ export class PurchaseService {
   }
 
   updatePurchaseDetail(params: Partial<CreatePurchase>, id: string): Observable<[] | null> {
-    return this.httpClientService.patch(`${API_ROUTES.addPurchaseApi}/${id}`, params);
+    return this.httpClientService.patch(`${API_ROUTES.purchasesApi}/${id}`, params);
   }
 
   downloadExcel(id: string): Observable<HttpResponse<Blob>> {

@@ -3,7 +3,7 @@
 	<mat-icon class="close-btn" (click)="toggleMenu()">close</mat-icon>
 	<div class="mb-auto">
 		<div class="logo">
-			<img src="../../../assets/images/map-logo.svg" alt="calopad">
+			<img src="../../../assets/images/mpss-logo.png" alt="mpss">
 		</div>
 		<div class="mt-6 2md:mt-10">
 			<ul (click)="toggleMenu()">
@@ -15,31 +15,31 @@
 				</li>
 				<li class="py-4 2md:py-5">
 					<a class="menu-item" [routerLink]="['/admin/vendor']" routerLinkActive="active">
-						<mat-icon svgIcon="list"></mat-icon>
+						<mat-icon>engineering</mat-icon>
 						<span class="ml-6"> {{ 'common.vendors' | translate }} </span>
 					</a>
 				</li>
 				<li class="py-4 2md:py-5">
 					<a class="menu-item" [routerLink]="['/admin/part']" routerLinkActive="active">
-						<mat-icon svgIcon="list"></mat-icon>
+						<mat-icon>handyman</mat-icon>
 						<span class="ml-6"> {{ 'common.parts' | translate }} </span>
 					</a>
 				</li>
 				<li class="py-4 2md:py-5">
 					<a class="menu-item" [routerLink]="['/admin/sale']" routerLinkActive="active">
-						<mat-icon svgIcon="list"></mat-icon>
+						<mat-icon>receipt</mat-icon>
 						<span class="ml-6"> {{ 'common.sales' | translate }} </span>
 					</a>
 				</li>
 				<li class="py-4 2md:py-5">
 					<a class="menu-item" [routerLink]="['/admin/purchase']" routerLinkActive="active">
-						<mat-icon svgIcon="list"></mat-icon>
+						<mat-icon>fact_check</mat-icon>
 						<span class="ml-6"> {{ 'common.purchases' | translate }} </span>
 					</a>
 				</li>
 				<li class="py-4 2md:py-5">
 					<a class="menu-item" [routerLink]="['/admin/report']" routerLinkActive="active">
-						<mat-icon svgIcon="list"></mat-icon>
+						<mat-icon>assessment</mat-icon>
 						<span class="ml-6"> {{ 'common.reports' | translate }} </span>
 					</a>
 				</li>

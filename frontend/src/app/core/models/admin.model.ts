@@ -19,27 +19,30 @@ export interface RedemptionDetail {
 }
 
 export interface DashboardAccountingStats {
-  totalCards: number;
-  activated: number;
-  revenueInitialCost: number;
-  revenueActivations: number;
-  billingPositions: number;
+  dailySales: number;
+  dailyPurchases: number;
+  monthlySales: number;
+  monthlyPurchases: number;
 }
 export interface TopPartners {
   companyName: string;
   totalRevenue: number;
 }
-export interface PerformanceOverview {
+
+export interface DailySales {
   day: number;
-  count: number;
-}
-export interface PerformanceStats {
-  topPartners: TopPartners[];
-  performanceOverview: PerformanceOverview[];
+  revenue: number;
 }
 
-export interface PerformanceStatsParams {
-  dateFilter: string;
+export interface MonthlySales {
+  date: Date;
+  month: string;
+  year: string;
+  dailyRevenues: DailySales[];
+}
+
+export interface DashboardMonthlySalesParams {
+  date: Date;
 }
 
 export interface InvoiceList {

@@ -45,7 +45,7 @@ export class UtilityService {
   }
 
   numberToDayConverter(index: number): string {
-    return `days.${this.days[index - 1]}`;
+    return `days.${index}`;
   }
 
 }

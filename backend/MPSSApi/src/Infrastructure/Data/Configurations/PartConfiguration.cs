@@ -18,6 +18,11 @@ public class PartConfiguration : IEntityTypeConfiguration<Part>
             .IsRequired();
 
         builder
+            .Property(t => t.Quantity)
+            .HasDefaultValue(0)
+            .IsRequired();
+
+        builder
             .Property(t => t.Cost)
             .HasPrecision(18, 2)
             .HasDefaultValue(0);

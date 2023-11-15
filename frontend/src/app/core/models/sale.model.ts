@@ -53,11 +53,10 @@ export interface SaleList {
 }
 
 export interface SaleDetail {
-    saleId: number;
-    id: string;
+    id: number;
     saleNumber: string;
-    total: number;
     date: Date;
+    total: number;
     customerName: string;
     customerNo: string;
     records: InventoryRecord[];

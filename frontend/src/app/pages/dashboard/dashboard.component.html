@@ -2,299 +2,101 @@
   <div class="flex flex-wrap">
     <div class="p-2 xl:p-3 2xl:p-4 flex w-[100%] xs:w-[50%] lg:w-[33.33%] xl:w-[25%]">
       <div class="bg-white shadow-2sm w-full p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
-        <p class="text-[15px] xl:text-[16px] 2xl:text-[18px] font-semibold text-secondary">{{ 'common.totalCards' |
-          translate }} / {{
-          'common.activated' | translate }}</p>
-        <ng-container *ngIf="!accountingStatsLoading">
+        <p class="text-[15px] xl:text-[16px] 2xl:text-[18px] font-semibold text-secondary">
+          {{ 'dashboard.dailySales' | translate }}</p>
+        <ng-container *ngIf="!dashboardStatsLoading">
           <p
-            class="text-[30px] xl:text-[34px] 2xl:text-[40px] leading-[34px] xl:leading-[38px] 2xl:leading-[44px] font-medium text-secondary mt-3">
-            {{ accountingStats?.totalCards || 0 }} / {{ accountingStats?.activated || 0 }}
+            class="text-[30px] xl:text-[34px] 2xl:text-[25px] leading-[34px] xl:leading-[38px] 2xl:leading-[44px] font-medium text-secondary mt-3">
+            <span class="text-[20px] xl:text-[22px] 2xl:text-[15px] leading-[24px] 2xl:leading-[28px]">&#8377;</span>
+            {{ dashboardStats?.dailySales | number: '1.2-2' }}
           </p>
         </ng-container>
-        <ng-container *ngTemplateOutlet="accountingStatsLoader"></ng-container>
+        <ng-container *ngTemplateOutlet="dashboardStatsLoader"></ng-container>
       </div>
     </div>
     <div class="p-2 xl:p-3 2xl:p-4 flex w-[100%] xs:w-[50%] lg:w-[33.33%] xl:w-[25%]">
       <div class="bg-white shadow-2sm w-full p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
         <p class="text-[15px] xl:text-[16px] 2xl:text-[18px] font-semibold text-secondary">{{
-          'dashboard.revenueInitialCards' | translate }}</p>
-        <ng-container *ngIf="!accountingStatsLoading">
+          'dashboard.dailyPurchase' | translate }}</p>
+        <ng-container *ngIf="!dashboardStatsLoading">
           <p
-            class="text-[30px] xl:text-[34px] 2xl:text-[40px] leading-[34px] xl:leading-[38px] 2xl:leading-[44px] font-medium text-secondary mt-3">
-            <span class="text-[20px] xl:text-[22px] 2xl:text-[25px] leading-[24px] 2xl:leading-[28px]">{{
-              userData?.currency }}</span>
-            {{ accountingStats?.revenueInitialCost | number: '1.2-2' }}
+            class="text-[30px] xl:text-[34px] 2xl:text-[25px] leading-[34px] xl:leading-[38px] 2xl:leading-[44px] font-medium text-secondary mt-3">
+            <span class="text-[20px] xl:text-[22px] 2xl:text-[15px] leading-[24px] 2xl:leading-[28px]">&#8377;</span>
+            {{ dashboardStats?.dailyPurchases | number: '1.2-2' }}
           </p>
         </ng-container>
-        <ng-container *ngTemplateOutlet="accountingStatsLoader"></ng-container>
+        <ng-container *ngTemplateOutlet="dashboardStatsLoader"></ng-container>
       </div>
     </div>
     <div class="p-2 xl:p-3 2xl:p-4 flex w-[100%] xs:w-[50%] lg:w-[33.33%] xl:w-[25%]">
       <div class="bg-white shadow-2sm w-full p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
         <p class="text-[15px] xl:text-[16px] 2xl:text-[18px] font-semibold text-secondary">{{
-          'dashboard.revenueActivations' | translate }}</p>
-        <ng-container *ngIf="!accountingStatsLoading">
+          'dashboard.monthlySales' | translate }}</p>
+        <ng-container *ngIf="!dashboardStatsLoading">
           <p
-            class="text-[30px] xl:text-[34px] 2xl:text-[40px] leading-[34px] xl:leading-[38px] 2xl:leading-[44px] font-medium text-secondary mt-3">
-            <span class="text-[20px] xl:text-[22px] 2xl:text-[25px] leading-[24px] 2xl:leading-[28px]">{{
-              userData?.currency }}</span>
-            {{ accountingStats?.revenueActivations | number: '1.2-2' }}
+            class="text-[30px] xl:text-[34px] 2xl:text-[25px] leading-[34px] xl:leading-[38px] 2xl:leading-[44px] font-medium text-secondary mt-3">
+            <span class="text-[20px] xl:text-[22px] 2xl:text-[15px] leading-[24px] 2xl:leading-[28px]">&#8377;</span>
+            {{ dashboardStats?.monthlySales | number: '1.2-2' }}
           </p>
         </ng-container>
-        <ng-container *ngTemplateOutlet="accountingStatsLoader"></ng-container>
+        <ng-container *ngTemplateOutlet="dashboardStatsLoader"></ng-container>
       </div>
     </div>
     <div class="p-2 xl:p-3 2xl:p-4 flex w-[100%] xs:w-[50%] lg:w-[33.33%] xl:w-[25%]">
       <div class="bg-white shadow-2sm w-full p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
         <p class="text-[15px] xl:text-[16px] 2xl:text-[18px] font-semibold text-secondary">{{
-          'dashboard.billingPositions' | translate }}</p>
-        <ng-container *ngIf="!accountingStatsLoading">
+          'dashboard.monthlyPurchases' | translate }}</p>
+        <ng-container *ngIf="!dashboardStatsLoading">
           <p
-            class="text-[30px] xl:text-[34px] 2xl:text-[40px] leading-[34px] xl:leading-[38px] 2xl:leading-[44px] font-medium text-secondary mt-3">
-            {{ accountingStats?.billingPositions | number: '1.2-2' }}
+            class="text-[30px] xl:text-[34px] 2xl:text-[25px] leading-[34px] xl:leading-[38px] 2xl:leading-[44px] font-medium text-secondary mt-3">
+            <span class="text-[20px] xl:text-[22px] 2xl:text-[15px] leading-[24px] 2xl:leading-[28px]">&#8377;</span>
+            {{ dashboardStats?.monthlyPurchases | number: '1.2-2' }}
           </p>
         </ng-container>
-        <ng-container *ngTemplateOutlet="accountingStatsLoader"></ng-container>
-      </div>
-    </div>
-  </div>
-  <div class="flex flex-wrap lg:mt-2 xl:m-0">
-    <div class="p-2 xl:p-3 2xl:p-4 flex w-[100%] xl:w-[50%]">
-      <div class="bg-white shadow-2sm w-full p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
-        <div class="flex justify-between flex-wrap -m-1.5 sm:-m-2">
-          <div class="p-1.5 sm:p-2">
-            <h4 class="text-[16px] xl:text-[18px] 2xl:text-[20px] font-bold text-secondary">{{
-              'dashboard.overviewPerformance' | translate }}</h4>
-          </div>
-          <div class="p-1.5 sm:p-2 w-full xs:w-auto">
-            <ng-select class="w-full min-w-[140px] font-semibold text-secondary custom-select rounded"
-              [clearable]="false" [searchable]="false" [formControl]="dateFilter">
-              <ng-option value="lastSixDays">{{ 'dashboard.last6Days' | translate }}</ng-option>
-            </ng-select>
-          </div>
-        </div>
-        <div class="mt-3">
-          <ng-container *ngIf="!performanceOverviewLoading">
-            <canvas baseChart width="560" height="210" [datasets]="dayWiseData" [labels]="translatedChartLabels"
-              [options]="lineChartOptions" type="line" [legend]="false"></canvas>
-          </ng-container>
-          <ng-container *ngIf="performanceOverviewLoading">
-            <ng-container *ngTemplateOutlet="performanceStatsLoader"></ng-container>
-          </ng-container>
-        </div>
-      </div>
-    </div>
-    <div class="p-2 xl:p-3 2xl:p-4 flex w-[100%] xl:w-[50%]">
-      <div class="bg-white flex flex-col shadow-2sm w-full p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
-        <div class="flex justify-between flex-wrap -m-1.5 sm:-m-2">
-          <div class="p-1.5 sm:p-2">
-            <h4 class="text-[16px] xl:text-[18px] 2xl:text-[20px] font-bold text-secondary">{{ 'dashboard.topPartners' |
-              translate }}</h4>
-          </div>
-        </div>
-        <div class="pt-6 2xl:pt-8 -mb-4 lg:-mb-6 xl:-mb-8 2xl:-mb-10 -mx-3 h-full flex">
-          <ng-container *ngIf="!topPartnersDetailLoading">
-            <ng-container *ngIf="topPartnerDetail?.length; else noDataFound">
-              <ng-container *ngFor="let partnerDetail of topPartnerDetail;">
-                <div
-                  class="flex flex-col items-center flex-auto border-r border-grey-50 px-3 pt-3 pb-4 lg:pb-6 xl:pb-8 2xl:pb-10">
-                  <p
-                    class="text-[30px] xl:text-[32px] 2xl:text-[36px] leading-[34px] xl:leading-[36px] 2xl:leading-[40px] mb-3 text-center font-medium text-secondary">
-                    <span class="text-[20px] xl:text-[22px] 2xl:text-[25px] leading-[24px] 2xl:leading-[28px]">{{
-                      userData?.currency }}</span>
-                    {{ partnerDetail.totalRevenue | number: '1.2-2' }}
-                  </p>
-                  <p class="font-bold text-center mt-auto">{{ partnerDetail.companyName || '-' }}</p>
-                </div>
-              </ng-container>
-            </ng-container>
-          </ng-container>
-          <ng-container *ngIf="topPartnersDetailLoading">
-            <ng-container *ngTemplateOutlet="performanceStatsLoader"></ng-container>
-          </ng-container>
-        </div>
+        <ng-container *ngTemplateOutlet="dashboardStatsLoader"></ng-container>
       </div>
     </div>
   </div>
   <div class="flex flex-wrap lg:mt-2 xl:m-0">
     <div class="p-2 xl:p-3 2xl:p-4 flex w-full">
       <div class="bg-white shadow-2sm w-full p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
-        <div class="flex justify-between flex-wrap -m-1.5 sm:-m-2 mb-2 sm:mb-3">
-          <div class="p-1.5 sm:p-2">
-            <h4 class="text-[16px] xl:text-[18px] 2xl:text-[20px] font-bold text-secondary">{{ 'dashboard.openInvoices'
-              | translate }}</h4>
-          </div>
-          <div class="p-1.5 sm:p-2 w-full xs:w-auto">
-            <ng-select class="w-full font-semibold text-secondary custom-select rounded"
-              [formControl]="invoiceSortValue" [clearable]="false" [searchable]="false"
-              (change)="getOpenInvoicesList()">
-              <ng-option *ngFor="let sort of sortOptions" [value]="sort.value">
-                {{ 'common.' + sort.label | translate }}
-              </ng-option>
-            </ng-select>
-          </div>
-        </div>
-        <div class="overflow-auto max-h-[360px]">
-          <table class="custom-table" mat-table [dataSource]="openInvoiceList">
-            <ng-container matColumnDef="affiliatePartner">
-              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.affiliatePartner' | translate }} </th>
-              <td mat-cell *matCellDef="let element" class="text-primary">
-                {{ element.affiliatePartner }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="accountingDate">
-              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.accountingDate' | translate }} </th>
-              <td mat-cell *matCellDef="let element"> {{ element.accountingDate | date: 'dd.MM.yyyy HH:mm' }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="billable">
-              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.billable' | translate }} </th>
-              <td mat-cell *matCellDef="let element" class="text-green">
-                {{ userData?.currency || 'CHF' }} {{ element.billable | number: '1.2-2' }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> {{ 'common.status' | translate }} </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-select class="w-auto font-semibold text-secondary custom-select status-select" [searchable]="false"
-                  [clearable]="false" [(ngModel)]="element.status" (change)="updateStatus($event, element.id)">
-                  <ng-option *ngIf="element.status === accountingStatus.open" value="open">
-                    <span class="text-[12px] px-3 py-0.5 rounded-[8px] bg-grey-100 text-black">
-                      {{ 'partner.accountingPage.open' | translate }}
-                    </span>
-                  </ng-option>
-                  <ng-option value="billed">
-                    <span class="text-[12px] px-3 py-0.5 rounded-[8px] text-primary bg-primary-light">
-                      {{ 'partner.accountingPage.billed' | translate }}
-                    </span>
-                  </ng-option>
-                </ng-select>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="invoiceColumnLabel"></tr>
-            <tr mat-row *matRowDef="let row; columns: invoiceColumnLabel;"></tr>
-
-          </table>
-          <ng-container *ngIf="!invoiceListLoading && !openInvoiceList.data.length">
-            <div class="flex items-center font-medium justify-center h-[80px]">
-              {{ 'common.noDataFound' | translate }}
+        <div class="bg-white shadow-2sm w-full p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
+          <div class="flex justify-between flex-wrap -m-1.5 sm:-m-2">
+            <div class="p-1.5 sm:p-2">
+              <h4 class="text-[16px] xl:text-[18px] 2xl:text-[20px] font-bold text-secondary">{{
+                'dashboard.salesTrend' | translate }}</h4>
             </div>
-          </ng-container>
-          <ng-container *ngIf="invoiceListLoading">
-            <div class="flex items-center justify-center h-[80px]">
-              <app-cp-loader [class]="{ 'w-8 h-8 border-x-primary border-y-transparent': true }"></app-cp-loader>
+            <div class="p-1.5 sm:p-2 w-full xs:w-auto">
+              <ng-select class="w-full min-w-[140px] font-semibold text-secondary custom-select rounded"
+                [items]="months" bindLabel="label" bindValue="value" [clearable]="false" [searchable]="false"
+                [formControl]="monthFilter" (close)="getMonthlySales()">
+              </ng-select>
             </div>
-          </ng-container>
-        </div>
-        <mat-paginator #invoicePaginator class="custom-paginator" (page)="getOpenInvoicesList()"
-          [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
-      </div>
-    </div>
-  </div>
-  <div class="flex flex-wrap lg:mt-2 xl:m-0">
-    <div class="p-2 xl:p-3 2xl:p-4 flex w-full">
-      <div class="bg-white shadow-2sm w-full p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
-        <div class="flex justify-between flex-wrap -m-1.5 sm:-m-2 mb-2 sm:mb-3">
-          <div class="p-1.5 sm:p-2">
-            <h4 class="text-[16px] xl:text-[18px] 2xl:text-[20px] font-bold text-secondary">{{
-              'dashboard.latestActivations' | translate }}</h4>
           </div>
-          <div class="p-1.5 sm:p-2 w-full xs:w-auto">
-            <ng-select class="w-full font-semibold text-secondary custom-select rounded"
-              [formControl]="redemptionSortValue" [clearable]="false" [searchable]="false"
-              (change)="getLatestRedemptionList()">
-              <ng-option *ngFor="let sort of sortOptions" [value]="sort.value">
-                {{ 'common.' + sort.label | translate }}
-              </ng-option>
-            </ng-select>
+          <div class="mt-3">
+            <ng-container *ngIf="!monthlySalesLoading">
+              <canvas baseChart width="560" height="210" [datasets]="dayWiseData" [labels]="chartLabels"
+                [options]="lineChartOptions" type="line" [legend]="false"></canvas>
+            </ng-container>
+            <ng-container *ngIf="monthlySalesLoading">
+              <ng-container *ngTemplateOutlet="monthlySalesLoader"></ng-container>
+            </ng-container>
           </div>
         </div>
-        <div class="overflow-auto max-h-[360px]">
-          <table class="custom-table" mat-table [dataSource]="latestRedemptionList">
-            <ng-container matColumnDef="affiliatePartner">
-              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.affiliatePartner' | translate }} </th>
-              <td mat-cell *matCellDef="let element"> {{ element.affiliatePartner }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="cardType">
-              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.cardType' | translate }} </th>
-              <td mat-cell *matCellDef="let element">
-                <span class="text-[12px] px-3 py-0.5 rounded-[8px] text-primary bg-primary-light">
-                  {{ element.cardType }}
-                </span>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="cardCode">
-              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.cardNr' | translate }} </th>
-              <td mat-cell *matCellDef="let element"> {{ element.cardCode }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="date">
-              <th mat-header-cell *matHeaderCellDef> {{ 'common.date' | translate }} </th>
-              <td mat-cell *matCellDef="let element"> {{ element.date | date: 'dd.MM.yyyy' }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="shopOrderNumber">
-              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.shopOrderNr' | translate }} </th>
-              <td mat-cell *matCellDef="let element"> {{ element.shopOrderNumber }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="shopStatus">
-              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.shopStatus' | translate }} </th>
-              <td mat-cell *matCellDef="let element"> {{ element.shopStatus | titlecase }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="billingPositions">
-              <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.billingPositions' | translate }} </th>
-              <td mat-cell *matCellDef="let element">
-                <span class="text-green">
-                  {{ userData?.currency || 'CHF' }} {{ element.billingPositions | number: '1.2-2' }}
-                </span>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.actions' | translate }}</th>
-              <td class="w-[10px]" mat-cell *matCellDef="let element">
-                <app-cp-action-toolbar [actionData]="element.action"
-                  [rowReference]="element.trackingUrl"></app-cp-action-toolbar>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="columnLabel"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnLabel;">
-            </tr>
-
-          </table>
-          <ng-container *ngIf="!redemptionListLoading && !latestRedemptionList.data.length">
-            <ng-container *ngTemplateOutlet="noDataFound"></ng-container>
-          </ng-container>
-          <ng-container *ngIf="redemptionListLoading">
-            <div class="flex items-center justify-center h-[80px]">
-              <app-cp-loader [class]="{ 'w-8 h-8 border-x-primary border-y-transparent': true }"></app-cp-loader>
-            </div>
-          </ng-container>
-        </div>
-        <mat-paginator #redemptionPaginator class="custom-paginator" (page)="getLatestRedemptionList()"
-          [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
       </div>
     </div>
   </div>
 </div>
 
-<ng-template #accountingStatsLoader>
-  <ng-container *ngIf="accountingStatsLoading">
+<ng-template #dashboardStatsLoader>
+  <ng-container *ngIf="dashboardStatsLoading">
     <div class="flex mt-3 w-full ml-2">
       <app-cp-loader [class]="{ 'w-8 h-8 border-x-primary border-y-transparent': true }"></app-cp-loader>
     </div>
   </ng-container>
 </ng-template>
 
-<ng-template #performanceStatsLoader>
+<ng-template #monthlySalesLoader>
   <div class="flex items-center w-full justify-center h-[80px]">
     <app-cp-loader [class]="{ 'w-8 h-8 border-x-primary border-y-transparent': true }"></app-cp-loader>
   </div>

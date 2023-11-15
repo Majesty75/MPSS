@@ -13,17 +13,35 @@
                 <ng-container
                     *ngTemplateOutlet="requiredError; context: { control: formControls.partName }"></ng-container>
             </div>
-            <div class="w-[100%] p-2">
-                <div class="flex">
-                    <label class="field-lbl"
-                        [ngClass]="{ 'field-error': formControls.partNumber.touched && formControls.partNumber.invalid }">{{
-                        'part.partNumber' | translate }}</label>
-                    <input class="form-field"
-                        [ngClass]="{ 'field-error': formControls.partNumber.touched && formControls.partNumber.invalid }"
-                        type="text" formControlName="partNumber">
+            <div class="w-[100%] flex flex-wrap">
+                <div class="w-full sm:w-[50%] p-2">
+                    <div class="flex">
+                        <label class="field-lbl"
+                            [ngClass]="{ 'field-error': formControls.partNumber.touched && formControls.partNumber.invalid }">{{
+                            'part.partNumber' | translate }}</label>
+                        <input class="form-field"
+                            [ngClass]="{ 'field-error': formControls.partNumber.touched && formControls.partNumber.invalid }"
+                            type="text" formControlName="partNumber">
+                    </div>
+                    <ng-container
+                        *ngTemplateOutlet="requiredError; context: { control: formControls.partNumber }"></ng-container>
                 </div>
-                <ng-container
-                    *ngTemplateOutlet="requiredError; context: { control: formControls.partNumber }"></ng-container>
+                <div class="w-full sm:w-[50%] p-2">
+                    <div class="flex">
+                        <label class="field-lbl"
+                            [ngClass]="{ 'field-error': formControls.quantity.touched && formControls.quantity.invalid }">{{
+                            'part.quantity' | translate }}</label>
+                        <input class="form-field"
+                            [ngClass]="{ 'field-error': formControls.quantity.touched && formControls.quantity.invalid }"
+                            type="number" formControlName="quantity">
+                    </div>
+                    <ng-container
+                        *ngTemplateOutlet="requiredError; context: { control: formControls.quantity }"></ng-container>
+                    <ng-container
+                        *ngTemplateOutlet="greaterThanZeroError; context: { control: formControls.quantity }"></ng-container>
+                    <ng-container
+                        *ngTemplateOutlet="patternError; context: { control: formControls.quantity}"></ng-container>
+                </div>
             </div>
             <div class="w-[100%] flex flex-wrap">
                 <div class="w-full sm:w-[50%] p-2">
@@ -89,5 +107,10 @@
 <ng-template #greaterThanZeroError let-control="control">
     <ng-container *ngIf="control.touched && control.errors?.min">
         <p class="error-message">{{ 'validation.greaterThanZero' | translate }}</p>
+    </ng-container>
+</ng-template>
+<ng-template #patternError let-control="control">
+    <ng-container *ngIf="control.touched && control.errors?.pattern">
+        <p class="error-message">{{ 'validation.invalidQuantity' | translate }}</p>
     </ng-container>
 </ng-template>

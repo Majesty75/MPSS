@@ -452,6 +452,145 @@
         ]
       }
     },
+    "/api/Reports/dashboard": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "GetDashboardStatastics",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/Reports/daily-revenue": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "GetDailyRevenue",
+        "requestBody": {
+          "x-name": "query",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDailyRevenueQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyRevenueDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/Reports/monthly-revenue": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "GetMonthlyRevenue",
+        "requestBody": {
+          "x-name": "query",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetMonthlyRevenueQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonthlyRevenueDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/Reports/daily-purchase-order": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "GetDailyPurchaseOrder",
+        "requestBody": {
+          "x-name": "query",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDailyPurchaseOrderQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyPurchaseOrderDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
     "/api/Sales/{id}": {
       "get": {
         "tags": [
@@ -1298,6 +1437,10 @@
           "partNumber": {
             "type": "string"
           },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
           "cost": {
             "type": "number",
             "format": "decimal"
@@ -1372,6 +1515,10 @@
           "partNumber": {
             "type": "string"
           },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
           "cost": {
             "type": "number",
             "format": "decimal"
@@ -1437,6 +1584,10 @@
             "minLength": 1,
             "nullable": false
           },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
           "cost": {
             "type": "number",
             "format": "decimal",
@@ -1480,6 +1631,10 @@
             "maxLength": 50,
             "minLength": 1,
             "nullable": false
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
           },
           "cost": {
             "type": "number",
@@ -1783,6 +1938,170 @@
             "items": {
               "$ref": "#/components/schemas/RecordCommand"
             }
+          }
+        }
+      },
+      "DashboardDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dailySales": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "dailyPurchases": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "monthlySales": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "monthlyPurchases": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "DailyRevenueDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "revenue": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "GetDailyRevenueQuery": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "minLength": 1,
+            "nullable": false
+          }
+        }
+      },
+      "MonthlyRevenueDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "month": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "dailyRevenues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyRevenueDto"
+            }
+          }
+        }
+      },
+      "GetMonthlyRevenueQuery": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "minLength": 1,
+            "nullable": false
+          }
+        }
+      },
+      "DailyPurchaseOrderDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dailyPurchaseOrderRecords": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyPurchaseOrderRecordDto"
+            }
+          }
+        }
+      },
+      "DailyPurchaseOrderRecordDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "partId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "partName": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cost": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "vendorId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "vendorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendorAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendorContact": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "GetDailyPurchaseOrderQuery": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "minLength": 1,
+            "nullable": false
           }
         }
       },

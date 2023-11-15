@@ -27,6 +27,18 @@ public class DeleteSaleCommandHandler : IRequestHandler<DeleteSaleCommand>
 
         Guard.Against.NotFound(request.Id, entity);
 
+        foreach (var item in entity.Records)
+        {
+            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+
+            if (part != null)
+            {
+                // Deleting sales record means increase quantity
+                part.Quantity += item.Quantity;
+            }
+
+        }
+
         _context.Records.RemoveRange(entity.Records);
 
         _context.Sales.Remove(entity);

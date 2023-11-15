@@ -95,6 +95,14 @@ public class CreatePurchaseCommandHandler : IRequestHandler<CreatePurchaseComman
             item.SaleId = null;
             item.PurchaseId = entity.Id;
             item.Date = entity.Date;
+
+            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+
+            if (part != null)
+            {
+                // Creating purchase record means increase quantity
+                part.Quantity += item.Quantity;
+            }
         }
 
         await _context.SaveChangesAsync(cancellationToken);

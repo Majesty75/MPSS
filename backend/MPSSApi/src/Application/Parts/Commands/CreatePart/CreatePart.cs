@@ -10,6 +10,8 @@ public record CreatePartCommand : IRequest<int>
 
     public string PartNumber { get; set; } = string.Empty;
 
+    public int Quantity { get; set; }
+
     public decimal Cost { get; set; } = 0;
 
     public decimal SellPrice { get; set; } = 0;
@@ -81,6 +83,7 @@ public class CreatePartCommandHandler : IRequestHandler<CreatePartCommand, int>
         {
             PartName = request.PartName,
             PartNumber = request.PartNumber,
+            Quantity = request.Quantity,
             Cost = request.Cost,
             SellPrice = request.SellPrice,
             VendorId = request.VendorId

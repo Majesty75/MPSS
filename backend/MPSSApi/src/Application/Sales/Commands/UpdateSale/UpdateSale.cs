@@ -90,11 +90,51 @@ public class UpdateSaleCommandHandler : IRequestHandler<UpdateSaleCommand>
             item.Date = entity.Date;
         }
 
-        var existingRecords = records.Where(r => r.Id > 0).Select(r => r.Id);
+        var updateRecords = records.Where(r => r.Id > 0).Select(r => r.Id);
 
-        entity.Records = entity.Records.Where(r => !existingRecords.Contains(r.Id)).ToList();
+        foreach (var item in entity.Records)
+        {
+            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
 
-        entity.Records.Concat(records.Where(r => r.Id == 0));
+            if (!updateRecords.Contains(item.Id))
+            {
+                // Remove this items
+                if (part != null)
+                {
+                    // Deleting sales record means increase quantity
+                    part.Quantity += item.Quantity;
+                }
+
+                entity.Records.Remove(item);
+            }
+            else
+            {
+                // Update this items
+                if (part != null)
+                {
+                    // Updating sales record means increase by difference of old and new
+                    part.Quantity += item.Quantity - records.First(r => r.Id == item.Id).Quantity;
+
+                    if (part.Quantity < 0) part.Quantity = 0;
+                }
+            }
+        }
+
+        foreach(var item in records.Where(r => r.Id == 0))
+        {
+            // Add this items
+            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+
+            if (part != null)
+            {
+                // Creating sales record means decrease quantity
+                part.Quantity -= item.Quantity;
+
+                if (part.Quantity < 0) part.Quantity = 0;
+            }
+
+            entity.Records.Add(item);
+        }
 
         _context.Records.UpdateRange(records.Where(r => r.Id != 0));
 

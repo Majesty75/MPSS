@@ -1,0 +1,62 @@
+<div class="bg-white shadow-2sm p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px]">
+    <div class="flex flex-col">
+        <div class="overflow-x-auto">
+            <table class="custom-table" mat-table [dataSource]="dailyPurchaseOrderList">
+
+                <ng-container matColumnDef="partId">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'common.id' | translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.partId }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="partName">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'part.partName' | translate }} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <a class="cursor-pointer text-primary">
+                            {{ element.partName }}
+                        </a>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'part.quantity' | translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.quantity }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cost">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'part.cost' | translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.cost }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="vendorName">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'vendor.vendorName' | translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.vendorName }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="vendorAddress">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'vendor.vendorAddress' | translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.vendorAddress }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="vendorContact">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'vendor.vendorContact' | translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.vendorAddress }} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnLabel"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnLabel;">
+                </tr>
+
+            </table>
+            <ng-container *ngIf="!isLoading && !dailyPurchaseOrderList.data.length">
+                <div class="flex items-center font-medium justify-center h-[80px]">
+                    {{ 'common.noDataFound' | translate }}
+                </div>
+            </ng-container>
+            <ng-container *ngIf="isLoading">
+                <div class="flex items-center justify-center h-[80px]">
+                    <app-cp-loader [class]="{ 'w-8 h-8 border-x-primary border-y-transparent': true }"></app-cp-loader>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

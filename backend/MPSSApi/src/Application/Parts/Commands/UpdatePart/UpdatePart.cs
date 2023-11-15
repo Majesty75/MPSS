@@ -10,6 +10,8 @@ public record UpdatePartCommand : IRequest
 
     public string PartNumber { get; set; } = string.Empty;
 
+    public int Quantity { get; set; }
+
     public decimal Cost { get; set; } = 0;
 
     public decimal SellPrice { get; set; } = 0;
@@ -93,11 +95,12 @@ public class UpdatePartCommandHandler : IRequestHandler<UpdatePartCommand>
 
         var entity = await _context.Parts
             .FindAsync(new object[] { request.Id }, cancellationToken);
-
+        ;
         Guard.Against.NotFound(request.Id, entity);
 
         entity.PartName = request.PartName;
         entity.PartNumber = request.PartNumber;
+        entity.Quantity = request.Quantity;
         entity.Cost = request.Cost;
         entity.SellPrice = request.SellPrice;
         entity.VendorId = request.VendorId;

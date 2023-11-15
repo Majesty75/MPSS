@@ -19,22 +19,14 @@ export const API_ROUTES = {
   vendorsApi: 'vendors',
   partListApi: 'parts/paginate',
   partsApi: 'parts',
-  saleListApi: 'sales',
-  addSaleApi: 'sales',
-  purchaseListApi: 'purchases',
-  addPurchaseApi: 'purchases',
-  cardListApi: 'cards',
+  saleListApi: 'sales/paginate',
+  salesApi: 'sales',
+  purchaseListApi: 'purchases/paginate',
+  purchasesApi: 'purchases',
   downloadExcelApi: 'cards/excel',
-  accountingStatsApi: 'cards/accountingStats',
-  buyingBillApi: 'accounts/buy',
-  redeemBillApi: 'accounts/redeem',
-  accountStatusChangeApi: 'accounts',
-  dashboardAccountingStatsApi: 'dashboard/accountingStats',
-  redemptionListApi: 'dashboard/shopifyOrders',
-  dashboardPerformanceOverviewApi: 'dashboard/performanceOverview',
-  dashboardTopPartnersApi: 'dashboard/topPartners',
-  exchangeRateApi: 'exchangerates',
-  openInvoiceListApi: 'dashboard/openBillList'
+  dashboardStatsApi: 'reports/dashboard',
+  dashboardMonthlySalesApi: 'reports/monthly-revenue',
+  dailyPurchaseOrderListApi: 'reports/daily-purchase-order'
 }
 
 export enum MessageType {

@@ -22,11 +22,11 @@ export class SaleService {
   }
 
   addSale(params: Partial<CreateSale>): Observable<[] | null> {
-    return this.httpClientService.post(API_ROUTES.addSaleApi, params);
+    return this.httpClientService.post(API_ROUTES.salesApi, params);
   }
 
   getSaleDetail(id: string): Observable<CreateSale> {
-    return this.httpClientService.get(`${API_ROUTES.addSaleApi}/${id}`, {
+    return this.httpClientService.get(`${API_ROUTES.salesApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
       }
@@ -34,7 +34,7 @@ export class SaleService {
   }
 
   updateSaleDetail(params: Partial<CreateSale>, id: string): Observable<[] | null> {
-    return this.httpClientService.patch(`${API_ROUTES.addSaleApi}/${id}`, params);
+    return this.httpClientService.patch(`${API_ROUTES.salesApi}/${id}`, params);
   }
 
   downloadExcel(id: string): Observable<HttpResponse<Blob>> {

@@ -63,6 +63,7 @@ export class PartAddComponent implements OnInit {
     this.addPartForm = new FormGroup<AddPartForm>({
       partName: new FormControl('', Validators.required),
       partNumber: new FormControl('', Validators.required),
+      quantity: new FormControl(0, [Validators.required, , Validators.pattern("^[0-9]*$"), Validators.min(0.1)]),
       cost: new FormControl(0, [Validators.required, Validators.min(0.1)]),
       sellPrice: new FormControl(0, [Validators.required, Validators.min(0.1)]),
       vendorId: new FormControl(null, Validators.required),
@@ -92,7 +93,7 @@ export class PartAddComponent implements OnInit {
       .subscribe({
         next: () => {
           this.isSubmitted = false;
-          this.toasterService.displaySnackBarWithTranslation('toasterMessage.addPartnerSuccessful', MessageType.success);
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.addPartSuccessful', MessageType.success);
           this.navigateToList();
         },
         error: () => {
@@ -107,7 +108,7 @@ export class PartAddComponent implements OnInit {
       .subscribe({
         next: () => {
           this.isSubmitted = false;
-          this.toasterService.displaySnackBarWithTranslation('toasterMessage.updatePartnerSuccessful', MessageType.success);
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.updatePartSuccessful', MessageType.success);
           this.navigateToList();
         },
         error: () => {

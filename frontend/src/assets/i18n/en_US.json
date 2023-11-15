@@ -21,7 +21,8 @@
     "purchaseList": "Purchase List",
     "add": "Add",
     "edit": "Edit",
-    "settings": "Settings"
+    "settings": "Settings",
+    "dailyPurchaseOrder": "Daiily Purchase Order"
   },
   "validation": {
     "emailRequired": "Email is required",
@@ -35,7 +36,8 @@
     "invalidWeb": "Please enter valid URL",
     "invalidZip": "Please enter valid zip",
     "invalidPhoneNo": "Please enter valid phone number",
-    "passwordValidation": "Password and confirm password doesn't match"
+    "passwordValidation": "Password and confirm password doesn't match",
+    "invalidQuantity": "Invalid Quantity"
   },
   "toasterMessage": {
     "loggedInSuccessfully": "Logged in successfully",
@@ -47,7 +49,9 @@
     "invalidsellPrice": "Partner selling price must be greater than the total cost of card",
     "tokenExpired": "Your token has expired, Please login again",
     "addVendorSuccessful": "Vendor added successfully",
-    "updateVendorSuccessful": "Vendor updated successfully"
+    "updateVendorSuccessful": "Vendor updated successfully",
+    "addPartSuccessful": "Part added successfully",
+    "updatePartSuccessful": "Part updated successfully"
   },
   "common": {
     "noDataFound": "No data found",
@@ -57,9 +61,6 @@
     "status": "Status",
     "dashboard": "Dashboard",
     "logout": "Logout",
-    "totalCards": "Total Cards",
-    "activated": "Activated",
-    "redeemed": "Redeemed",
     "date": "Date",
     "vendors": "Vendors",
     "parts": "Parts",
@@ -77,6 +78,7 @@
     "cancel": "Cancel",
     "update": "Update",
     "contactInfo": "Contact Info",
+    "total": "Total",
     "countries": {
       "india": "India",
       "austria": "Austria",
@@ -85,23 +87,11 @@
     }
   },
   "dashboard": {
-    "revenueInitialCards": "Revenue Initial Cards",
-    "revenueActivations": "Revenue Activations",
-    "billingPositions": "Billing Positions",
-    "overviewPerformance": "Overview Performance",
-    "topPartners": "Top Partners",
-    "latestActivations": "Latest Redemptions",
-    "affiliatePartner": "Affiliate Partner",
-    "cardType": "Card Type",
-    "cardNr": "Card Nr.",
-    "shopOrderNr": "Shop Order Nr.",
-    "shopStatus": "Shop Status",
-    "last6Days": "Last 6 Days",
-    "trackOrder": "Track Order",
-    "actions": "Actions",
-    "openInvoices": "Open Invoices",
-    "accountingDate": "Accounting Date",
-    "billable": "Billable"
+    "dailySales": "Day Sales",
+    "dailyPurchase": "Day Purchases",
+    "monthlySales": "Month Sales",
+    "monthlyPurchases": "Month Purchases",
+    "salesTrend": "Sales Trend"
   },
   "days": {
     "sun": "Sun",
@@ -115,7 +105,9 @@
   "vendor": {
     "addVendor": "Add Vendor",
     "searchVendor": "Search Vendor",
-    "vendorName": "Vendor Name"
+    "vendorName": "Vendor Name",
+    "vendorAddress": "Vendor Address",
+    "vendorContact": "Vendor Contact"
   },
   "part": {
     "addPart": "Add Part",
@@ -123,6 +115,21 @@
     "partName": "Part Name",
     "partNumber": "Part Number",
     "cost": "Cost",
+    "sellPrice": "Sell Price",
+    "quantity": "Quantity"
+  },
+  "sale": {
+    "addSale": "Add Sale",
+    "searchSale": "Search Sale",
+    "saleNumber": "Sale Number",
+    "customerName": "Customer Name",
+    "customerNo": "Customer No",
     "sellPrice": "Sell Price"
+  },
+  "purchase": {
+    "addPurchase": "Add Purchase",
+    "searchPurchase": "Search Purchase",
+    "purchaseNumber": "Purchase Number",
+    "cost": "Cost"
   }
 }

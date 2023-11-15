@@ -34,7 +34,7 @@ export class PartListComponent {
 
   breadcrumbs: BreadCrumb[] = [];
   partList = new MatTableDataSource<PartDetail>();
-  columnLabel = ['partName', 'partNumber', 'cost', 'sellPrice', 'vendorName', 'action'];
+  columnLabel = ['partName', 'partNumber', 'quantity', 'cost', 'sellPrice', 'vendorName', 'action'];
   selection = new SelectionModel<PartDetail>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageSizeOptions = PAGE_SIZE;

@@ -33,12 +33,12 @@ export class PurchaseListComponent {
 
   breadcrumbs: BreadCrumb[] = [];
   purchaseList = new MatTableDataSource<PurchaseDetail>();
-  columnLabel = ['partnerId', 'companyName', 'street', 'zip', 'city', 'country', 'email', 'phoneNo', 'isActive', 'action'];
+  columnLabel = ['purchaseNumber', 'date', 'total', 'vendorName', 'action'];
   selection = new SelectionModel<PurchaseDetail>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageSizeOptions = PAGE_SIZE;
   searchControl = new FormControl('');
-  sortValue = new FormControl('newest');
+  sortValue = new FormControl('asc');
   sortOptions = SORT_OPTIONS;
   searchValue: string;
   isLoading = false;

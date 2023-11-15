@@ -33,12 +33,12 @@ export class SaleListComponent {
 
   breadcrumbs: BreadCrumb[] = [];
   saleList = new MatTableDataSource<SaleDetail>();
-  columnLabel = ['saleId', 'saleNumber', 'total', 'date', 'customerName', 'customerNo', 'action'];
+  columnLabel = ['saleNumber', 'date', 'total', 'customerName', 'action'];
   selection = new SelectionModel<SaleDetail>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageSizeOptions = PAGE_SIZE;
   searchControl = new FormControl('');
-  sortValue = new FormControl('newest');
+  sortValue = new FormControl('asc');
   sortOptions = SORT_OPTIONS;
   searchValue: string;
   isLoading = false;

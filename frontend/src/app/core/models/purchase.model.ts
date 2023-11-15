@@ -54,11 +54,11 @@ export interface PurchaseList {
     totalCount: number;
 }
 export interface PurchaseDetail {
-    purchaseId: number;
-    id: string;
+    id: number;
     purchaseNumber: string;
     total: number;
     date: Date;
+    vendorName: string;
     vendor: VendorDetail;
     records: InventoryRecord[];
     purchaseAction: ActionToolbar[];

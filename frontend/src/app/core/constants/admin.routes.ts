@@ -2,6 +2,8 @@ import { Routes } from "@angular/router";
 import { VendorDetailService } from "@app/core/services/vendor-detail.service";
 import { BreadcrumbResolverFn } from "@services/breadcrumb-resolve.service";
 import { PartDetailService } from "../services/part-detail.service";
+import { PurchaseDetailService } from "../services/purchase-detail.service";
+import { SaleDetailService } from "../services/sale-detail.service";
 
 export const adminRoutes: Routes = [
   {
@@ -141,7 +143,7 @@ export const adminRoutes: Routes = [
             },
             resolve: {
               breadcrumbs: BreadcrumbResolverFn,
-              partnerDetail: VendorDetailService
+              saleDetail: SaleDetailService
             }
           }
         ]
@@ -182,7 +184,7 @@ export const adminRoutes: Routes = [
             },
             resolve: {
               breadcrumbs: BreadcrumbResolverFn,
-              partnerDetail: VendorDetailService
+              purchaseDetail: PurchaseDetailService
             }
           }
         ]
@@ -190,12 +192,12 @@ export const adminRoutes: Routes = [
       {
         path: 'report',
         data: {
-          breadcrumb: 'reports',
+          breadcrumb: 'dailyPurchaseOrder',
         },
         children: [
           {
             path: '',
-            loadComponent: () => import('@pages/reports/reports.component').then((m) => m.ReportsComponent),
+            loadComponent: () => import('@pages/daily-purchase-order/daily-purchase-order.component').then((m) => m.DailyPurchaseOrderComponent),
             resolve: {
               breadcrumbs: BreadcrumbResolverFn,
             }

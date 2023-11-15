@@ -87,6 +87,17 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, int>
             item.SaleId = entity.Id;
             item.PurchaseId = null;
             item.Date = entity.Date;
+
+            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+
+            if(part != null)
+            {
+                // Creating sales record means decrease quantity
+                part.Quantity -= item.Quantity;
+
+                if (part.Quantity < 0) part.Quantity = 0;
+            }
+
         }
 
         await _context.SaveChangesAsync(cancellationToken);

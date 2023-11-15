@@ -40,30 +40,30 @@
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="total">
-                    <th mat-header-cell *matHeaderCellDef> {{ 'common.total' | translate }} </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.total }} </td>
-                </ng-container>
-
                 <ng-container matColumnDef="date">
                     <th mat-header-cell *matHeaderCellDef> {{ 'common.date' | translate }} </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.zip }} </td>
+                    <td mat-cell *matCellDef="let element"> {{ element.date | date: 'mediumDate' }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef> {{ 'common.total' | translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.total | number: '1.2-2' }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="customerName">
                     <th mat-header-cell *matHeaderCellDef> {{ 'sale.customerName' | translate }} </th>
-                    <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="customerNo">
                     <th mat-header-cell *matHeaderCellDef> {{ 'sale.customerNo' | translate }} </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.country }} </td>
+                    <td mat-cell *matCellDef="let element"> {{ element.customerNo }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td class="w-[10px]" mat-cell *matCellDef="let element">
-                        <app-cp-action-toolbar [actionData]="element.partnerAction"
+                        <app-cp-action-toolbar [actionData]="element.saleAction"
                             [rowReference]="element"></app-cp-action-toolbar>
                     </td>
                 </ng-container>

@@ -10,6 +10,8 @@ public class PartDto
 
     public string PartNumber { get; set; } = string.Empty;
 
+    public int Quantity { get; set; }
+
     public decimal Cost { get; set; } = 0;
 
     public decimal SellPrice { get; set; } = 0;

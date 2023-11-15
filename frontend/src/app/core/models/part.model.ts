@@ -5,6 +5,7 @@ import { VendorDetail } from "./vendor.model";
 export interface CreatePart {
     partName: string;
     partNumber: string;
+    quantity: number;
     cost: number;
     sellPrice: number;
     vendorId: number;
@@ -13,6 +14,7 @@ export interface CreatePart {
 export interface AddPartForm {
     partName: FormControl<string>;
     partNumber: FormControl<string>;
+    quantity: FormControl<number>;
     cost: FormControl<number>;
     sellPrice: FormControl<number>;
     vendorId: FormControl<number>;
@@ -34,6 +36,7 @@ export interface PartDetail {
     id: string;
     partName: string;
     partNumber: string;
+    quantity: number;
     cost: number;
     sellPrice: number;
     vendor: VendorDetail;

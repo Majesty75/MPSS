@@ -27,6 +27,19 @@ public class DeletePurchaseCommandHandler : IRequestHandler<DeletePurchaseComman
 
         Guard.Against.NotFound(request.Id, entity);
 
+        foreach (var item in entity.Records)
+        {
+            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+
+            if (part != null)
+            {
+                // Deleting purchase record means decrease quantity
+                part.Quantity -= item.Quantity;
+
+                if(part.Quantity < 0) part.Quantity = 0;
+            }
+        }
+
         _context.Records.RemoveRange(entity.Records);
 
         _context.Purchases.Remove(entity);

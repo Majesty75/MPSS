@@ -10,11 +10,11 @@ import { UtilityService } from '@services/utility.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'vc angular boilerplate';
+  title = 'Motor Parts Shop Software';
 
   constructor(
     private utilityService: UtilityService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.utilityService.setLanguage();
