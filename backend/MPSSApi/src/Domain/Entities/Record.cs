@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MPSSApi.Domain.Entities;
-public class Record
+﻿namespace MPSSApi.Domain.Entities;
+public class Record : BaseAuditableEntity
 {
-    public int RecordId { get; set; }
+    public int? PartId { get; set; }
 
-    public int TrxId { get; set; }
+    public int? SaleId { get; set; }
 
-    public int TrxType { get; set; }
-
-    public int PartId { get; set; }
+    public int PurchaseId { get; set; }
 
     public int Quantity { get; set; }
 

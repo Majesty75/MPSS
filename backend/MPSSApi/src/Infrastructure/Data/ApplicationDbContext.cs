@@ -19,6 +19,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
     public DbSet<Part> Parts => Set<Part>();
 
+    public DbSet<Sale> Sales => Set<Sale>();
+
+    public DbSet<Purchase> Purchases => Set<Purchase>();
+
+    public DbSet<Record> Records => Set<Record>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
