@@ -9,6 +9,7 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
     {
         builder
             .Property(t => t.PurchaseNumber)
+            .HasMaxLength(20)
             .IsRequired();
 
         builder

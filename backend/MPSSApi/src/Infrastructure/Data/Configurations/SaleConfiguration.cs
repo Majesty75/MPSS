@@ -9,6 +9,7 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
     {
         builder
             .Property(t => t.SaleNumber)
+            .HasMaxLength(20)
             .IsRequired();
 
         builder

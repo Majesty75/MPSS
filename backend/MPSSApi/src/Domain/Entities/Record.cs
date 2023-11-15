@@ -1,11 +1,11 @@
 ﻿namespace MPSSApi.Domain.Entities;
 public class Record : BaseAuditableEntity
 {
-    public int? PartId { get; set; }
+    public int PartId { get; set; }
 
     public int? SaleId { get; set; }
 
-    public int PurchaseId { get; set; }
+    public int? PurchaseId { get; set; }
 
     public int Quantity { get; set; }
 

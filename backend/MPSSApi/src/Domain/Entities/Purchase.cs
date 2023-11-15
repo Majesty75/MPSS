@@ -1,7 +1,7 @@
 ﻿namespace MPSSApi.Domain.Entities;
 public class Purchase : BaseAuditableEntity
 {
-    public string? PurchaseNumber { get; set; }
+    public string PurchaseNumber { get; set; } = string.Empty;
 
     public decimal Total { get; set; }
 
