@@ -10,7 +10,7 @@ import { PartService } from '@app/core/services/part.service';
 import { VendorService } from '@app/core/services/vendor.service';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpTelInputComponent } from '@app/shared/cp-libs/cp-tel-input/cp-tel-input.component';
-import { COUNTRY_LIST, MessageType, REGEX_CONSTANTS, RegexType } from '@constants/app.constants';
+import { MessageType, RegexType } from '@constants/app.constants';
 import { AllowNumberOnlyDirective } from '@directives/allow-number-only.directive';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -29,12 +29,10 @@ export class PartAddComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
   addPartForm: FormGroup<AddPartForm>;
-  id: string;
+  id: number;
   isSubmitted = false;
   vendorList: VendorDetail[];
 
-  readonly countryList = COUNTRY_LIST;
-  readonly emailRegex = REGEX_CONSTANTS.EMAIL_REGEX;
   readonly regexType = RegexType;
   private destroyRef = inject(DestroyRef);
 
@@ -47,10 +45,11 @@ export class PartAddComponent implements OnInit {
     private router: Router
   ) {
     this.breadcrumbs = this.route.snapshot.data.breadcrumbs;
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = +this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
+    this.cpEventsService.cpHeaderDataChanged.emit({ breadcrumbs: this.breadcrumbs });
     this.initializeForm();
     if (this.id) {
       const partDetail = this.route.snapshot.data.partDetail || this.partService.partDetail;

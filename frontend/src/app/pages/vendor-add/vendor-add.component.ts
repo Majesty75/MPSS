@@ -5,10 +5,11 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddVendorForm, VendorAddress } from '@app/core/models/vendor.model';
+import { CpEventsService } from '@app/core/services/cp-events.service';
 import { VendorService } from '@app/core/services/vendor.service';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpTelInputComponent } from '@app/shared/cp-libs/cp-tel-input/cp-tel-input.component';
-import { COUNTRY_LIST, CURRENCY_LIST, LANGUAGE_LIST, MessageType, REGEX_CONSTANTS, RegexType } from '@constants/app.constants';
+import { COUNTRY_LIST, MessageType, REGEX_CONSTANTS, RegexType } from '@constants/app.constants';
 import { AllowNumberOnlyDirective } from '@directives/allow-number-only.directive';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -26,29 +27,27 @@ export class VendorAddComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
   addVendorForm: FormGroup<AddVendorForm>;
-  id: string;
+  id: number;
   isSubmitted = false;
 
   readonly countryList = COUNTRY_LIST;
-  readonly currencyList = CURRENCY_LIST;
-  readonly languageList = LANGUAGE_LIST;
   readonly emailRegex = REGEX_CONSTANTS.EMAIL_REGEX;
-  readonly webUrlRegex = REGEX_CONSTANTS.WEB_URL_REGEX;
-  readonly integerRegex = REGEX_CONSTANTS.INTEGER_REGEX;
   readonly regexType = RegexType;
   private destroyRef = inject(DestroyRef);
 
   constructor(
     private route: ActivatedRoute,
+    private cpEventsService: CpEventsService,
     private vendorService: VendorService,
     private toasterService: AlertToastrService,
     private router: Router
   ) {
     this.breadcrumbs = this.route.snapshot.data.breadcrumbs;
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = +this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
+    this.cpEventsService.cpHeaderDataChanged.emit({ breadcrumbs: this.breadcrumbs });
     this.initializeForm();
     if (this.id) {
       const vendorDetail = this.route.snapshot.data.vendorDetail || this.vendorService.vendorDetail;

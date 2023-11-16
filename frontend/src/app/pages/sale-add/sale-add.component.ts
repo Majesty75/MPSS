@@ -2,111 +2,110 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AddSaleForm } from '@app/core/models/sale.model';
-import { VendorAddress } from '@app/core/models/vendor.model';
-import { VendorService } from '@app/core/services/vendor.service';
+import { PartDetail } from '@app/core/models/part.model';
+import { AddSaleForm, Record } from '@app/core/models/sale.model';
+import { PartService } from '@app/core/services/part.service';
+import { SaleService } from '@app/core/services/sale.service';
+import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpTelInputComponent } from '@app/shared/cp-libs/cp-tel-input/cp-tel-input.component';
-import { COUNTRY_LIST, CURRENCY_LIST, LANGUAGE_LIST, MessageType, REGEX_CONSTANTS, RegexType } from '@constants/app.constants';
+import { MessageType } from '@constants/app.constants';
 import { AllowNumberOnlyDirective } from '@directives/allow-number-only.directive';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertToastrService } from '@services/alert-toastr.service';
 import { CpEventsService } from '@services/cp-events.service';
+import { RecordAddComponent } from '../record-add/record-add.component';
 
 @Component({
   selector: 'app-sale-add',
   standalone: true,
-  imports: [CommonModule, MatSlideToggleModule, NgSelectModule, FormsModule, CpButtonComponent, ReactiveFormsModule, TranslateModule, AllowNumberOnlyDirective, CpTelInputComponent],
+  imports: [CommonModule, MatSlideToggleModule, NgSelectModule, FormsModule, CpButtonComponent, ReactiveFormsModule, TranslateModule, AllowNumberOnlyDirective, CpTelInputComponent, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, MatInputModule, MatIconModule, MatTableModule, CpActionToolbarComponent],
   templateUrl: './sale-add.component.html',
   styleUrls: ['./sale-add.component.scss']
 })
 export class SaleAddComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
-  addPartnerForm: FormGroup<AddSaleForm>;
-  id: string;
+  addSaleForm: FormGroup<AddSaleForm>;
+  recordDataSource = new MatTableDataSource<Record>();
+  recordList: Record[] = [];
+  partList: PartDetail[];
+  id: number;
+  columnLabel = ['partName', 'quantity', 'price', 'total', 'action'];
   isSubmitted = false;
-  isReadOnly = false;
+  newRecord: Partial<Record> = {
+    id: 0,
+    partId: 0,
+    price: 0,
+    quantity: 0
+  }
+  newRecordCount: number = -1;
 
-  readonly countryList = COUNTRY_LIST;
-  readonly currencyList = CURRENCY_LIST;
-  readonly languageList = LANGUAGE_LIST;
-  readonly emailRegex = REGEX_CONSTANTS.EMAIL_REGEX;
-  readonly webUrlRegex = REGEX_CONSTANTS.WEB_URL_REGEX;
-  readonly integerRegex = REGEX_CONSTANTS.INTEGER_REGEX;
-  readonly regexType = RegexType;
   private destroyRef = inject(DestroyRef);
 
   constructor(
     private route: ActivatedRoute,
     private cpEventsService: CpEventsService,
-    private partnerService: VendorService,
+    private saleService: SaleService,
+    private partService: PartService,
     private toasterService: AlertToastrService,
+    private dialog: MatDialog,
     private router: Router
   ) {
     this.breadcrumbs = this.route.snapshot.data.breadcrumbs;
-    this.id = this.route.snapshot.paramMap.get('id');
-    if (this.router.url.includes('company-details')) {
-      this.isReadOnly = true;
-    }
+    this.id = +this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-    !this.isReadOnly && this.cpEventsService.cpHeaderDataChanged.emit({ breadcrumbs: this.breadcrumbs });
+    this.cpEventsService.cpHeaderDataChanged.emit({ breadcrumbs: this.breadcrumbs });
     this.initializeForm();
-    if (this.id || this.isReadOnly) {
-      const partnerDetail = this.route.snapshot.data.partnerDetail || this.partnerService.vendorDetail;
-      this.addPartnerForm.patchValue(partnerDetail);
-      this.isReadOnly && this.addPartnerForm.disable();
+    if (this.id) {
+      const saleDetail = this.route.snapshot.data.saleDetail || this.saleService.saleDetail;
+      this.addSaleForm.patchValue(saleDetail);
+      this.recordList = saleDetail.records ?? [];
     }
+    this.getPartList();
   }
 
   initializeForm(): void {
-    this.addPartnerForm = new FormGroup<AddSaleForm>({
-      isActive: new FormControl(false, Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      address: new FormGroup<VendorAddress>({
-        street: new FormControl('', Validators.required),
-        zip: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{4,6}$')]),
-        city: new FormControl('', Validators.required),
-        country: new FormControl('', Validators.required),
-      }),
-      companyName: new FormControl('', Validators.required),
-      name: new FormControl('', Validators.required),
-      phoneNo: new FormControl('', Validators.required),
-      webAddress: new FormControl(''),
-      currency: new FormControl('', Validators.required),
-      locale: new FormControl('', Validators.required),
+    this.addSaleForm = new FormGroup<AddSaleForm>({
+      saleNumber: new FormControl<string>('', Validators.required),
+      date: new FormControl<Date>(new Date(), Validators.required),
+      customerName: new FormControl<string>(''),
+      customerContact: new FormControl<string>('')
     });
   }
 
   get formControls(): AddSaleForm {
-    return this.addPartnerForm.controls;
-  }
-
-  get addressControls(): VendorAddress {
-    return this.addPartnerForm.controls.address.controls;
+    return this.addSaleForm.controls;
   }
 
   onSubmit(): boolean | void {
-    this.addPartnerForm.markAllAsTouched();
-    if (this.addPartnerForm.invalid) {
+    this.addSaleForm.markAllAsTouched();
+    if (this.addSaleForm.invalid) {
       return true;
     }
     this.isSubmitted = true;
     if (!this.id) {
-      this.addPartner();
+      this.addSale();
     } else {
-      this.updatePartner();
+      this.updateSale();
     }
   }
 
-  addPartner(): void {
-    this.partnerService.addVendor(this.addPartnerForm.value)
+  addSale(): void {
+    this.saleService.addSale({ ...this.addSaleForm.value, records: this.recordList })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
@@ -120,8 +119,8 @@ export class SaleAddComponent implements OnInit {
       })
   }
 
-  updatePartner(): void {
-    this.partnerService.updateVendorDetail(this.addPartnerForm.value, this.id)
+  updateSale(): void {
+    this.saleService.updateSaleDetail({ ...this.addSaleForm.value, records: this.recordList }, this.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
@@ -131,6 +130,117 @@ export class SaleAddComponent implements OnInit {
         },
         error: () => {
           this.isSubmitted = false;
+        }
+      })
+  }
+
+  addRecord() {
+    const dialogRef = this.dialog.open(RecordAddComponent, {
+      data: {
+        record: this.newRecord,
+        partList: this.partList
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (addRecord: Partial<Record>) => {
+          if (addRecord) {
+            const record: Record = {
+              id: this.newRecordCount--,
+              date: new Date(),
+              partId: addRecord.partId,
+              partName: addRecord.partName,
+              quantity: addRecord.quantity,
+              price: addRecord.price,
+              total: addRecord.price * addRecord.quantity,
+              recordAction: [
+                {
+                  label: 'common.edit',
+                  callback: this.updateRecord.bind(this)
+                },
+                {
+                  label: 'common.delete',
+                  callback: this.deleteRecord.bind(this)
+                }
+              ]
+            };
+            this.recordList.push(record);
+            this.recordDataSource = new MatTableDataSource(this.recordList);
+          }
+        }
+      });
+  }
+
+  updateRecord(row: Record) {
+    const record: Partial<Record> = {
+      id: row.id,
+      partId: row.partId,
+      partName: row.partName,
+      quantity: row.quantity,
+      price: row.price
+    }
+    const dialogRef = this.dialog.open(RecordAddComponent, {
+      data: { record, partList: this.partList },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (updatedRecord: Partial<Record>) => {
+          const record = this.recordList.find(r => r.id === updatedRecord?.id);
+          if (updatedRecord && record) {
+            record.partId = updatedRecord.partId;
+            record.partName = updatedRecord.partName;
+            record.quantity = updatedRecord.quantity;
+            record.price = updatedRecord.price;
+            record.total = record.price * record.quantity;
+            record.recordAction = [
+              {
+                label: 'common.edit',
+                callback: this.updateRecord.bind(this)
+              },
+              {
+                label: 'common.delete',
+                callback: this.deleteRecord.bind(this)
+              }
+            ];
+          }
+        }
+      });
+  }
+
+  deleteRecord(row: Record) {
+    this.recordList = this.recordList.filter(r => r.id != row.id);
+    this.recordDataSource = new MatTableDataSource(this.recordList);
+  }
+
+  getPartList(): void {
+    this.partService.getAllParts()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: PartDetail[]) => {
+          if (res) {
+            this.partList = res;
+            for (let record of this.recordList) {
+              const part = this.partList.find(p => p.id == record.partId);
+              part && (record.partName = part.partName);
+              record.recordAction = [
+                {
+                  label: 'common.edit',
+                  callback: this.updateRecord.bind(this)
+                },
+                {
+                  label: 'common.delete',
+                  callback: this.deleteRecord.bind(this)
+                }
+              ]
+            }
+            this.recordDataSource = new MatTableDataSource(this.recordList);
+          }
         }
       })
   }

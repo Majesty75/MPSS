@@ -2,6 +2,7 @@
 using MPSSApi.Application.Common.Models;
 using MPSSApi.Application.TodoLists.Commands.DeleteTodoList;
 using MPSSApi.Application.Vendors.Commands.CreateVendor;
+using MPSSApi.Application.Vendors.Commands.DeleteVendor;
 using MPSSApi.Application.Vendors.Commands.UpdateVendor;
 using MPSSApi.Application.Vendors.Queries.GetVendor;
 using MPSSApi.Application.Vendors.Queries.GetVendors;
@@ -50,7 +51,7 @@ public class Vendors : EndpointGroupBase
 
     public async Task<IResult> DeleteVendor(ISender sender, int id)
     {
-        await sender.Send(new DeleteTodoListCommand(id));
+        await sender.Send(new DeleteVendorCommand(id));
         return Results.Ok(new { message = "Vendor Deleted" });
     }
 }

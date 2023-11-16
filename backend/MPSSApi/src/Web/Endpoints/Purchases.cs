@@ -5,6 +5,7 @@ using MPSSApi.Application.Purchases.Commands.CreatePurchase;
 using MPSSApi.Application.Purchases.Commands.UpdatePurchase;
 using MPSSApi.Application.Purchases.Queries.GetPurchase;
 using MPSSApi.Application.Purchases.Queries.GetPurchasesWithPagination;
+using MPSSApi.Application.Purchases.Commands.DeletePurchase;
 
 namespace MPSSApi.Web.Endpoints;
 public class Purchases : EndpointGroupBase
@@ -44,7 +45,7 @@ public class Purchases : EndpointGroupBase
 
     public async Task<IResult> DeletePurchase(ISender sender, int id)
     {
-        await sender.Send(new DeleteTodoListCommand(id));
+        await sender.Send(new DeletePurchaseCommand(id));
         return Results.Ok(new { message = "Purchase Deleted" });
     }
 }

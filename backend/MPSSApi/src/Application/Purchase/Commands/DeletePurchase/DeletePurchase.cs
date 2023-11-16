@@ -40,10 +40,22 @@ public class DeletePurchaseCommandHandler : IRequestHandler<DeletePurchaseComman
             }
         }
 
-        _context.Records.RemoveRange(entity.Records);
+        using var transaction = _context.StartTransaction();
+        try
+        {
+            _context.Records.RemoveRange(entity.Records);
 
-        _context.Purchases.Remove(entity);
+            _context.Purchases.Remove(entity);
 
-        await _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            await transaction.CommitAsync(cancellationToken);
+        }
+        catch
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
+        }
+
     }
 }

@@ -32,8 +32,7 @@ export interface PartList {
     totalCount: number;
 }
 export interface PartDetail {
-    partId: number;
-    id: string;
+    id: number;
     partName: string;
     partNumber: string;
     quantity: number;

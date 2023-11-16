@@ -27,7 +27,7 @@ export class PurchaseAddComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
   addPartnerForm: FormGroup<AddPurchaseForm>;
-  id: string;
+  id: number;
   isSubmitted = false;
   isReadOnly = false;
 
@@ -48,7 +48,7 @@ export class PurchaseAddComponent implements OnInit {
     private router: Router
   ) {
     this.breadcrumbs = this.route.snapshot.data.breadcrumbs;
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = +this.route.snapshot.paramMap.get('id');
     if (this.router.url.includes('company-details')) {
       this.isReadOnly = true;
     }

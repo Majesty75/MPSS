@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MPSSApi.Application.Common.Interfaces;
+﻿using MPSSApi.Application.Common.Interfaces;
 using MPSSApi.Application.Common.Models;
-using MPSSApi.Application.Sales.Queries.GetSalesWithPagination;
 using MPSSApi.Domain.Entities;
 
 namespace MPSSApi.Application.Sales.Commands.CreateSale;
@@ -76,31 +74,45 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, int>
             Date = request.Date
         };
 
-        _context.Sales.Add(entity);
-
-        await _context.SaveChangesAsync(cancellationToken);
-
-        entity.Records = records; 
-
-        foreach (var item in entity.Records)
+        using var transaction = _context.StartTransaction();
+        try
         {
-            item.SaleId = entity.Id;
-            item.PurchaseId = null;
-            item.Date = entity.Date;
+            _context.Sales.Add(entity);
 
-            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+            await _context.SaveChangesAsync(cancellationToken);
 
-            if(part != null)
+            entity.Records = records; 
+
+            foreach (var item in entity.Records)
             {
-                // Creating sales record means decrease quantity
-                part.Quantity -= item.Quantity;
+                item.Id = 0;
+                item.SaleId = entity.Id;
+                item.PurchaseId = null;
+                item.Date = entity.Date;
 
-                if (part.Quantity < 0) part.Quantity = 0;
+                var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+
+                if(part != null)
+                {
+                    // Creating sales record means decrease quantity
+                    part.Quantity -= item.Quantity;
+
+                    if (part.Quantity < 0) part.Quantity = 0;
+                }
+
             }
 
+            await _context.SaveChangesAsync(cancellationToken);
+
+            await transaction.CommitAsync();
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            var message = ex.Message;
+            throw;
         }
 
-        await _context.SaveChangesAsync(cancellationToken);
 
         return entity.Id;
     }

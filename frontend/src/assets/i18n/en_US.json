@@ -50,8 +50,16 @@
     "tokenExpired": "Your token has expired, Please login again",
     "addVendorSuccessful": "Vendor added successfully",
     "updateVendorSuccessful": "Vendor updated successfully",
+    "deleteVendorSuccessful": "Vendor deleted successfully",
     "addPartSuccessful": "Part added successfully",
-    "updatePartSuccessful": "Part updated successfully"
+    "updatePartSuccessful": "Part updated successfully",
+    "deletePartSuccessful": "Part deleted successfully",
+    "addSaleSuccessful": "Sale added successfully",
+    "updateSaleSuccessful": "Sale updated successfully",
+    "deleteSaleSuccessful": "Sale deleted successfully",
+    "addPurchaseSuccessful": "Purchase added successfully",
+    "updatePurchaseSuccessful": "Purchase updated successfully",
+    "deletePurchaseSuccessful": "Purchase deleted successfully"
   },
   "common": {
     "noDataFound": "No data found",
@@ -77,8 +85,11 @@
     "add": "Add",
     "cancel": "Cancel",
     "update": "Update",
+    "delete": "Delete",
     "contactInfo": "Contact Info",
     "total": "Total",
+    "record": "Record",
+    "addRecord": "Add Record",
     "countries": {
       "india": "India",
       "austria": "Austria",
@@ -124,7 +135,8 @@
     "saleNumber": "Sale Number",
     "customerName": "Customer Name",
     "customerNo": "Customer No",
-    "sellPrice": "Sell Price"
+    "sellPrice": "Sell Price",
+    "saleDate": "Sale Date"
   },
   "purchase": {
     "addPurchase": "Add Purchase",

@@ -1,4 +1,6 @@
-﻿using MPSSApi.Domain.Entities;
+﻿using System.Data.Common;
+using Microsoft.EntityFrameworkCore.Storage;
+using MPSSApi.Domain.Entities;
 
 namespace MPSSApi.Application.Common.Interfaces;
 
@@ -19,4 +21,6 @@ public interface IApplicationDbContext
     DbSet<Record> Records { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
+    abstract IDbContextTransaction StartTransaction();
 }

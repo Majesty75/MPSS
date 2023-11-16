@@ -84,28 +84,39 @@ public class CreatePurchaseCommandHandler : IRequestHandler<CreatePurchaseComman
             Date = request.Date
         };
 
-        _context.Purchases.Add(entity);
-
-        await _context.SaveChangesAsync(cancellationToken);
-
-        entity.Records = records;
-
-        foreach (var item in entity.Records)
+        using var transaction = _context.StartTransaction();
+        try
         {
-            item.SaleId = null;
-            item.PurchaseId = entity.Id;
-            item.Date = entity.Date;
+            _context.Purchases.Add(entity);
 
-            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+            await _context.SaveChangesAsync(cancellationToken);
 
-            if (part != null)
+            entity.Records = records;
+
+            foreach (var item in entity.Records)
             {
-                // Creating purchase record means increase quantity
-                part.Quantity += item.Quantity;
-            }
-        }
+                item.SaleId = null;
+                item.PurchaseId = entity.Id;
+                item.Date = entity.Date;
 
-        await _context.SaveChangesAsync(cancellationToken);
+                var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+
+                if (part != null)
+                {
+                    // Creating purchase record means increase quantity
+                    part.Quantity += item.Quantity;
+                }
+            }
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            await transaction.CommitAsync(cancellationToken);
+        }
+        catch
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
+        }
 
         return entity.Id;
     }

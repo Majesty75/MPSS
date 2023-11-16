@@ -1,6 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActionToolbar } from "@models/common.model";
-import { InventoryRecord } from "./sale.model";
+import { Record } from "./sale.model";
 import { VendorDetail } from "./vendor.model";
 
 export interface CreatePurchase {
@@ -60,6 +60,6 @@ export interface PurchaseDetail {
     date: Date;
     vendorName: string;
     vendor: VendorDetail;
-    records: InventoryRecord[];
+    records: Record[];
     purchaseAction: ActionToolbar[];
 }

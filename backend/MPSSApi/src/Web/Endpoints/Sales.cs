@@ -1,10 +1,10 @@
 ﻿
 using MPSSApi.Application.Common.Models;
-using MPSSApi.Application.TodoLists.Commands.DeleteTodoList;
 using MPSSApi.Application.Sales.Commands.CreateSale;
 using MPSSApi.Application.Sales.Commands.UpdateSale;
 using MPSSApi.Application.Sales.Queries.GetSale;
 using MPSSApi.Application.Sales.Queries.GetSalesWithPagination;
+using MPSSApi.Application.Sales.Commands.DeleteSale;
 
 namespace MPSSApi.Web.Endpoints;
 public class Sales : EndpointGroupBase
@@ -44,7 +44,7 @@ public class Sales : EndpointGroupBase
 
     public async Task<IResult> DeleteSale(ISender sender, int id)
     {
-        await sender.Send(new DeleteTodoListCommand(id));
+        await sender.Send(new DeleteSaleCommand(id));
         return Results.Ok(new { message = "Sale Deleted" });
     }
 }

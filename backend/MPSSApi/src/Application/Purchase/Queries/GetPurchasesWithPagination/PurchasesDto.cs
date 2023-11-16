@@ -4,6 +4,8 @@ using MPSSApi.Domain.Entities;
 namespace MPSSApi.Application.Purchases.Queries.GetPurchasesWithPagination;
 public class PurchasesDto
 {
+    public int Id { get; set; }
+
     public string? PurchaseNumber { get; set; }
 
     public decimal Total { get; set; }

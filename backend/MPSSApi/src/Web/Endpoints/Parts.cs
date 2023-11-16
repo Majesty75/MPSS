@@ -6,6 +6,7 @@ using MPSSApi.Application.Parts.Commands.UpdatePart;
 using MPSSApi.Application.Parts.Queries.GetPart;
 using MPSSApi.Application.Parts.Queries.GetParts;
 using MPSSApi.Application.Parts.Queries.GetPartsWithPagination;
+using MPSSApi.Application.Parts.Commands.DeletePart;
 
 namespace MPSSApi.Web.Endpoints;
 public class Parts : EndpointGroupBase
@@ -51,7 +52,7 @@ public class Parts : EndpointGroupBase
 
     public async Task<IResult> DeletePart(ISender sender, int id)
     {
-        await sender.Send(new DeleteTodoListCommand(id));
+        await sender.Send(new DeletePartCommand(id));
         return Results.Ok(new { message = "Part Deleted" });
     }
 }

@@ -1,17 +1,12 @@
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 import { ActionToolbar } from "@models/common.model";
 
 export interface CreateSale {
-    isActive: boolean;
-    email: string;
-    companyName: string;
-    address: Partial<Address>;
-    name: string;
-    phoneNo: string;
-    webAddress: string;
-    currency: string;
-    locale: string;
-    id: string;
+    saleNumber: string;
+    date: Date;
+    customerName: string;
+    customerContact: string;
+    records: Partial<Record>[];
 }
 
 export interface Address {
@@ -22,22 +17,18 @@ export interface Address {
 }
 
 export interface AddSaleForm {
-    isActive: FormControl<boolean>,
-    email: FormControl<string>,
-    address: FormGroup<SaleAddress>,
-    companyName: FormControl<string>,
-    name: FormControl<string>,
-    phoneNo: FormControl<string>,
-    webAddress: FormControl<string>,
-    currency: FormControl<string>,
-    locale: FormControl<string>,
+    saleNumber: FormControl<string>,
+    date: FormControl<Date>,
+    customerName: FormControl<string>,
+    customerContact: FormControl<string>
 }
 
-export interface SaleAddress {
-    street: FormControl<string>,
-    zip: FormControl<string>,
-    city: FormControl<string>,
-    country: FormControl<string>,
+export interface AddRecordForm {
+    id: FormControl<number>,
+    partId: FormControl<number>,
+    quantity: FormControl<number>,
+    price: FormControl<number>,
+    partName: FormControl<string>
 }
 
 export interface SaleListQueryParams {
@@ -58,18 +49,18 @@ export interface SaleDetail {
     date: Date;
     total: number;
     customerName: string;
-    customerNo: string;
-    records: InventoryRecord[];
+    customerContact: string;
+    records: Partial<Record>[];
     saleAction: ActionToolbar[];
 }
 
-export interface InventoryRecord {
-    recordId: number;
-    txrId: number;
-    trxType: number;
+export interface Record {
+    id: number;
     partId: number;
+    partName?: string;
     quantity: number;
     price: number;
     total: number;
     date: Date;
+    recordAction: ActionToolbar[];
 }

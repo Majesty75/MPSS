@@ -14,7 +14,7 @@ import { SaleService } from '@app/core/services/sale.service';
 import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpLoaderComponent } from '@app/shared/cp-libs/cp-loader/cp-loader.component';
-import { PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
+import { MessageType, PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -91,6 +91,10 @@ export class SaleListComponent {
                 {
                   label: 'common.edit',
                   callback: this.editSale.bind(this)
+                },
+                {
+                  label: 'common.delete',
+                  callback: this.deleteSale.bind(this)
                 }
               ]
             });
@@ -110,6 +114,17 @@ export class SaleListComponent {
 
   editSale(row: SaleDetail): void {
     this.router.navigate([`../${row.id}`], { relativeTo: this.route });
+  }
+
+  deleteSale(row: SaleDetail): void {
+    this.saleService.deleteSale(row.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.deleteSaleSuccessful', MessageType.success);
+          this.getSalesList();
+        },
+      })
   }
 
   onSearch(searchValue: string): void {

@@ -1,0 +1,76 @@
+<div class="bg-white shadow-2sm p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px] w-[100%] max-w-[900px]">
+    <form [formGroup]="addRecordForm">
+        <div class="flex flex-wrap -m-2">
+            <div class="w-[100%] p-2">
+                <div class="flex">
+                    <label class="field-lbl"
+                        [ngClass]="{ 'field-error': formControls.partId.touched && formControls.partId.invalid }">{{
+                        'vendor.vendorName' | translate }}</label>
+                    <ng-select class="w-full font-semibold text-secondary custom-select"
+                        [ngClass]="{ 'field-error': formControls.partId.touched && formControls.partId.invalid }"
+                        [items]="partList" bindLabel="partName" bindValue="id" formControlName="partId"
+                        [searchable]="false" [clearable]="false" (change)="partSelected($event)"></ng-select>
+                </div>
+                <ng-container
+                    *ngTemplateOutlet="requiredError; context: { control: formControls.partId }"></ng-container>
+            </div>
+        </div>
+        <div class="flex flex-wrap -m-2">
+            <div class="w-full sm:w-[50%] p-2">
+                <div class="flex">
+                    <label class="field-lbl"
+                        [ngClass]="{ 'field-error': formControls.price.touched && formControls.price.invalid }">{{
+                        'part.sellPrice' | translate }}</label>
+                    <input class="form-field"
+                        [ngClass]="{ 'field-error': formControls.price.touched && formControls.price.invalid }"
+                        type="number" formControlName="price">
+                </div>
+                <ng-container
+                    *ngTemplateOutlet="requiredError; context: { control: formControls.price }"></ng-container>
+                <ng-container
+                    *ngTemplateOutlet="greaterThanZeroError; context: { control: formControls.price }"></ng-container>
+            </div>
+            <div class="w-full sm:w-[50%] p-2">
+                <div class="flex">
+                    <label class="field-lbl"
+                        [ngClass]="{ 'field-error': formControls.quantity.touched && formControls.quantity.invalid }">{{
+                        'part.quantity' | translate }}</label>
+                    <input class="form-field"
+                        [ngClass]="{ 'field-error': formControls.quantity.touched && formControls.quantity.invalid }"
+                        type="number" formControlName="quantity">
+                </div>
+                <ng-container
+                    *ngTemplateOutlet="requiredError; context: { control: formControls.quantity }"></ng-container>
+                <ng-container
+                    *ngTemplateOutlet="greaterThanZeroError; context: { control: formControls.quantity }"></ng-container>
+                <ng-container
+                    *ngTemplateOutlet="patternError; context: { control: formControls.quantity}"></ng-container>
+            </div>
+        </div>
+        <div class="flex justify-end mt-6 2xl:mt-8">
+            <app-cp-button [class]="{ 'common-btn secondary-btn font-semibold rounded-[5px] min-w-[100px] mr-4': true }"
+                [label]="( 'common.cancel' | translate )" (onTap)="cancel()"></app-cp-button>
+
+            <app-cp-button [class]="{ 'common-btn primary-btn font-semibold rounded-[5px] min-w-[100px]': true }"
+                [label]="id ? ( 'common.update' | translate ) : ( 'common.add' | translate )" (onTap)="onSubmit()"
+                [isDisabled]="isSubmitted" [spin]="isSubmitted"></app-cp-button>
+
+        </div>
+    </form>
+</div>
+
+<ng-template #requiredError let-control="control">
+    <ng-container *ngIf="control.touched && control.errors?.required">
+        <p class="error-message">{{ 'validation.fieldRequired' | translate }}</p>
+    </ng-container>
+</ng-template>
+<ng-template #greaterThanZeroError let-control="control">
+    <ng-container *ngIf="control.touched && control.errors?.min">
+        <p class="error-message">{{ 'validation.greaterThanZero' | translate }}</p>
+    </ng-container>
+</ng-template>
+<ng-template #patternError let-control="control">
+    <ng-container *ngIf="control.touched && control.errors?.pattern">
+        <p class="error-message">{{ 'validation.invalidQuantity' | translate }}</p>
+    </ng-container>
+</ng-template>

@@ -80,64 +80,92 @@ public class UpdateSaleCommandHandler : IRequestHandler<UpdateSaleCommand>
         entity.CustomerName = request.CustomerName;
         entity.CustomerContact = request.CustomerContact;
 
-        await _context.SaveChangesAsync(cancellationToken);
-
-
-        foreach (var item in records)
+        using var transaction = _context.StartTransaction();
+        try
         {
-            item.SaleId = entity.Id;
-            item.PurchaseId = null;
-            item.Date = entity.Date;
-        }
+            await _context.SaveChangesAsync(cancellationToken);
 
-        var updateRecords = records.Where(r => r.Id > 0).Select(r => r.Id);
 
-        foreach (var item in entity.Records)
-        {
-            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
-
-            if (!updateRecords.Contains(item.Id))
+            foreach (var item in records)
             {
-                // Remove this items
-                if (part != null)
-                {
-                    // Deleting sales record means increase quantity
-                    part.Quantity += item.Quantity;
-                }
-
-                entity.Records.Remove(item);
+                item.SaleId = entity.Id;
+                item.PurchaseId = null;
+                item.Date = entity.Date;
             }
-            else
+
+            var updateRecords = records.Where(r => r.Id > 0).Select(r => r.Id);
+
+            foreach (var item in entity.Records)
             {
-                // Update this items
+                var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+
+                if (!updateRecords.Contains(item.Id))
+                {
+                    // Remove this items
+                    if (part != null)
+                    {
+                        // Deleting sales record means increase quantity
+                        part.Quantity += item.Quantity;
+                    }
+                }
+                else
+                {
+                    var record = records.First(r => r.Id == item.Id);
+
+                    // Update this items
+                    if (part != null)
+                    {
+                        // Updating sales record means increase old part quantity
+                        part.Quantity += item.Quantity;
+
+                        if (part.Quantity < 0) part.Quantity = 0;
+                    }
+
+                    item.PartId = record.PartId;
+                    item.Date = entity.Date;
+                    item.Quantity = record.Quantity;
+                    item.Price = record.Price;
+                    item.Total = item.Price * item.Quantity;
+
+                    part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+                    if (part != null)
+                    {
+                        // Updating sales record means decrease new part quantity
+                        part.Quantity += item.Quantity;
+                    }
+                }
+            }
+
+            foreach(var item in records.Where(r => r.Id < 0))
+            {
+                item.Id = 0;
+
+                // Add this items
+                var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
+
                 if (part != null)
                 {
-                    // Updating sales record means increase by difference of old and new
-                    part.Quantity += item.Quantity - records.First(r => r.Id == item.Id).Quantity;
+                    // Creating sales record means decrease quantity
+                    part.Quantity -= item.Quantity;
 
                     if (part.Quantity < 0) part.Quantity = 0;
                 }
-            }
-        }
 
-        foreach(var item in records.Where(r => r.Id == 0))
+                entity.Records.Add(item);
+            }
+
+            _context.Records.RemoveRange(entity.Records.Where(r => !updateRecords.Contains(r.Id)));
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            await transaction.CommitAsync(cancellationToken);
+        }
+        catch (Exception ex)
         {
-            // Add this items
-            var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
-
-            if (part != null)
-            {
-                // Creating sales record means decrease quantity
-                part.Quantity -= item.Quantity;
-
-                if (part.Quantity < 0) part.Quantity = 0;
-            }
-
-            entity.Records.Add(item);
+            await transaction.RollbackAsync(cancellationToken);
+            var mess = ex.Message;
+            throw;
         }
 
-        _context.Records.UpdateRange(records.Where(r => r.Id != 0));
-
-        await _context.SaveChangesAsync(cancellationToken);
     }
 }

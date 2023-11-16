@@ -14,7 +14,7 @@ import { PurchaseService } from '@app/core/services/purchase.service';
 import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpLoaderComponent } from '@app/shared/cp-libs/cp-loader/cp-loader.component';
-import { PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
+import { MessageType, PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -91,6 +91,10 @@ export class PurchaseListComponent {
                 {
                   label: 'common.edit',
                   callback: this.editPurchase.bind(this)
+                },
+                {
+                  label: 'common.delete',
+                  callback: this.deletePurchase.bind(this)
                 }
               ]
             });
@@ -110,6 +114,17 @@ export class PurchaseListComponent {
 
   editPurchase(row: PurchaseDetail): void {
     this.router.navigate([`../${row.id}`], { relativeTo: this.route });
+  }
+
+  deletePurchase(row: PurchaseDetail): void {
+    this.purchaseService.deletePurchase(row.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.deletePurchaseSuccessful', MessageType.success);
+          this.getPurchaseList();
+        },
+      })
   }
 
   onSearch(searchValue: string): void {

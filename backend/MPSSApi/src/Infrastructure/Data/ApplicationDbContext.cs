@@ -4,6 +4,8 @@ using MPSSApi.Domain.Entities;
 using MPSSApi.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MPSSApi.Infrastructure.Data;
 
@@ -31,4 +33,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
         base.OnModelCreating(builder);
     }
+
+    IDbContextTransaction IApplicationDbContext.StartTransaction()
+    {
+        return base.Database.BeginTransaction();
+    } 
 }

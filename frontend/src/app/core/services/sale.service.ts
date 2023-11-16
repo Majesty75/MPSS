@@ -1,4 +1,3 @@
-import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreateSale, SaleList, SaleListQueryParams } from '@app/core/models/sale.model';
 import { API_ROUTES } from '@constants/app.constants';
@@ -11,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class SaleService {
 
-  partnerDetail: CreateSale;
+  saleDetail: CreateSale;
   breadcrumbs: BreadCrumb[];
   constructor(
     private httpClientService: HttpClientService
@@ -21,11 +20,11 @@ export class SaleService {
     return this.httpClientService.get(API_ROUTES.saleListApi, { params });
   }
 
-  addSale(params: Partial<CreateSale>): Observable<[] | null> {
+  addSale(params: Partial<CreateSale>): Observable<any> {
     return this.httpClientService.post(API_ROUTES.salesApi, params);
   }
 
-  getSaleDetail(id: string): Observable<CreateSale> {
+  getSaleDetail(id: number): Observable<CreateSale> {
     return this.httpClientService.get(`${API_ROUTES.salesApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
@@ -33,17 +32,12 @@ export class SaleService {
     });
   }
 
-  updateSaleDetail(params: Partial<CreateSale>, id: string): Observable<[] | null> {
-    return this.httpClientService.patch(`${API_ROUTES.salesApi}/${id}`, params);
+  updateSaleDetail(params: Partial<CreateSale>, id: number): Observable<any> {
+    return this.httpClientService.put(`${API_ROUTES.salesApi}/${id}`, params);
   }
 
-  downloadExcel(id: string): Observable<HttpResponse<Blob>> {
-    return this.httpClientService.get(`${API_ROUTES.downloadExcelApi}/${id}`, {
-      observe: 'response', responseType: 'blob',
-      headers: {
-        'X-CP-BIR': 'true'
-      }
-    });
+  deleteSale(id: number): Observable<any> {
+    return this.httpClientService.delete(`${API_ROUTES.salesApi}/${id}`);
   }
 
 }

@@ -3,7 +3,7 @@ import { API_ROUTES } from '@constants/app.constants';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { HttpClientService } from '@services/http-client.service';
 import { Observable } from 'rxjs';
-import { CreatePart, PartList, PartListQueryParams } from '../models/part.model';
+import { CreatePart, PartDetail, PartList, PartListQueryParams } from '../models/part.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +20,15 @@ export class PartService {
     return this.httpClientService.get(API_ROUTES.partListApi, { params });
   }
 
-  addPart(params: Partial<CreatePart>): Observable<[] | null> {
+  getAllParts(): Observable<PartDetail[]> {
+    return this.httpClientService.get(API_ROUTES.partsApi);
+  }
+
+  addPart(params: Partial<CreatePart>): Observable<any> {
     return this.httpClientService.post(API_ROUTES.partsApi, params);
   }
 
-  getPartDetail(id: string): Observable<CreatePart> {
+  getPartDetail(id: number): Observable<CreatePart> {
     return this.httpClientService.get(`${API_ROUTES.partsApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
@@ -32,8 +36,12 @@ export class PartService {
     });
   }
 
-  updateVendorDetail(params: Partial<CreatePart>, id: string): Observable<[] | null> {
+  updateVendorDetail(params: Partial<CreatePart>, id: number): Observable<any> {
     return this.httpClientService.put(`${API_ROUTES.partsApi}/${id}`, params);
+  }
+
+  deletePart(id: number): Observable<any> {
+    return this.httpClientService.delete(`${API_ROUTES.partsApi}/${id}`);
   }
 
 }

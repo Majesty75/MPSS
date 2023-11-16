@@ -10,12 +10,11 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PartDetail, PartList } from '@app/core/models/part.model';
-import { VendorDetail } from '@app/core/models/vendor.model';
 import { PartService } from '@app/core/services/part.service';
 import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpLoaderComponent } from '@app/shared/cp-libs/cp-loader/cp-loader.component';
-import { PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
+import { MessageType, PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -92,6 +91,10 @@ export class PartListComponent {
                 {
                   label: 'common.edit',
                   callback: this.editPart.bind(this)
+                },
+                {
+                  label: 'common.delete',
+                  callback: this.deletePart.bind(this)
                 }
               ]
             });
@@ -109,8 +112,19 @@ export class PartListComponent {
     this.partList.paginator = this.paginator;
   }
 
-  editPart(row: VendorDetail): void {
+  editPart(row: PartDetail): void {
     this.router.navigate([`../${row.id}`], { relativeTo: this.route });
+  }
+
+  deletePart(row: PartDetail): void {
+    this.partService.deletePart(row.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.deletePartSuccessful', MessageType.success);
+          this.getPartList();
+        },
+      })
   }
 
   onSearch(searchValue: string): void {

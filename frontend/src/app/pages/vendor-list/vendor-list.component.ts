@@ -14,7 +14,7 @@ import { VendorService } from '@app/core/services/vendor.service';
 import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpLoaderComponent } from '@app/shared/cp-libs/cp-loader/cp-loader.component';
-import { COUNTRY_LIST, PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
+import { COUNTRY_LIST, MessageType, PAGE_SIZE, SORT_OPTIONS } from '@constants/app.constants';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -48,7 +48,7 @@ export class VendorListComponent {
   constructor(
     private route: ActivatedRoute,
     private cpEventsService: CpEventsService,
-    private partnerService: VendorService,
+    private vendorService: VendorService,
     private router: Router,
     private toasterService: AlertToastrService,
     public translateService: TranslateService
@@ -80,7 +80,7 @@ export class VendorListComponent {
     }
     this.isLoading = true;
     this.vendorList = new MatTableDataSource([]);
-    this.partnerService.getVendorList(params)
+    this.vendorService.getVendorList(params)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: VendorList) => {
@@ -97,6 +97,10 @@ export class VendorListComponent {
                 {
                   label: 'common.edit',
                   callback: this.editVendor.bind(this)
+                },
+                {
+                  label: 'common.delete',
+                  callback: this.deleteVendor.bind(this)
                 }
               ]
             });
@@ -116,6 +120,17 @@ export class VendorListComponent {
 
   editVendor(row: VendorDetail): void {
     this.router.navigate([`../${row.id}`], { relativeTo: this.route });
+  }
+
+  deleteVendor(row: VendorDetail): void {
+    this.vendorService.deleteVendor(row.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.deleteVendorSuccessful', MessageType.success);
+          this.getVendorList();
+        },
+      })
   }
 
   onSearch(searchValue: string): void {
