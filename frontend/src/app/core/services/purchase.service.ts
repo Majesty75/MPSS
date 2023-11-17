@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class PurchaseService {
 
-  partnerDetail: CreatePurchase;
+  purchaseDetail: CreatePurchase;
   breadcrumbs: BreadCrumb[];
   constructor(
     private httpClientService: HttpClientService
@@ -24,7 +24,7 @@ export class PurchaseService {
     return this.httpClientService.post(API_ROUTES.purchasesApi, params);
   }
 
-  getPurchaseDetail(id: string): Observable<CreatePurchase> {
+  getPurchaseDetail(id: number): Observable<CreatePurchase> {
     return this.httpClientService.get(`${API_ROUTES.purchasesApi}/${id}`, {
       headers: {
         'X-CP-BIT': 'false'
@@ -32,8 +32,8 @@ export class PurchaseService {
     });
   }
 
-  updatePurchaseDetail(params: Partial<CreatePurchase>, id: string): Observable<any> {
-    return this.httpClientService.patch(`${API_ROUTES.purchasesApi}/${id}`, params);
+  updatePurchaseDetail(params: Partial<CreatePurchase>, id: number): Observable<any> {
+    return this.httpClientService.put(`${API_ROUTES.purchasesApi}/${id}`, params);
   }
 
   deletePurchase(id: number): Observable<any> {

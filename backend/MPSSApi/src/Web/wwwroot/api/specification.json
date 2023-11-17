@@ -1530,6 +1530,11 @@
           "vendorName": {
             "type": "string",
             "nullable": true
+          },
+          "vendorId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         }
       },
@@ -1973,7 +1978,7 @@
         "properties": {
           "date": {
             "type": "string",
-            "format": "date-time"
+            "nullable": true
           },
           "day": {
             "type": "integer",
@@ -2045,7 +2050,7 @@
         "properties": {
           "date": {
             "type": "string",
-            "format": "date-time"
+            "nullable": true
           },
           "dailyPurchaseOrderRecords": {
             "type": "array",
@@ -2131,7 +2136,7 @@
           },
           "date": {
             "type": "string",
-            "format": "date-time"
+            "nullable": true
           },
           "records": {
             "type": "array",
@@ -2197,7 +2202,7 @@
           },
           "date": {
             "type": "string",
-            "format": "date-time"
+            "nullable": true
           }
         }
       },

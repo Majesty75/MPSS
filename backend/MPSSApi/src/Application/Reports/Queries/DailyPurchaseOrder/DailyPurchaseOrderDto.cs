@@ -1,7 +1,7 @@
 ﻿namespace MPSSApi.Application.Reports.Queries.DailyPurchaseOrder;
 public class DailyPurchaseOrderDto
 {
-    public DateTime Date { get; set; }
+    public string? Date { get; set; }
 
     public IReadOnlyCollection<DailyPurchaseOrderRecordDto> DailyPurchaseOrderRecords { get; set; } = new List<DailyPurchaseOrderRecordDto>();
 }

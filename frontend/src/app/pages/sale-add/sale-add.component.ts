@@ -12,7 +12,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PartDetail } from '@app/core/models/part.model';
-import { AddSaleForm, Record } from '@app/core/models/sale.model';
+import { Record, RecordType } from '@app/core/models/record.model';
+import { AddSaleForm } from '@app/core/models/sale.model';
 import { PartService } from '@app/core/services/part.service';
 import { SaleService } from '@app/core/services/sale.service';
 import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
@@ -72,6 +73,7 @@ export class SaleAddComponent implements OnInit {
     this.initializeForm();
     if (this.id) {
       const saleDetail = this.route.snapshot.data.saleDetail || this.saleService.saleDetail;
+      saleDetail.date = new Date(saleDetail.date);
       this.addSaleForm.patchValue(saleDetail);
       this.recordList = saleDetail.records ?? [];
     }
@@ -105,12 +107,12 @@ export class SaleAddComponent implements OnInit {
   }
 
   addSale(): void {
-    this.saleService.addSale({ ...this.addSaleForm.value, records: this.recordList })
+    this.saleService.addSale({ ...this.addSaleForm.value, records: this.recordList, date: this.addSaleForm.value.date.toISOString() })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.isSubmitted = false;
-          this.toasterService.displaySnackBarWithTranslation('toasterMessage.addPartnerSuccessful', MessageType.success);
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.addSaleSuccessful', MessageType.success);
           this.navigateToList();
         },
         error: () => {
@@ -120,12 +122,12 @@ export class SaleAddComponent implements OnInit {
   }
 
   updateSale(): void {
-    this.saleService.updateSaleDetail({ ...this.addSaleForm.value, records: this.recordList }, this.id)
+    this.saleService.updateSaleDetail({ ...this.addSaleForm.value, records: this.recordList, date: this.addSaleForm.value.date.toISOString() }, this.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.isSubmitted = false;
-          this.toasterService.displaySnackBarWithTranslation('toasterMessage.updatePartnerSuccessful', MessageType.success);
+          this.toasterService.displaySnackBarWithTranslation('toasterMessage.updateSaleSuccessful', MessageType.success);
           this.navigateToList();
         },
         error: () => {
@@ -138,7 +140,8 @@ export class SaleAddComponent implements OnInit {
     const dialogRef = this.dialog.open(RecordAddComponent, {
       data: {
         record: this.newRecord,
-        partList: this.partList
+        partList: this.partList,
+        type: RecordType.Sale
       },
       disableClose: true
     });
@@ -183,7 +186,11 @@ export class SaleAddComponent implements OnInit {
       price: row.price
     }
     const dialogRef = this.dialog.open(RecordAddComponent, {
-      data: { record, partList: this.partList },
+      data: {
+        record,
+        partList: this.partList,
+        type: RecordType.Sale
+      },
       disableClose: true
     });
 

@@ -81,7 +81,7 @@
                     <ng-select class="w-full font-semibold text-secondary custom-select"
                         [ngClass]="{ 'field-error': formControls.vendorId.touched && formControls.vendorId.invalid }"
                         [items]="vendorList" bindLabel="vendorName" bindValue="id" formControlName="vendorId"
-                        [clearable]="false"></ng-select>
+                        [searchable]="false" [clearable]="false"></ng-select>
                 </div>
                 <ng-container
                     *ngTemplateOutlet="requiredError; context: { control: formControls.vendorId }"></ng-container>

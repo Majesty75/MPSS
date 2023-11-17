@@ -1,45 +1,18 @@
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 import { ActionToolbar } from "@models/common.model";
-import { Record } from "./sale.model";
-import { VendorDetail } from "./vendor.model";
+import { Record } from "@models/record.model";
 
 export interface CreatePurchase {
-    isActive: boolean;
-    email: string;
-    companyName: string;
-    address: Partial<Address>;
-    name: string;
-    phoneNo: string;
-    webAddress: string;
-    currency: string;
-    locale: string;
-    id: string;
-}
-
-export interface Address {
-    city: string;
-    zip: string;
-    country: string;
-    street: string;
+    purchaseNumber: string;
+    date: Date;
+    vendorId: number;
+    records: Partial<Record>[];
 }
 
 export interface AddPurchaseForm {
-    isActive: FormControl<boolean>,
-    email: FormControl<string>,
-    address: FormGroup<PurchaseAddress>,
-    companyName: FormControl<string>,
-    name: FormControl<string>,
-    phoneNo: FormControl<string>,
-    webAddress: FormControl<string>,
-    currency: FormControl<string>,
-    locale: FormControl<string>,
-}
-
-export interface PurchaseAddress {
-    street: FormControl<string>,
-    zip: FormControl<string>,
-    city: FormControl<string>,
-    country: FormControl<string>,
+    purchaseNumber: FormControl<string>,
+    date: FormControl<Date>,
+    vendorId: FormControl<number>
 }
 
 export interface PurchaseListQueryParams {
@@ -53,13 +26,14 @@ export interface PurchaseList {
     records: PurchaseDetail[] | null;
     totalCount: number;
 }
+
 export interface PurchaseDetail {
     id: number;
     purchaseNumber: string;
-    total: number;
     date: Date;
-    vendorName: string;
-    vendor: VendorDetail;
-    records: Record[];
+    total: number;
+    customerName: string;
+    customerContact: string;
+    records: Partial<Record>[];
     purchaseAction: ActionToolbar[];
 }

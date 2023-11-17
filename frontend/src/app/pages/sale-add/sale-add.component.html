@@ -44,11 +44,8 @@
             <div class="w-full sm:w-[50%] p-2">
                 <div class="flex field-box relative">
                     <label class="field-lbl"
-                        [ngClass]="{ 'field-error': formControls.customerContact.touched && formControls.customerContact.invalid }">{{
+                        [ngClass]="{ 'field-error': formControls.date.touched && formControls.date.invalid }">{{
                         'common.date' | translate }}</label>
-                    <!-- <app-cp-tel-input class="w-full flex"
-                        [cssClass]="{ 'form-field': true, 'field-error': formControls.customerContact.touched && formControls.customerContact.invalid }"
-                        formControlName="customerContact"></app-cp-tel-input> -->
                     <input matInput [matDatepicker]="datepicker" class="form-field"
                         [ngClass]="{ 'field-error': formControls.date.touched && formControls.date.invalid }"
                         type="text" formControlName="date">

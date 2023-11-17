@@ -7,7 +7,7 @@ export const LoginGuard: CanMatchFn = (route, segments) => {
   const localStorageService = inject(LocalStorageService);
   const router = inject(Router);
   const token = localStorageService.get(LOCAL_STORAGE_CONSTANT.LOGIN_TOKEN);
-  if (!token || (segments.length || segments[segments.length - 1].path == 'logout')) {
+  if (!token || (segments.length && segments[segments.length - 1].path === 'logout')) {
     return true;
   }
   router.navigate(['/admin']);

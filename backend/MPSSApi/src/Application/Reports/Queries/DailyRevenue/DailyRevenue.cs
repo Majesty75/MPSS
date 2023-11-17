@@ -4,7 +4,7 @@ namespace MPSSApi.Application.Reports.Queries.DailyRevenue;
 
 public record GetDailyRevenueQuery : IRequest<DailyRevenueDto>
 {
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.Today;
 }
 
 public class GetDailyRevenueQueryValidator : AbstractValidator<GetDailyRevenueQuery>
@@ -28,7 +28,7 @@ public class GetDailyRevenueQueryHandler : IRequestHandler<GetDailyRevenueQuery,
 
     public async Task<DailyRevenueDto> Handle(GetDailyRevenueQuery request, CancellationToken cancellationToken)
     {
-        var start = new DateTime(request.Date.Year, request.Date.Month, request.Date.Day, 0, 0, 0);
+        var start = request.Date;
         var end = start.AddDays(1);
 
         var revenue = _context.Records
@@ -39,7 +39,7 @@ public class GetDailyRevenueQueryHandler : IRequestHandler<GetDailyRevenueQuery,
 
         return new DailyRevenueDto
         {
-            Date = start,
+            Date = start.ToString("o") + "Z",
             Day = start.Day,
             Revenue = revenue
         };

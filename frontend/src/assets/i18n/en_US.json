@@ -59,7 +59,11 @@
     "deleteSaleSuccessful": "Sale deleted successfully",
     "addPurchaseSuccessful": "Purchase added successfully",
     "updatePurchaseSuccessful": "Purchase updated successfully",
-    "deletePurchaseSuccessful": "Purchase deleted successfully"
+    "deletePurchaseSuccessful": "Purchase deleted successfully",
+    "invalidVendor": "Vendor not found",
+    "invalidPart": "Part not found",
+    "invalidSale": "Sale not found",
+    "invalidPurchase": "Purchase not found"
   },
   "common": {
     "noDataFound": "No data found",

@@ -7,7 +7,7 @@ namespace MPSSApi.Application.Reports.Queries.MonthlyRevenue;
 
 public record GetMonthlyRevenueQuery : IRequest<MonthlyRevenueDto>
 {
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.Today;
 }
 
 public class GetMonthlyRevenueQueryValidator : AbstractValidator<GetMonthlyRevenueQuery>
@@ -34,23 +34,24 @@ public class GetMonthlyRevenueQueryHandler : IRequestHandler<GetMonthlyRevenueQu
         var dailyRevenues = new List<DailyRevenueDto>();
         var start = new DateTime(request.Date.Year, request.Date.Month, 1, 0, 0, 0);
         var month = start.Month;
+        var end = DateTime.Today;
 
-        while (start.Month == month && start <= DateTime.Today)
+        while (start.Month == month && start <= end)
         {
-            var end = start.AddDays(1);
+            var day = start.AddDays(1);
 
             var revenue = _context.Records
-                .Where(r => r.SaleId != null && r.Date >= start && r.Date < end)
+                .Where(r => r.SaleId != null && r.Date >= start && r.Date < day)
                 .Sum(r => r.Total);
 
             dailyRevenues.Add(new DailyRevenueDto
             {
-                Date = start,
+                Date = start.ToString("o") + "Z",
                 Day = start.Day,
                 Revenue = revenue
             });
 
-            start = end;
+            start = day;
         }
 
         await Task.CompletedTask;

@@ -13,7 +13,7 @@ public class SaleDto
 
     public string? CustomerContact { get; set; }
 
-    public DateTime Date { get; set; }
+    public string? Date { get; set; }
 
     public IReadOnlyCollection<RecordDto> Records { get; set; } = new List<RecordDto>();
 
@@ -22,7 +22,8 @@ public class SaleDto
         public Mapping()
         {
             CreateMap<Sale, SaleDto>()
-                .ForMember(p => p.Records, v => v.MapFrom(p => p.Records));
+                .ForMember(d => d.Records, v => v.MapFrom(s => s.Records))
+                .ForMember(d => d.Date, s => s.MapFrom(t => t.Date.ToString("o") + "Z"));
         }
     }
 }

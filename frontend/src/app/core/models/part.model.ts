@@ -1,6 +1,5 @@
 import { FormControl } from "@angular/forms";
 import { ActionToolbar } from "@models/common.model";
-import { VendorDetail } from "./vendor.model";
 
 export interface CreatePart {
     partName: string;
@@ -38,6 +37,6 @@ export interface PartDetail {
     quantity: number;
     cost: number;
     sellPrice: number;
-    vendor: VendorDetail;
+    vendorId: number;
     partAction: ActionToolbar[];
 }

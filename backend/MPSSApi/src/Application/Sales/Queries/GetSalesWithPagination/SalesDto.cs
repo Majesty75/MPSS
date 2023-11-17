@@ -14,13 +14,14 @@ public class SalesDto
 
     public string? CustomerContact { get; set; }
 
-    public DateTime Date { get; set; }
+    public string? Date { get; set; }
 
     private class Mapping : Profile
     {
         public Mapping()
         {
-            CreateMap<Sale, SalesDto>();
+            CreateMap<Sale, SalesDto>()
+                .ForMember(d => d.Date, s => s.MapFrom(t => t.Date.ToString("o") + "Z"));
         }
     }
 }

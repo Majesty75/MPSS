@@ -28,6 +28,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     await app.InitialiseDatabaseAsync();
+    app.UseExceptionHandler("/Error");
 }
 else
 {
@@ -48,6 +49,15 @@ app.UseSwaggerUi3(settings =>
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
+
+app.UseExceptionHandler(exceptionHandlerApp =>
+{
+    exceptionHandlerApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        await Task.CompletedTask;
+    });
+});
 
 app.UseCors(MyAllowSpecificOrigins);
 

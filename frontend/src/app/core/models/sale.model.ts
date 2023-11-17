@@ -1,19 +1,13 @@
 import { FormControl } from "@angular/forms";
 import { ActionToolbar } from "@models/common.model";
+import { Record } from "./record.model";
 
 export interface CreateSale {
     saleNumber: string;
-    date: Date;
+    date: string;
     customerName: string;
     customerContact: string;
     records: Partial<Record>[];
-}
-
-export interface Address {
-    city: string;
-    zip: string;
-    country: string;
-    street: string;
 }
 
 export interface AddSaleForm {
@@ -21,14 +15,6 @@ export interface AddSaleForm {
     date: FormControl<Date>,
     customerName: FormControl<string>,
     customerContact: FormControl<string>
-}
-
-export interface AddRecordForm {
-    id: FormControl<number>,
-    partId: FormControl<number>,
-    quantity: FormControl<number>,
-    price: FormControl<number>,
-    partName: FormControl<string>
 }
 
 export interface SaleListQueryParams {
@@ -52,15 +38,4 @@ export interface SaleDetail {
     customerContact: string;
     records: Partial<Record>[];
     saleAction: ActionToolbar[];
-}
-
-export interface Record {
-    id: number;
-    partId: number;
-    partName?: string;
-    quantity: number;
-    price: number;
-    total: number;
-    date: Date;
-    recordAction: ActionToolbar[];
 }

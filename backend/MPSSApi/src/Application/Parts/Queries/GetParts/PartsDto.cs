@@ -17,12 +17,15 @@ public class PartsDto
 
     public string? vendorName { get; set; }
 
+    public int? vendorId { get; set; }
+
     private class Mapping : Profile
     {
         public Mapping()
         {
             CreateMap<Part, PartsDto>()
-                .ForMember(p => p.vendorName, v => v.MapFrom(p => p.Vendor.VendorName));
+                .ForMember(p => p.vendorName, v => v.MapFrom(p => p.Vendor.VendorName))
+                .ForMember(p => p.vendorId, v => v.MapFrom(p => p.Vendor.Id));
         }
     }
 }

@@ -68,7 +68,7 @@ public class GetDailyPurchaseOrderQueryHandler : IRequestHandler<GetDailyPurchas
 
         return new DailyPurchaseOrderDto
         {
-            Date = poDate,
+            Date = poDate.ToString("o") + "Z",
             DailyPurchaseOrderRecords = new ReadOnlyCollection<DailyPurchaseOrderRecordDto>(dailyPurchaseOrderRecords)
         };
     }

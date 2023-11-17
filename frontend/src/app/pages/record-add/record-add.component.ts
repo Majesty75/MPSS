@@ -8,10 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
 import { PartDetail } from '@app/core/models/part.model';
-import { AddRecordForm, Record } from '@app/core/models/sale.model';
+import { AddRecordForm, Record, RecordType, addRecordDialogData } from '@app/core/models/record.model';
 import { CpActionToolbarComponent } from '@app/shared/cp-libs/cp-action-toolbar/cp-action-toolbar.component';
 import { CpButtonComponent } from '@app/shared/cp-libs/cp-button/cp-button.component';
 import { CpTelInputComponent } from '@app/shared/cp-libs/cp-tel-input/cp-tel-input.component';
@@ -30,22 +29,22 @@ export class RecordAddComponent implements OnInit {
 
   @Input() record: Partial<Record>;
   @Input() partList: PartDetail[];
+  @Input() recordType: RecordType;
 
   @Output() recordEvent: EventEmitter<Partial<Record>> = new EventEmitter<Partial<Record>>();;
 
   addRecordForm: FormGroup<AddRecordForm>;
-  recordList = new MatTableDataSource<Record>();
   id: number;
   columnLabel = ['partName', 'quantity', 'price', 'total', 'action'];
   isSubmitted = false;
 
   constructor(
-    private route: ActivatedRoute,
-    @Inject(MAT_DIALOG_DATA) private data: { partList: PartDetail[], record: Partial<Record> },
+    @Inject(MAT_DIALOG_DATA) private data: addRecordDialogData,
     private dialogRef: MatDialogRef<RecordAddComponent>
   ) {
     this.record = this.record ?? data.record;
-    this.partList = this.partList ?? data.partList
+    this.partList = this.partList ?? data.partList;
+    this.recordType = this.recordType ?? data.type;
     this.id = this.record.id ?? 0;
   }
 
@@ -101,7 +100,14 @@ export class RecordAddComponent implements OnInit {
 
   partSelected(event: PartDetail) {
     this.addRecordForm.controls.partName.patchValue(event.partName);
-    this.addRecordForm.controls.price.patchValue(event.sellPrice);
+
+    if (this.recordType === RecordType.Sale) {
+      this.addRecordForm.controls.price.patchValue(event.sellPrice);
+    }
+
+    if (this.recordType === RecordType.Purchase) {
+      this.addRecordForm.controls.price.patchValue(event.cost);
+    }
   }
 
 }

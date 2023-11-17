@@ -28,7 +28,7 @@ public class DashboardDataQueryHandler : IRequestHandler<DashboardDataQuery, Das
         var start = request.Date;
         var end = start.AddDays(1);
 
-        var monthStart = new DateTime(start.Year, start.Month, 1, 0, 0 ,0);
+        var monthStart = new DateTime(start.Year, start.Month, 1, 0, 0, 0);
         var monthEnd = monthStart.AddMonths(1);
 
         var dayRecords = _context.Records.Where(r => r.Date >= start && r.Date < end);
