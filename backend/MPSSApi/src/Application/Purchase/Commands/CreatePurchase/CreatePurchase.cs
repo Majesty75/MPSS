@@ -95,6 +95,7 @@ public class CreatePurchaseCommandHandler : IRequestHandler<CreatePurchaseComman
 
             foreach (var item in entity.Records)
             {
+                item.Id = 0;
                 item.SaleId = null;
                 item.PurchaseId = entity.Id;
                 item.Date = entity.Date;

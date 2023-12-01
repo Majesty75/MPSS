@@ -22,7 +22,7 @@
     "add": "Add",
     "edit": "Edit",
     "settings": "Settings",
-    "dailyPurchaseOrder": "Daiily Purchase Order"
+    "dailyPurchaseOrder": "Daily Purchase Order"
   },
   "validation": {
     "emailRequired": "Email is required",

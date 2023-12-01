@@ -50,6 +50,12 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
+app.UseCors(MyAllowSpecificOrigins);
+
+app.MapRazorPages();
+
+app.MapFallbackToFile("index.html");
+
 app.UseExceptionHandler(exceptionHandlerApp =>
 {
     exceptionHandlerApp.Run(async context =>
@@ -59,15 +65,7 @@ app.UseExceptionHandler(exceptionHandlerApp =>
     });
 });
 
-app.UseCors(MyAllowSpecificOrigins);
-
-app.MapRazorPages();
-
-app.MapFallbackToFile("index.html");
-
-app.UseExceptionHandler(options => { });
-
-app.Map("/", () => Results.Redirect("/api"));
+app.Map("/", () => Results.Redirect("/index.html"));
 
 app.MapEndpoints();
 

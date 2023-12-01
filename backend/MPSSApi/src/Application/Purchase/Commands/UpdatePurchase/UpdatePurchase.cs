@@ -145,6 +145,8 @@ public class UpdatePurchaseCommandHandler : IRequestHandler<UpdatePurchaseComman
 
             foreach (var item in records.Where(r => r.Id < 0))
             {
+                item.Id = 0;
+
                 // Add this items
                 var part = _context.Parts.FirstOrDefault(p => p.Id == item.PartId);
 

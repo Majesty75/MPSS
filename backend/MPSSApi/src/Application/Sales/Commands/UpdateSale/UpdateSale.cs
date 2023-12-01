@@ -131,7 +131,8 @@ public class UpdateSaleCommandHandler : IRequestHandler<UpdateSaleCommand>
                     if (part != null)
                     {
                         // Updating sales record means decrease new part quantity
-                        part.Quantity += item.Quantity;
+                        part.Quantity -= item.Quantity;
+                        if (part.Quantity < 0) part.Quantity = 0;
                     }
                 }
             }
