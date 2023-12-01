@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Majesty75/MPSS">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo" width="400">
   </a>
 
   <h3 align="center">MPSS - Motor Parts Shop Software</h3>
@@ -112,41 +112,33 @@ This project was made with .NET 8, Angular 16 and SQL Server 2022.
 
 ### Prerequisites
 
-* Node v18.17.2
-  download from <a href="https://nodejs.org/en/about/previous-releases"></a>
+* <a href="https://nodejs.org/en/about/previous-releases">Node v18.17.2></a>
 
-* .NET 8.0.100 SDK
-  download from <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0"></a>
+* <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">.NET 8.0.100 SDK</a>
 
-* SQL Server 2022 or SQL Server 2022 Express
-  download from <a href="https://www.microsoft.com/en-in/sql-server/sql-server-downloads"></a>
+* <a href="https://www.microsoft.com/en-in/sql-server/sql-server-downloads">SQL Server 2022 or SQL Server 2022 Express</a>
 
-* Visual Studio 2022
-  download from <a href="https://visualstudio.microsoft.com/"></a>
+* <a href="https://visualstudio.microsoft.com/">Visual Studio 2022</a>
 
 
 
 ### Installation
 
-1. Open _backend/MPSSApi.sln_ in Visual Studio.
+1. Open _backend/MPSSApi.sln_ in Visual Studio, Do not build solution before step 4.
 2. Set _src/Web_  as startup project.
-3. Rebuild solution.
-4. Change connection string in _src/Web/appSettings.json_ to point to your sql server instance and database.
+3. Change connection string in _src/Web/appSettings.json_ to point to your sql server instance and database.
   ```sh
   Server=(Server Name);Database=(Database Name);Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True
   ```
-5. Open visual studio developer command prompt and run below commands to generate database
-  ```
-  dotnet tool update --global dotnet-ef
-  dotnet ef database update --project src\Infrastructure --startup-project src\Web
-  ```
-6. Debug or run the project from visual studio and note localhost url
-7. Open _frontend/src/environments/environment.dev.ts and replace hostName with url noted in previous step
-8. Open cmd in _frontend_ and run below commands to start frontend
+4. Rebuild the solution.
+5. Debug or run the project from visual studio and note localhost base url (http://localhost:5000).
+6. Open _frontend/src/environments/environment.dev.ts and replace hostName with url noted in previous step.
+7. Open cmd in _frontend_ and run below commands to start frontend.
   ```
   npm install
   npm start
   ```
+8. Login with email: admin@mpss and password: Password1!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

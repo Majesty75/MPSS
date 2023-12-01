@@ -1,5 +1,5 @@
 {
-  "x-generator": "NSwag v13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))",
+  "x-generator": "NSwag v14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "MPSSApi API",
@@ -61,7 +61,6 @@
         ],
         "requestBody": {
           "x-name": "command",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -146,7 +145,6 @@
         "operationId": "CreatePart",
         "requestBody": {
           "x-name": "command",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -297,7 +295,6 @@
         ],
         "requestBody": {
           "x-name": "command",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -421,7 +418,6 @@
         "operationId": "CreatePurchase",
         "requestBody": {
           "x-name": "command",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -485,7 +481,6 @@
         "operationId": "GetDailyRevenue",
         "requestBody": {
           "x-name": "query",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -523,7 +518,6 @@
         "operationId": "GetMonthlyRevenue",
         "requestBody": {
           "x-name": "query",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -561,7 +555,6 @@
         "operationId": "GetDailyPurchaseOrder",
         "requestBody": {
           "x-name": "query",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -646,7 +639,6 @@
         ],
         "requestBody": {
           "x-name": "command",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -770,7 +762,6 @@
         "operationId": "CreateSale",
         "requestBody": {
           "x-name": "command",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -809,7 +800,6 @@
         "operationId": "PostApiUsersRegister",
         "requestBody": {
           "x-name": "registration",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -844,7 +834,7 @@
         "operationId": "PostApiUsersLogin",
         "parameters": [
           {
-            "name": "cookieMode",
+            "name": "useCookies",
             "in": "query",
             "schema": {
               "type": "boolean",
@@ -853,7 +843,7 @@
             "x-position": 2
           },
           {
-            "name": "persistCookies",
+            "name": "useSessionCookies",
             "in": "query",
             "schema": {
               "type": "boolean",
@@ -864,7 +854,6 @@
         ],
         "requestBody": {
           "x-name": "login",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -896,7 +885,6 @@
         "operationId": "PostApiUsersRefresh",
         "requestBody": {
           "x-name": "refreshRequest",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -925,7 +913,7 @@
         "tags": [
           "Users"
         ],
-        "operationId": "MapIdentityApi-/api/Users/confirmEmail",
+        "operationId": "GetApiUsersConfirmEmail",
         "parameters": [
           {
             "name": "userId",
@@ -970,11 +958,10 @@
         "operationId": "PostApiUsersResendConfirmationEmail",
         "requestBody": {
           "x-name": "resendRequest",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ResendEmailRequest"
+                "$ref": "#/components/schemas/ResendConfirmationEmailRequest"
               }
             }
           },
@@ -987,6 +974,40 @@
         }
       }
     },
+    "/api/Users/forgotPassword": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "PostApiUsersForgotPassword",
+        "requestBody": {
+          "x-name": "resetRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            }
+          },
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Users/resetPassword": {
       "post": {
         "tags": [
@@ -995,7 +1016,6 @@
         "operationId": "PostApiUsersResetPassword",
         "requestBody": {
           "x-name": "resetRequest",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1022,41 +1042,14 @@
         }
       }
     },
-    "/api/Users/account/2fa": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "operationId": "GetApiUsersAccount2fa",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TwoFactorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      },
+    "/api/Users/manage/2fa": {
       "post": {
         "tags": [
           "Users"
         ],
-        "operationId": "PostApiUsersAccount2fa",
+        "operationId": "PostApiUsersManage2fa",
         "requestBody": {
           "x-name": "tfaRequest",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1098,12 +1091,12 @@
         ]
       }
     },
-    "/api/Users/account/info": {
+    "/api/Users/manage/info": {
       "get": {
         "tags": [
           "Users"
         ],
-        "operationId": "GetApiUsersAccountInfo",
+        "operationId": "GetApiUsersManageInfo",
         "responses": {
           "200": {
             "description": "",
@@ -1139,10 +1132,9 @@
         "tags": [
           "Users"
         ],
-        "operationId": "PostApiUsersAccountInfo",
+        "operationId": "PostApiUsersManageInfo",
         "requestBody": {
           "x-name": "infoRequest",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1239,7 +1231,6 @@
         ],
         "requestBody": {
           "x-name": "command",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1324,7 +1315,6 @@
         "operationId": "CreateVendor",
         "requestBody": {
           "x-name": "command",
-          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -1580,14 +1570,12 @@
           "partName": {
             "type": "string",
             "maxLength": 200,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "partNumber": {
             "type": "string",
             "maxLength": 50,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "quantity": {
             "type": "integer",
@@ -1608,7 +1596,7 @@
           "vendorId": {
             "type": "integer",
             "format": "int32",
-            "nullable": false
+            "nullable": true
           }
         }
       },
@@ -1628,14 +1616,12 @@
           "partName": {
             "type": "string",
             "maxLength": 200,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "partNumber": {
             "type": "string",
             "maxLength": 50,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "quantity": {
             "type": "integer",
@@ -1656,7 +1642,7 @@
           "vendorId": {
             "type": "integer",
             "format": "int32",
-            "nullable": false
+            "nullable": true
           }
         }
       },
@@ -1864,13 +1850,11 @@
           "purchaseNumber": {
             "type": "string",
             "maxLength": 20,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "date": {
             "type": "string",
-            "format": "date-time",
-            "nullable": false
+            "format": "date-time"
           },
           "vendorId": {
             "type": "integer",
@@ -1878,8 +1862,6 @@
           },
           "records": {
             "type": "array",
-            "minLength": 1,
-            "nullable": false,
             "items": {
               "$ref": "#/components/schemas/RecordCommand"
             }
@@ -1928,13 +1910,11 @@
           "purchaseNumber": {
             "type": "string",
             "maxLength": 20,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "date": {
             "type": "string",
-            "format": "date-time",
-            "nullable": false
+            "format": "date-time"
           },
           "vendorId": {
             "type": "integer",
@@ -1942,8 +1922,6 @@
           },
           "records": {
             "type": "array",
-            "minLength": 1,
-            "nullable": false,
             "items": {
               "$ref": "#/components/schemas/RecordCommand"
             }
@@ -1999,9 +1977,7 @@
         "properties": {
           "date": {
             "type": "string",
-            "format": "date-time",
-            "minLength": 1,
-            "nullable": false
+            "format": "date-time"
           }
         }
       },
@@ -2038,9 +2014,7 @@
         "properties": {
           "date": {
             "type": "string",
-            "format": "date-time",
-            "minLength": 1,
-            "nullable": false
+            "format": "date-time"
           }
         }
       },
@@ -2108,9 +2082,7 @@
         "properties": {
           "date": {
             "type": "string",
-            "format": "date-time",
-            "minLength": 1,
-            "nullable": false
+            "format": "date-time"
           }
         }
       },
@@ -2218,13 +2190,11 @@
           "saleNumber": {
             "type": "string",
             "maxLength": 20,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "date": {
             "type": "string",
-            "format": "date-time",
-            "nullable": false
+            "format": "date-time"
           },
           "customerName": {
             "type": "string",
@@ -2236,8 +2206,6 @@
           },
           "records": {
             "type": "array",
-            "minLength": 1,
-            "nullable": false,
             "items": {
               "$ref": "#/components/schemas/RecordCommand"
             }
@@ -2260,8 +2228,7 @@
           "saleNumber": {
             "type": "string",
             "maxLength": 20,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "total": {
             "type": "number",
@@ -2269,8 +2236,7 @@
           },
           "date": {
             "type": "string",
-            "format": "date-time",
-            "nullable": false
+            "format": "date-time"
           },
           "customerName": {
             "type": "string",
@@ -2282,8 +2248,6 @@
           },
           "records": {
             "type": "array",
-            "minLength": 1,
-            "nullable": false,
             "items": {
               "$ref": "#/components/schemas/RecordCommand"
             }
@@ -2347,13 +2311,10 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "username": {
+          "email": {
             "type": "string"
           },
           "password": {
-            "type": "string"
-          },
-          "email": {
             "type": "string"
           }
         }
@@ -2362,17 +2323,17 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "token_type": {
+          "tokenType": {
             "type": "string"
           },
-          "access_token": {
+          "accessToken": {
             "type": "string"
           },
-          "expires_in": {
+          "expiresIn": {
             "type": "integer",
             "format": "int64"
           },
-          "refresh_token": {
+          "refreshToken": {
             "type": "string"
           }
         }
@@ -2381,7 +2342,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "username": {
+          "email": {
             "type": "string"
           },
           "password": {
@@ -2406,7 +2367,16 @@
           }
         }
       },
-      "ResendEmailRequest": {
+      "ResendConfirmationEmailRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "ForgotPasswordRequest": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -2423,12 +2393,10 @@
             "type": "string"
           },
           "resetCode": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "newPassword": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         }
       },
@@ -2485,17 +2453,11 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "username": {
-            "type": "string"
-          },
           "email": {
             "type": "string"
           },
-          "claims": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
+          "isEmailConfirmed": {
+            "type": "boolean"
           }
         }
       },
@@ -2503,10 +2465,6 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "newUsername": {
-            "type": "string",
-            "nullable": true
-          },
           "newEmail": {
             "type": "string",
             "nullable": true
@@ -2561,8 +2519,7 @@
           "vendorName": {
             "type": "string",
             "maxLength": 200,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "email": {
             "type": "string",
@@ -2599,8 +2556,7 @@
           "vendorName": {
             "type": "string",
             "maxLength": 200,
-            "minLength": 1,
-            "nullable": false
+            "minLength": 0
           },
           "email": {
             "type": "string",

@@ -40,7 +40,7 @@ app.UseHealthChecks("/health");
 //app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseSwaggerUi3(settings =>
+app.UseSwaggerUi(settings =>
 {
     settings.Path = "/api";
     settings.DocumentPath = "/api/specification.json";
@@ -56,14 +56,7 @@ app.MapRazorPages();
 
 app.MapFallbackToFile("index.html");
 
-app.UseExceptionHandler(exceptionHandlerApp =>
-{
-    exceptionHandlerApp.Run(async context =>
-    {
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        await Task.CompletedTask;
-    });
-});
+app.UseExceptionHandler(options => { });
 
 app.Map("/", () => Results.Redirect("/index.html"));
 

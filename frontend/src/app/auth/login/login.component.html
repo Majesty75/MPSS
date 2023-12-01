@@ -5,15 +5,13 @@
     <form #loginForm="ngForm">
       <div class="flex">
         <label class="field-lbl"
-          [ngClass]="{ 'field-error': (loginForm.submitted || username.touched) && username.invalid }">{{
-          'login.username' |
+          [ngClass]="{ 'field-error': (loginForm.submitted || email.touched) && email.invalid }">{{ 'login.email' |
           translate }}</label>
-        <input class="form-field"
-          [ngClass]="{ 'field-error': (loginForm.submitted || username.touched) && username.invalid }" type="text"
-          name="username" ngModel #username="ngModel" required>
+        <input class="form-field" [ngClass]="{ 'field-error': (loginForm.submitted || email.touched) && email.invalid }"
+          email type="email" name="email" ngModel #email="ngModel" required>
       </div>
-      <ng-container *ngIf="(loginForm.submitted || username.touched) && username.errors?.required">
-        <p class="error-message"> {{ 'validation.usernameRequired' | translate }} </p>
+      <ng-container *ngIf="(loginForm.submitted || email.touched) && email.errors?.required">
+        <p class="error-message"> {{ 'validation.emailRequired' | translate }} </p>
       </ng-container>
       <div class="flex mt-4">
         <label class="field-lbl"

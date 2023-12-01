@@ -45,7 +45,7 @@ export class LoginComponent {
         next: (res: LoginResponse) => {
           if (res) {
             this.isSubmitted = false;
-            this.localStorageService.set(LOCAL_STORAGE_CONSTANT.LOGIN_TOKEN, res.access_token);
+            this.localStorageService.set(LOCAL_STORAGE_CONSTANT.LOGIN_TOKEN, res.accessToken);
             // this.localStorageService.set(LOCAL_STORAGE_CONSTANT.USER_ROLE, res.role);
             this.localStorageService.set(LOCAL_STORAGE_CONSTANT.USER_DATA, res);
             // this.utilityService.changeLanguage(res.locale);
