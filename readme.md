@@ -126,7 +126,7 @@ This project was made with .NET 8, Angular 16 and SQL Server 2022.
 
 1. Open _backend/MPSSApi.sln_ in Visual Studio, Do not build solution before step 4.
 2. Set _src/Web_  as startup project.
-3. Change connection string in _src/Web/appSettings.json_ to point to your sql server instance and database.
+3. Change connection string in _src/Web/appSettings.json_ to point to your sql server instance and database. It is built with entity framework core code first approch. Which means you do not need separate database script. Solution will create database with default user when rebuilt.
   ```sh
   Server=(Server Name);Database=(Database Name);Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True
   ```
